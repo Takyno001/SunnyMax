@@ -242,8 +242,8 @@ export default function Home() {
     <div className="flex flex-col min-h-screen bg-dark-bg text-white font-sans selection:bg-primary selection:text-white">
       {/* 1. HEADER / NAVBAR */}
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
-          ? "backdrop-blur-md bg-dark-bg/90 border-b border-white/5"
-          : "bg-transparent border-b border-transparent"
+        ? "backdrop-blur-md bg-dark-bg/90 border-b border-white/5"
+        : "bg-transparent border-b border-transparent"
         }`}>
         <div className={`max-w-7xl mx-auto px-6 flex items-center justify-between transition-all duration-300 ${scrolled ? "h-16" : "h-24"
           }`}>
@@ -379,6 +379,10 @@ export default function Home() {
               <span className="text-white">Nguyen</span>
             </h1>
 
+            <div className="text-sm md:text-base font-semibold uppercase tracking-widest text-zinc-300 mb-6">
+              Tôi là người bán thiết bị điện
+            </div>
+
 
             {/* Social handles */}
             <div className="flex items-center gap-4 mb-8">
@@ -510,8 +514,8 @@ export default function Home() {
                   key={cat.id}
                   onClick={() => setActiveCategory(cat.id)}
                   className={`px-4 py-2 text-xs font-bold uppercase tracking-wider rounded transition-all cursor-pointer ${activeCategory === cat.id
-                      ? "bg-primary text-white"
-                      : "bg-zinc-900 border border-white/5 hover:border-white/10 text-zinc-400 hover:text-white"
+                    ? "bg-primary text-white"
+                    : "bg-zinc-900 border border-white/5 hover:border-white/10 text-zinc-400 hover:text-white"
                     }`}
                 >
                   {cat.label}
