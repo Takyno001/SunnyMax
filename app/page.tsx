@@ -258,23 +258,14 @@ export default function Home() {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
-            <a href="#home" onClick={(e) => handleScroll(e, "home")} className="text-sm font-semibold tracking-wider uppercase text-zinc-400 hover:text-white transition-colors relative after:absolute after:bottom-[-6px] after:left-0 after:w-0 after:h-[2px] after:bg-primary after:transition-all hover:after:w-full">
-              Trang Chủ
+            <a href="#home" onClick={(e) => handleScroll(e, "home")} className="text-base font-semibold tracking-wider text-zinc-400 hover:text-white transition-colors relative after:absolute after:bottom-[-6px] after:left-0 after:w-0 after:h-[2px] after:bg-primary after:transition-all hover:after:w-full">
+              Home
             </a>
-            <a href="#services" onClick={(e) => handleScroll(e, "services")} className="text-sm font-semibold tracking-wider uppercase text-zinc-400 hover:text-white transition-colors relative after:absolute after:bottom-[-6px] after:left-0 after:w-0 after:h-[2px] after:bg-primary after:transition-all hover:after:w-full">
-              Dịch Vụ
+            <a href="#services" onClick={(e) => handleScroll(e, "services")} className="text-base font-semibold tracking-wider text-zinc-400 hover:text-white transition-colors relative after:absolute after:bottom-[-6px] after:left-0 after:w-0 after:h-[2px] after:bg-primary after:transition-all hover:after:w-full">
+              Services
             </a>
-            <a href="#products" onClick={(e) => handleScroll(e, "products")} className="text-sm font-semibold tracking-wider uppercase text-zinc-400 hover:text-white transition-colors relative after:absolute after:bottom-[-6px] after:left-0 after:w-0 after:h-[2px] after:bg-primary after:transition-all hover:after:w-full">
-              Sản Phẩm
-            </a>
-            <a href="#brands" onClick={(e) => handleScroll(e, "brands")} className="text-sm font-semibold tracking-wider uppercase text-zinc-400 hover:text-white transition-colors relative after:absolute after:bottom-[-6px] after:left-0 after:w-0 after:h-[2px] after:bg-primary after:transition-all hover:after:w-full">
-              Thương Hiệu
-            </a>
-            <a href="#blog" onClick={(e) => handleScroll(e, "blog")} className="text-sm font-semibold tracking-wider uppercase text-zinc-400 hover:text-white transition-colors relative after:absolute after:bottom-[-6px] after:left-0 after:w-0 after:h-[2px] after:bg-primary after:transition-all hover:after:w-full">
-              Tin Tức
-            </a>
-            <a href="#contact" onClick={(e) => handleScroll(e, "contact")} className="text-sm font-semibold tracking-wider uppercase text-zinc-400 hover:text-white transition-colors relative after:absolute after:bottom-[-6px] after:left-0 after:w-0 after:h-[2px] after:bg-primary after:transition-all hover:after:w-full">
-              Liên Hệ
+            <a href="#products" onClick={(e) => handleScroll(e, "products")} className="text-base font-semibold tracking-wider text-zinc-400 hover:text-white transition-colors relative after:absolute after:bottom-[-6px] after:left-0 after:w-0 after:h-[2px] after:bg-primary after:transition-all hover:after:w-full">
+              Product
             </a>
           </nav>
 
@@ -290,7 +281,7 @@ export default function Home() {
             <a
               href="#contact"
               onClick={(e) => handleScroll(e, "contact")}
-              className="px-6 py-2.5 bg-primary hover:bg-primary-light text-white text-xs font-bold tracking-widest uppercase rounded transition-colors duration-300"
+              className="px-5 py-2.5 bg-primary hover:bg-primary-light text-white text-xs font-bold tracking-wider uppercase rounded-xl transition-colors duration-300"
             >
               Let's Talk
             </a>
@@ -319,28 +310,19 @@ export default function Home() {
         {mobileMenuOpen && (
           <div className="md:hidden absolute top-full left-0 w-full bg-dark-bg/98 border-b border-white/5 backdrop-blur-lg transition-transform duration-300">
             <nav className="flex flex-col p-6 gap-4">
-              <a href="#home" onClick={(e) => handleScroll(e, "home")} className="text-base font-semibold uppercase text-zinc-300 hover:text-primary py-2 transition-colors border-b border-white/5">
-                Trang Chủ
+              <a href="#home" onClick={(e) => handleScroll(e, "home")} className="text-base font-semibold text-zinc-300 hover:text-primary py-2 transition-colors border-b border-white/5">
+                Home
               </a>
-              <a href="#services" onClick={(e) => handleScroll(e, "services")} className="text-base font-semibold uppercase text-zinc-300 hover:text-primary py-2 transition-colors border-b border-white/5">
-                Dịch Vụ
+              <a href="#services" onClick={(e) => handleScroll(e, "services")} className="text-base font-semibold text-zinc-300 hover:text-primary py-2 transition-colors border-b border-white/5">
+                Services
               </a>
-              <a href="#products" onClick={(e) => handleScroll(e, "products")} className="text-base font-semibold uppercase text-zinc-300 hover:text-primary py-2 transition-colors border-b border-white/5">
-                Sản Phẩm
-              </a>
-              <a href="#brands" onClick={(e) => handleScroll(e, "brands")} className="text-base font-semibold uppercase text-zinc-300 hover:text-primary py-2 transition-colors border-b border-white/5">
-                Thương Hiệu
-              </a>
-              <a href="#blog" onClick={(e) => handleScroll(e, "blog")} className="text-base font-semibold uppercase text-zinc-300 hover:text-primary py-2 transition-colors border-b border-white/5">
-                Tin Tức
-              </a>
-              <a href="#contact" onClick={(e) => handleScroll(e, "contact")} className="text-base font-semibold uppercase text-zinc-300 hover:text-primary py-2 transition-colors border-b border-white/5">
-                Liên Hệ
+              <a href="#products" onClick={(e) => handleScroll(e, "products")} className="text-base font-semibold text-zinc-300 hover:text-primary py-2 transition-colors border-b border-white/5">
+                Product
               </a>
               <a
                 href="#contact"
                 onClick={(e) => handleScroll(e, "contact")}
-                className="mt-4 w-full py-3 bg-primary hover:bg-primary-light text-white text-center text-xs font-bold tracking-widest uppercase rounded transition-colors"
+                className="mt-4 w-full py-2.5 bg-primary hover:bg-primary-light text-white text-center text-xs font-bold tracking-wider uppercase rounded-xl transition-colors"
               >
                 Let's Talk
               </a>
@@ -860,13 +842,10 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-6 text-xs font-bold uppercase tracking-wider">
-            <a href="#home" onClick={(e) => handleScroll(e, "home")} className="hover:text-primary transition-colors">Trang Chủ</a>
-            <a href="#services" onClick={(e) => handleScroll(e, "services")} className="hover:text-primary transition-colors">Dịch Vụ</a>
-            <a href="#products" onClick={(e) => handleScroll(e, "products")} className="hover:text-primary transition-colors">Sản Phẩm</a>
-            <a href="#brands" onClick={(e) => handleScroll(e, "brands")} className="hover:text-primary transition-colors">Thương Hiệu</a>
-            <a href="#blog" onClick={(e) => handleScroll(e, "blog")} className="hover:text-primary transition-colors">Tin Tức</a>
-            <a href="#contact" onClick={(e) => handleScroll(e, "contact")} className="hover:text-primary transition-colors">Liên Hệ</a>
+          <div className="flex flex-wrap justify-center gap-6 text-xs font-bold tracking-wider">
+            <a href="#home" onClick={(e) => handleScroll(e, "home")} className="hover:text-primary transition-colors">Home</a>
+            <a href="#services" onClick={(e) => handleScroll(e, "services")} className="hover:text-primary transition-colors">Services</a>
+            <a href="#products" onClick={(e) => handleScroll(e, "products")} className="hover:text-primary transition-colors">Product</a>
           </div>
 
           {/* Quick Zalo chat float button replacement link */}
