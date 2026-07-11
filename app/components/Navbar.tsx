@@ -34,11 +34,14 @@ export default function Navbar({ onSearchOpen }: NavbarProps) {
     return pathname.startsWith(href);
   };
 
+  const isInnerPage = pathname !== "/";
+  const showSolid = scrolled || isInnerPage;
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "backdrop-blur-md bg-[#121212]/90 border-b border-white/5"
+        showSolid
+          ? "backdrop-blur-md bg-[#121212]/95 border-b border-white/10 shadow-lg"
           : "bg-transparent border-b border-transparent"
       }`}
     >

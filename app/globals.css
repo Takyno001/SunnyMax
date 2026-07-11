@@ -9,6 +9,7 @@
   --color-border-dark: #2a2a2a;
   --font-sans: var(--font-inter), sans-serif;
   --font-display: var(--font-outfit), sans-serif;
+  --font-serif: var(--font-playfair), Georgia, serif;
 }
 
 :root {
@@ -31,6 +32,14 @@ body {
 .text-stroke-bg {
   -webkit-text-stroke: 1px rgba(255, 255, 255, 0.08);
   color: transparent;
+}
+
+/* Ghost title: clean outline via paint-order — stroke renders under fill, no inner artifacts */
+.ghost-title {
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.2);
+  color: #121212;
+  paint-order: stroke fill;
+  -webkit-paint-order: stroke fill;
 }
 
 /* Custom font smooth rendering */

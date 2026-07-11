@@ -45,26 +45,45 @@ export default function ServicesPage() {
       <Navbar />
 
       {/* Hero Banner */}
-      <section className="relative pt-40 pb-24 bg-[#121212] overflow-hidden">
-        <div className="absolute -top-10 left-10 select-none pointer-events-none opacity-10 z-0">
-          <span
-            className="text-[15vw] font-black uppercase leading-none text-transparent"
-            style={{ WebkitTextStroke: "1px rgba(255,255,255,0.08)" }}
-          >
-            Services
-          </span>
-        </div>
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <span className="text-sm font-bold text-[#ff5017] tracking-[0.2em] uppercase block mb-4">
-            01. DỊCH VỤ
-          </span>
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black uppercase leading-[0.9] text-white mb-6 tracking-tight">
-            TÔI CÓ THỂ<br />
-            <span className="text-[#ff5017]">GIÚP GÌ?</span>
-          </h1>
-          <p className="text-zinc-400 text-base md:text-lg max-w-xl mt-6 leading-relaxed">
+      <section className="relative pt-44 pb-20 bg-[#121212] overflow-hidden">
+        <div className="relative z-10 flex flex-col items-center text-center px-6">
+
+          {/* Breadcrumb */}
+          <nav className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest mb-10">
+            <Link href="/" className="text-[#ff5017] hover:underline">Home</Link>
+            <span className="text-zinc-500">›</span>
+            <span className="text-white">Services</span>
+          </nav>
+
+          {/* Title wrapper */}
+          <div className="relative flex items-center justify-center mb-8" style={{ height: "160px" }}>
+            {/* Ghost: paint-order stroke fill — clean outline, no inner artifacts */}
+            <span
+              aria-hidden="true"
+              suppressHydrationWarning
+              className="ghost-title absolute font-display font-black pointer-events-none select-none"
+              style={{
+                fontSize: "280px",
+                lineHeight: 1,
+                whiteSpace: "nowrap",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+              }}
+            >
+              Services
+            </span>
+            {/* Solid foreground */}
+            <h1 className="relative z-10 font-display font-black leading-none text-white tracking-tight" style={{ fontSize: "clamp(64px, 10vw, 120px)" }}>
+              Services
+            </h1>
+          </div>
+
+          {/* Subtitle */}
+          <p className="text-zinc-400 text-base md:text-lg max-w-2xl leading-relaxed">
             Từ cung cấp thiết bị điện chính hãng đến thiết kế thi công hệ thống điện nước và Smart Home — Truong Nguyen đồng hành cùng công trình của bạn từ đầu đến cuối.
           </p>
+
         </div>
       </section>
 
