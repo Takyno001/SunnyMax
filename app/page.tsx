@@ -360,9 +360,9 @@ export default function Home() {
             className="object-cover object-[70%_top] md:object-[right_top]"
           />
           {/* Dark overlay to darken the background image uniformly */}
-          <div className="absolute inset-0 bg-black/55" />
+          <div className="absolute inset-0 bg-black/20" />
           {/* Subtle vignette/gradient overlay for text readability */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent md:from-black/85 md:via-black/35 md:to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/25 to-transparent md:from-black/70 md:via-black/15 md:to-transparent" />
           {/* Top gradient overlay to transition with header */}
           <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-black/85 to-transparent" />
           {/* Bottom gradient overlay to blend with Services section */}
