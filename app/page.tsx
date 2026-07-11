@@ -357,8 +357,10 @@ export default function Home() {
             alt="Truong Nguyen - Hero Background"
             fill
             priority
-            className="object-cover object-[70%_center] md:object-right-center"
+            className="object-cover object-[70%_top] md:object-[right_top]"
           />
+          {/* Dark overlay to darken the background image uniformly */}
+          <div className="absolute inset-0 bg-black/55" />
           {/* Subtle vignette/gradient overlay for text readability */}
           <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent md:from-black/85 md:via-black/35 md:to-transparent" />
           {/* Top gradient overlay to transition with header */}
