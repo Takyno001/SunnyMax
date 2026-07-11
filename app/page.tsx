@@ -249,9 +249,11 @@ export default function Home() {
           }`}>
           {/* Logo */}
           <a href="#home" onClick={(e) => handleScroll(e, "home")} className="flex items-center gap-2 group">
-            <span className="font-display text-2xl font-black tracking-tight text-white group-hover:text-primary transition-colors">
-              Persona<span className="text-primary">.</span>
-            </span>
+            <img 
+              src="/truong_logo_cropped.png" 
+              alt="Truong Nguyen Logo" 
+              className={`transition-all duration-300 ${scrolled ? "h-7" : "h-9"} w-auto object-contain`}
+            />
           </a>
 
           {/* Desktop Navigation */}
@@ -848,9 +850,11 @@ export default function Home() {
       <footer className="bg-zinc-950 text-zinc-500 text-sm border-t border-white/5 py-12">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex flex-col items-center md:items-start gap-2">
-            <span className="font-display text-xl font-black tracking-tight text-white">
-              Persona<span className="text-primary">.</span>
-            </span>
+            <img 
+              src="/truong_logo_cropped.png" 
+              alt="Truong Nguyen Logo" 
+              className="h-8 w-auto object-contain"
+            />
             <p className="text-xs text-zinc-600">
               © 2026 Truong Nguyen. Tất cả quyền được bảo lưu. Thiết kế và phát triển dựa trên Persona Template.
             </p>
