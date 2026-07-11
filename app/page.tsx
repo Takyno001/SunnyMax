@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import {
   Menu,
   X,
@@ -305,15 +306,25 @@ export default function Home() {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
-            <a href="#home" onClick={(e) => handleScroll(e, "home")} className="text-base font-semibold tracking-wider text-zinc-400 hover:text-white transition-colors relative after:absolute after:bottom-[-6px] after:left-0 after:w-0 after:h-[2px] after:bg-primary after:transition-all hover:after:w-full">
+            <a
+              href="#home"
+              onClick={(e) => handleScroll(e, "home")}
+              className="text-base font-semibold tracking-wider transition-colors duration-200 relative pb-1.5 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:bg-primary after:transition-all after:duration-200 text-white after:w-full"
+            >
               Home
             </a>
-            <a href="#services" onClick={(e) => handleScroll(e, "services")} className="text-base font-semibold tracking-wider text-zinc-400 hover:text-white transition-colors relative after:absolute after:bottom-[-6px] after:left-0 after:w-0 after:h-[2px] after:bg-primary after:transition-all hover:after:w-full">
+            <Link
+              href="/services"
+              className="text-base font-semibold tracking-wider transition-colors duration-200 relative pb-1.5 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:bg-primary after:transition-all after:duration-200 text-zinc-400 hover:text-white after:w-0 hover:after:w-full"
+            >
               Services
-            </a>
-            <a href="#products" onClick={(e) => handleScroll(e, "products")} className="text-base font-semibold tracking-wider text-zinc-400 hover:text-white transition-colors relative after:absolute after:bottom-[-6px] after:left-0 after:w-0 after:h-[2px] after:bg-primary after:transition-all hover:after:w-full">
+            </Link>
+            <Link
+              href="/products"
+              className="text-base font-semibold tracking-wider transition-colors duration-200 relative pb-1.5 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:bg-primary after:transition-all after:duration-200 text-zinc-400 hover:text-white after:w-0 hover:after:w-full"
+            >
               Product
-            </a>
+            </Link>
           </nav>
 
           {/* Action Tools */}
@@ -328,9 +339,9 @@ export default function Home() {
             <a
               href="#contact"
               onClick={(e) => handleScroll(e, "contact")}
-              className="px-5 py-2.5 bg-primary hover:bg-primary-light text-white text-xs font-bold tracking-wider uppercase rounded-xl transition-colors duration-300"
+              className="px-5 py-2.5 bg-primary hover:bg-orange-700 text-white text-xs font-bold tracking-wider uppercase rounded-xl transition-colors duration-300"
             >
-              Let's Talk
+              Let&apos;s Talk
             </a>
           </div>
 
@@ -357,21 +368,21 @@ export default function Home() {
         {mobileMenuOpen && (
           <div className="md:hidden absolute top-full left-0 w-full bg-dark-bg/98 border-b border-white/5 backdrop-blur-lg transition-transform duration-300">
             <nav className="flex flex-col p-6 gap-4">
-              <a href="#home" onClick={(e) => handleScroll(e, "home")} className="text-base font-semibold text-zinc-300 hover:text-primary py-2 transition-colors border-b border-white/5">
+              <a href="#home" onClick={(e) => handleScroll(e, "home")} className="text-base font-semibold text-[#ff5017] py-2 transition-colors border-b border-white/5">
                 Home
               </a>
-              <a href="#services" onClick={(e) => handleScroll(e, "services")} className="text-base font-semibold text-zinc-300 hover:text-primary py-2 transition-colors border-b border-white/5">
+              <Link href="/services" className="text-base font-semibold text-zinc-300 hover:text-primary py-2 transition-colors border-b border-white/5">
                 Services
-              </a>
-              <a href="#products" onClick={(e) => handleScroll(e, "products")} className="text-base font-semibold text-zinc-300 hover:text-primary py-2 transition-colors border-b border-white/5">
+              </Link>
+              <Link href="/products" className="text-base font-semibold text-zinc-300 hover:text-primary py-2 transition-colors border-b border-white/5">
                 Product
-              </a>
+              </Link>
               <a
                 href="#contact"
                 onClick={(e) => handleScroll(e, "contact")}
-                className="mt-4 w-full py-2.5 bg-primary hover:bg-primary-light text-white text-center text-xs font-bold tracking-wider uppercase rounded-xl transition-colors"
+                className="mt-4 w-full py-2.5 bg-primary hover:bg-orange-700 text-white text-center text-xs font-bold tracking-wider uppercase rounded-xl transition-colors"
               >
-                Let's Talk
+                Let&apos;s Talk
               </a>
             </nav>
           </div>
@@ -417,16 +428,16 @@ export default function Home() {
 
             {/* Social handles */}
             <div className="flex items-center gap-5 mb-8">
-              <a href="https://m.me" target="_blank" rel="noreferrer" className="w-16 h-16 rounded-full bg-zinc-800/80 hover:bg-primary border border-white/5 hover:border-primary flex items-center justify-center text-white transition-all hover:-translate-y-1" aria-label="Messenger">
+              <a href="https://m.me" target="_blank" rel="noreferrer" className="w-16 h-16 rounded-full bg-zinc-800/80 hover:bg-zinc-600 border border-white/5 hover:border-zinc-500 flex items-center justify-center text-white transition-all hover:-translate-y-1" aria-label="Messenger">
                 <MessengerIcon className="w-7 h-7" />
               </a>
-              <a href="https://zalo.me" target="_blank" rel="noreferrer" className="w-16 h-16 rounded-full bg-zinc-800/80 hover:bg-primary border border-white/5 hover:border-primary flex items-center justify-center text-white transition-all hover:-translate-y-1" aria-label="Zalo">
+              <a href="https://zalo.me" target="_blank" rel="noreferrer" className="w-16 h-16 rounded-full bg-zinc-800/80 hover:bg-zinc-600 border border-white/5 hover:border-zinc-500 flex items-center justify-center text-white transition-all hover:-translate-y-1" aria-label="Zalo">
                 <ZaloIcon className="w-7 h-7" />
               </a>
-              <a href="https://tiktok.com" target="_blank" rel="noreferrer" className="w-16 h-16 rounded-full bg-zinc-800/80 hover:bg-primary border border-white/5 hover:border-primary flex items-center justify-center text-white transition-all hover:-translate-y-1" aria-label="Tiktok">
+              <a href="https://tiktok.com" target="_blank" rel="noreferrer" className="w-16 h-16 rounded-full bg-zinc-800/80 hover:bg-zinc-600 border border-white/5 hover:border-zinc-500 flex items-center justify-center text-white transition-all hover:-translate-y-1" aria-label="Tiktok">
                 <TiktokIcon className="w-7 h-7" />
               </a>
-              <a href="https://youtube.com" target="_blank" rel="noreferrer" className="w-16 h-16 rounded-full bg-zinc-800/80 hover:bg-primary border border-white/5 hover:border-primary flex items-center justify-center text-white transition-all hover:-translate-y-1" aria-label="Youtube">
+              <a href="https://youtube.com" target="_blank" rel="noreferrer" className="w-16 h-16 rounded-full bg-zinc-800/80 hover:bg-zinc-600 border border-white/5 hover:border-zinc-500 flex items-center justify-center text-white transition-all hover:-translate-y-1" aria-label="Youtube">
                 <YoutubeIcon className="w-7 h-7" />
               </a>
             </div>
@@ -891,8 +902,8 @@ export default function Home() {
 
           <div className="flex flex-wrap justify-center gap-6 text-xs font-bold tracking-wider">
             <a href="#home" onClick={(e) => handleScroll(e, "home")} className="hover:text-primary transition-colors">Home</a>
-            <a href="#services" onClick={(e) => handleScroll(e, "services")} className="hover:text-primary transition-colors">Services</a>
-            <a href="#products" onClick={(e) => handleScroll(e, "products")} className="hover:text-primary transition-colors">Product</a>
+            <Link href="/services" className="hover:text-primary transition-colors">Services</Link>
+            <Link href="/products" className="hover:text-primary transition-colors">Product</Link>
           </div>
 
           {/* Quick Zalo chat float button replacement link */}
