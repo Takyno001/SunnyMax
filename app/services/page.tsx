@@ -45,25 +45,25 @@ export default function ServicesPage() {
       <Navbar />
 
       {/* Hero Banner */}
-      <section className="relative pt-44 pb-20 bg-[#121212] overflow-hidden">
+      <section className="relative pt-32 pb-12 bg-[#121212] overflow-hidden">
         <div className="relative z-10 flex flex-col items-center text-center px-6">
 
           {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest mb-10">
+          <nav className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest mb-6">
             <Link href="/" className="text-[#ff5017] hover:underline">Home</Link>
             <span className="text-zinc-500">›</span>
             <span className="text-white">Services</span>
           </nav>
 
           {/* Title wrapper */}
-          <div className="relative flex items-center justify-center mb-8" style={{ height: "160px" }}>
+          <div className="relative flex items-center justify-center mb-5" style={{ height: "110px" }}>
             {/* Ghost: paint-order stroke fill — clean outline, no inner artifacts */}
             <span
               aria-hidden="true"
               suppressHydrationWarning
               className="ghost-title absolute font-display font-black pointer-events-none select-none"
               style={{
-                fontSize: "280px",
+                fontSize: "200px",
                 lineHeight: 1,
                 whiteSpace: "nowrap",
                 top: "50%",
@@ -74,7 +74,7 @@ export default function ServicesPage() {
               Services
             </span>
             {/* Solid foreground */}
-            <h1 className="relative z-10 font-display font-black leading-none text-white tracking-tight" style={{ fontSize: "clamp(64px, 10vw, 120px)" }}>
+            <h1 className="relative z-10 font-display font-black leading-none text-white tracking-tight" style={{ fontSize: "clamp(48px, 7vw, 80px)" }}>
               Services
             </h1>
           </div>
