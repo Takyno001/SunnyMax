@@ -245,14 +245,14 @@ export default function Home() {
         ? "backdrop-blur-md bg-dark-bg/90 border-b border-white/5"
         : "bg-transparent border-b border-transparent"
         }`}>
-        <div className={`max-w-7xl mx-auto px-6 flex items-center justify-between transition-all duration-300 ${scrolled ? "h-16" : "h-24"
+        <div className={`max-w-7xl mx-auto px-6 flex items-center justify-between transition-all duration-300 ${scrolled ? "h-20" : "h-24"
           }`}>
           {/* Logo */}
           <a href="#home" onClick={(e) => handleScroll(e, "home")} className="flex items-center gap-2 group">
             <img 
               src="/truong_logo_cropped.png" 
               alt="Truong Nguyen Logo" 
-              className={`transition-all duration-300 ${scrolled ? "h-7" : "h-9"} w-auto object-contain`}
+              className={`transition-all duration-300 ${scrolled ? "h-9" : "h-12"} w-auto object-contain`}
             />
           </a>
 
