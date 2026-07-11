@@ -17,7 +17,6 @@ import {
   Briefcase,
   Layers,
   Award,
-  ArrowRight,
   Send,
   CheckCircle2,
   Mail,
@@ -397,22 +396,6 @@ export default function Home() {
               </a>
             </div>
 
-            <div className="flex flex-wrap gap-4">
-              <a
-                href="#products"
-                onClick={(e) => handleScroll(e, "products")}
-                className="px-8 py-3.5 bg-primary hover:bg-primary-light text-white text-xs font-bold tracking-widest uppercase rounded flex items-center gap-2 group transition-all duration-300"
-              >
-                Xem Sản Phẩm <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </a>
-              <a
-                href="#contact"
-                onClick={(e) => handleScroll(e, "contact")}
-                className="px-8 py-3.5 border border-white/20 hover:border-primary hover:bg-primary/5 text-white text-xs font-bold tracking-widest uppercase rounded transition-all duration-300"
-              >
-                Liên Hệ Ngay
-              </a>
-            </div>
           </div>
 
           {/* Spacer column to keep text aligned to the left and leave the face visible on the right */}
