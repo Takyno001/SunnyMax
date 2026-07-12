@@ -80,31 +80,50 @@ export default function ProductsPage() {
       <Navbar />
 
       {/* Hero Banner */}
-      <section className="relative pt-40 pb-24 bg-zinc-950 overflow-hidden border-b border-white/5">
-        <div className="absolute -top-10 right-10 select-none pointer-events-none opacity-10 z-0">
-          <span
-            className="text-[15vw] font-black uppercase leading-none text-transparent"
-            style={{ WebkitTextStroke: "1px rgba(255,255,255,0.08)" }}
-          >
-            Products
-          </span>
-        </div>
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <span className="text-sm font-bold text-[#ff5017] tracking-[0.2em] uppercase block mb-4">
-            02. SẢN PHẨM
-          </span>
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black uppercase leading-[0.9] text-white mb-6 tracking-tight">
-            THIẾT BỊ ĐIỆN<br />
-            <span className="text-[#ff5017]">CAO CẤP</span>
-          </h1>
-          <p className="text-zinc-400 text-base md:text-lg max-w-xl mt-6 leading-relaxed">
+      <section className="relative pt-32 pb-12 bg-[#121212] overflow-hidden">
+        <div className="relative z-10 flex flex-col items-center text-center px-6">
+ 
+          {/* Breadcrumb */}
+          <nav className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest mb-20 relative z-20">
+            <Link href="/" className="text-[#ff5017] hover:text-orange-700 transition-colors">Home</Link>
+            <span className="text-zinc-500">›</span>
+            <span className="text-white">Products</span>
+          </nav>
+
+          {/* Title wrapper */}
+          <div className="relative flex items-center justify-center mb-5" style={{ height: "110px" }}>
+            {/* Ghost: paint-order stroke fill — clean outline, no inner artifacts */}
+            <span
+              aria-hidden="true"
+              suppressHydrationWarning
+              className="ghost-title absolute font-display font-black pointer-events-none select-none"
+              style={{
+                fontSize: "200px",
+                lineHeight: 1,
+                whiteSpace: "nowrap",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+              }}
+            >
+              Products
+            </span>
+            {/* Solid foreground */}
+            <h1 className="relative z-10 font-display font-black leading-none text-white tracking-tight" style={{ fontSize: "clamp(56px, 8.5vw, 96px)" }}>
+              Products
+            </h1>
+          </div>
+
+          {/* Subtitle */}
+          <p className="text-zinc-400 text-base md:text-lg max-w-2xl leading-relaxed">
             Danh mục sản phẩm thiết bị điện dân dụng & công nghiệp chính hãng từ Panasonic, Schneider, Cadivi, Philips và nhiều thương hiệu uy tín khác.
           </p>
+
         </div>
       </section>
 
       {/* Products Section */}
-      <section className="py-20 bg-[#121212]">
+      <section className="relative z-10 py-20 bg-[#121212]">
         <div className="max-w-7xl mx-auto px-6">
           {/* Filter */}
           <div className="flex flex-wrap gap-3 mb-12">

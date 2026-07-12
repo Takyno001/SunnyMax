@@ -50,7 +50,7 @@ export default function ServicesPage() {
 
           {/* Breadcrumb */}
           <nav className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest mb-20 relative z-20">
-            <Link href="/" className="text-[#ff5017] hover:underline">Home</Link>
+            <Link href="/" className="text-[#ff5017] hover:text-orange-700 transition-colors">Home</Link>
             <span className="text-zinc-500">›</span>
             <span className="text-white">Services</span>
           </nav>
