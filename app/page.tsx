@@ -247,16 +247,6 @@ export default function Home() {
     ? products
     : products.filter(p => p.category === activeCategory);
 
-  const brands = [
-    { name: "Panasonic", logoText: "Panasonic" },
-    { name: "Schneider", logoText: "Schneider" },
-    { name: "Philips", logoText: "PHILIPS" },
-    { name: "Cadivi", logoText: "CADIVI" },
-    { name: "Sino", logoText: "SINO" },
-    { name: "Lioa", logoText: "LiOA" },
-    { name: "Rạng Đông", logoText: "Rang Dong" },
-    { name: "Điện Quang", logoText: "DienQuang" }
-  ];
 
   const blogs = [
     {
@@ -303,526 +293,539 @@ export default function Home() {
     <div className="relative min-h-screen bg-[#121212] text-white font-sans selection:bg-primary selection:text-white">
       {/* Scrollable Content Wrapper */}
       <div className="relative z-20 bg-[#121212] shadow-2xl">
-      {/* 1. HEADER / NAVBAR */}
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
-        ? "bg-[#121212] shadow-lg"
-        : "bg-transparent"
-        }`}>
-        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-24">
-          {/* Logo */}
-          <a href="#home" onClick={(e) => handleScroll(e, "home")} className="flex items-center gap-2 group">
-            <img
-              src="/truong_logo_cropped.png"
-              alt="Truong Nguyen Logo"
-              className="h-12 w-auto object-contain"
-            />
-          </a>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
-            <a
-              href="#home"
-              onClick={(e) => handleScroll(e, "home")}
-              className="text-base font-semibold tracking-wider transition-colors duration-200 relative pb-1.5 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:bg-primary after:transition-all after:duration-200 text-white after:w-full"
-            >
-              Home
+        {/* 1. HEADER / NAVBAR */}
+        <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
+          ? "bg-[#121212] shadow-lg"
+          : "bg-transparent"
+          }`}>
+          <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-24">
+            {/* Logo */}
+            <a href="#home" onClick={(e) => handleScroll(e, "home")} className="flex items-center gap-2 group">
+              <img
+                src="/truong_logo_cropped.png"
+                alt="Truong Nguyen Logo"
+                className="h-12 w-auto object-contain"
+              />
             </a>
-            <Link
-              href="/services"
-              className="text-base font-semibold tracking-wider transition-colors duration-200 relative pb-1.5 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:bg-primary after:transition-all after:duration-200 text-zinc-400 hover:text-white after:w-0 hover:after:w-full"
-            >
-              Services
-            </Link>
-            <Link
-              href="/products"
-              className="text-base font-semibold tracking-wider transition-colors duration-200 relative pb-1.5 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:bg-primary after:transition-all after:duration-200 text-zinc-400 hover:text-white after:w-0 hover:after:w-full"
-            >
-              Product
-            </Link>
-          </nav>
 
-          {/* Action Tools */}
-          <div className="hidden md:flex items-center gap-6">
-            <button
-              onClick={() => setSearchModalOpen(true)}
-              className="text-zinc-400 hover:text-primary transition-colors cursor-pointer"
-              aria-label="Tìm kiếm"
-            >
-              <Search className="w-5 h-5" />
-            </button>
-            <a
-              href="tel:0987654321"
-              className="px-5 py-2.5 bg-primary hover:bg-orange-700 text-white text-xs font-bold tracking-wider uppercase rounded-xl transition-colors duration-300"
-            >
-              Let&apos;s Talk
-            </a>
-          </div>
-
-          {/* Mobile Navigation Toggle */}
-          <div className="flex md:hidden items-center gap-4">
-            <button
-              onClick={() => setSearchModalOpen(true)}
-              className="text-zinc-400 hover:text-primary transition-colors"
-              aria-label="Tìm kiếm"
-            >
-              <Search className="w-5 h-5" />
-            </button>
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="text-zinc-400 hover:text-white transition-colors"
-              aria-label="Toggle menu"
-            >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile Menu Panel */}
-        {mobileMenuOpen && (
-          <div className="md:hidden absolute top-full left-0 w-full bg-dark-bg/98 border-b border-white/5 backdrop-blur-lg transition-transform duration-300">
-            <nav className="flex flex-col p-6 gap-4">
-              <a href="#home" onClick={(e) => handleScroll(e, "home")} className="text-base font-semibold text-[#ff5017] py-2 transition-colors border-b border-white/5">
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex items-center gap-8">
+              <a
+                href="#home"
+                onClick={(e) => handleScroll(e, "home")}
+                className="text-base font-semibold tracking-wider transition-colors duration-200 relative pb-1.5 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:bg-primary after:transition-all after:duration-200 text-white after:w-full"
+              >
                 Home
               </a>
-              <Link href="/services" className="text-base font-semibold text-zinc-300 hover:text-primary py-2 transition-colors border-b border-white/5">
+              <Link
+                href="/services"
+                className="text-base font-semibold tracking-wider transition-colors duration-200 relative pb-1.5 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:bg-primary after:transition-all after:duration-200 text-zinc-400 hover:text-white after:w-0 hover:after:w-full"
+              >
                 Services
               </Link>
-              <Link href="/products" className="text-base font-semibold text-zinc-300 hover:text-primary py-2 transition-colors border-b border-white/5">
+              <Link
+                href="/products"
+                className="text-base font-semibold tracking-wider transition-colors duration-200 relative pb-1.5 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:bg-primary after:transition-all after:duration-200 text-zinc-400 hover:text-white after:w-0 hover:after:w-full"
+              >
                 Product
               </Link>
+            </nav>
+
+            {/* Action Tools */}
+            <div className="hidden md:flex items-center gap-6">
+              <button
+                onClick={() => setSearchModalOpen(true)}
+                className="text-zinc-400 hover:text-primary transition-colors cursor-pointer"
+                aria-label="Tìm kiếm"
+              >
+                <Search className="w-5 h-5" />
+              </button>
               <a
                 href="tel:0987654321"
-                className="mt-4 w-full py-2.5 bg-primary hover:bg-orange-700 text-white text-center text-xs font-bold tracking-wider uppercase rounded-xl transition-colors"
+                className="px-5 py-2.5 bg-primary hover:bg-orange-700 text-white text-xs font-bold tracking-wider uppercase rounded-xl transition-colors duration-300"
               >
                 Let&apos;s Talk
               </a>
-            </nav>
-          </div>
-        )}
-      </header>
-
-      {/* 2. HERO SECTION */}
-      <section id="home" className="relative min-h-screen flex items-center bg-dark-bg overflow-hidden">
-        {/* Full-screen Background Image */}
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/truong_hero.png"
-            alt="Truong Nguyen - Hero Background"
-            fill
-            priority
-            className="object-cover object-[70%_top] md:object-[right_top]"
-          />
-          {/* Dark overlay to darken the background image uniformly */}
-          <div className="absolute inset-0 bg-black/20" />
-          {/* Subtle vignette/gradient overlay for text readability */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/25 to-transparent md:from-black/70 md:via-black/15 md:to-transparent" />
-          {/* Top gradient overlay to transition with header */}
-          <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-black/85 to-transparent" />
-          {/* Bottom gradient overlay to blend with Services section */}
-          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-dark-bg to-transparent" />
-        </div>
-
-        <div className="max-w-7xl mx-auto px-6 w-full py-20 md:py-32 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
-          {/* Hero text */}
-          <div className="lg:col-span-7 flex flex-col items-start text-left">
-            <span className="text-xs md:text-sm font-bold uppercase tracking-widest text-primary mb-3">
-              XIN CHÀO, TÔI LÀ
-            </span>
-            <h1 className="text-5xl sm:text-6xl md:text-8xl font-display font-black leading-tight text-white mb-6 tracking-tight">
-              Truong<br />
-              <span className="text-white">Nguyen</span>
-            </h1>
-
-            <div className="text-sm md:text-base font-semibold uppercase tracking-widest text-zinc-300 mb-6">
-              Tôi là người bán thiết bị điện
             </div>
 
-
-            {/* Social handles */}
-            <div className="flex items-center gap-5 mb-8">
-              <a href="https://m.me" target="_blank" rel="noreferrer" className="w-16 h-16 rounded-full bg-zinc-800/80 hover:bg-zinc-600 border border-white/5 hover:border-zinc-500 flex items-center justify-center text-white transition-all hover:-translate-y-1" aria-label="Messenger">
-                <MessengerIcon className="w-7 h-7" />
-              </a>
-              <a href="https://zalo.me" target="_blank" rel="noreferrer" className="w-16 h-16 rounded-full bg-zinc-800/80 hover:bg-zinc-600 border border-white/5 hover:border-zinc-500 flex items-center justify-center text-white transition-all hover:-translate-y-1" aria-label="Zalo">
-                <ZaloIcon className="w-7 h-7" />
-              </a>
-              <a href="https://tiktok.com" target="_blank" rel="noreferrer" className="w-16 h-16 rounded-full bg-zinc-800/80 hover:bg-zinc-600 border border-white/5 hover:border-zinc-500 flex items-center justify-center text-white transition-all hover:-translate-y-1" aria-label="Tiktok">
-                <TiktokIcon className="w-7 h-7" />
-              </a>
-              <a href="https://youtube.com" target="_blank" rel="noreferrer" className="w-16 h-16 rounded-full bg-zinc-800/80 hover:bg-zinc-600 border border-white/5 hover:border-zinc-500 flex items-center justify-center text-white transition-all hover:-translate-y-1" aria-label="Youtube">
-                <YoutubeIcon className="w-7 h-7" />
-              </a>
-            </div>
-
-          </div>
-
-          {/* Spacer column to keep text aligned to the left and leave the face visible on the right */}
-          <div className="lg:col-span-5 hidden lg:block" />
-        </div>
-      </section>
-
-      {/* 3. SERVICES SECTION */}
-      <section id="services" className="py-24 bg-dark-bg relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          {/* Section header */}
-          <div className="flex flex-col gap-6 mb-16">
-            {/* Title & Button row */}
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-              <div className="relative flex flex-col items-start w-full md:w-auto">
-                <span className="text-xs md:text-sm font-bold text-primary tracking-widest uppercase block mb-8 relative z-20">
-                  01.
-                </span>
-                
-                {/* Title wrapper */}
-                <div className="relative flex items-center justify-start" style={{ height: "90px", width: "100%" }}>
-                  {/* Ghost: paint-order stroke fill — clean outline, no inner artifacts */}
-                  <span
-                    aria-hidden="true"
-                    suppressHydrationWarning
-                    className="ghost-title absolute font-display font-black pointer-events-none select-none"
-                    style={{
-                      fontSize: "clamp(80px, 12vw, 150px)",
-                      lineHeight: 1,
-                      whiteSpace: "nowrap",
-                      left: "-5px",
-                      top: "50%",
-                      transform: "translateY(-50%)",
-                    }}
-                  >
-                    Services
-                  </span>
-                  {/* Solid foreground */}
-                  <h2 className="relative z-10 font-display font-black leading-none text-white tracking-tight pl-8" style={{ fontSize: "clamp(48px, 7vw, 80px)" }}>
-                    Services
-                  </h2>
-                </div>
-              </div>
-
-              <Link
-                href="/services"
-                className="px-6 py-3.5 bg-zinc-800/80 hover:bg-black border border-white/5 text-white text-xs font-bold tracking-widest uppercase rounded-xl transition-all flex items-center gap-2 group w-fit h-fit self-start md:self-end md:mb-2"
-              >
-                Xem Toàn Bộ Dịch Vụ <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-            </div>
-
-            {/* Divider line */}
-            <div className="border-t border-white/5"></div>
-          </div>
-
-          {/* Cards grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
-            {services.map((svc, idx) => (
-              <div
-                key={idx}
-                className="bg-card-bg border border-white/5 rounded-xl p-8 hover:bg-card-hover transition-all duration-300 hover:-translate-y-2 group"
-              >
-                <div className="flex items-center justify-between mb-8">
-                  <div className="p-3 bg-zinc-800/50 rounded-lg border border-white/5 group-hover:bg-primary/10 group-hover:border-primary/20 transition-colors">
-                    {svc.icon}
-                  </div>
-                  <span className="text-3xl font-display font-bold text-zinc-800 group-hover:text-primary/20 transition-colors">
-                    {svc.num}
-                  </span>
-                </div>
-                <h3 className="text-xl font-bold text-white mb-4 group-hover:text-primary transition-colors">
-                  {svc.title}
-                </h3>
-                <p className="text-zinc-400 text-sm leading-relaxed">
-                  {svc.description}
-                </p>
-              </div>
-            ))}
-          </div>
-
-          {/* Stats Bar */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 bg-card-bg/60 border border-white/5 rounded-2xl p-8 md:p-12 relative overflow-hidden backdrop-blur-sm">
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent pointer-events-none"></div>
-            {stats.map((stat, idx) => (
-              <div key={idx} className="flex flex-col items-center text-center p-4">
-                <div className="mb-4 bg-zinc-800/40 p-2.5 rounded-full border border-white/5">
-                  {stat.icon}
-                </div>
-                <span className="text-3xl md:text-4xl font-display font-black text-primary mb-2">
-                  {stat.value}
-                </span>
-                <span className="text-xs md:text-sm font-medium tracking-wide text-zinc-400">
-                  {stat.label}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 4. PRODUCTS SECTION */}
-      <section id="products" className="py-24 bg-zinc-950 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          {/* Section header */}
-          <div className="flex flex-col gap-6 mb-16">
-            {/* Title & Button row */}
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-              <div className="relative flex flex-col items-start w-full md:w-auto">
-                <span className="text-xs md:text-sm font-bold text-primary tracking-widest uppercase block mb-8 relative z-20">
-                  02.
-                </span>
-                
-                {/* Title wrapper */}
-                <div className="relative flex items-center justify-start" style={{ height: "90px", width: "100%" }}>
-                  {/* Ghost: paint-order stroke fill — clean outline, no inner artifacts */}
-                  <span
-                    aria-hidden="true"
-                    suppressHydrationWarning
-                    className="ghost-title absolute font-display font-black pointer-events-none select-none"
-                    style={{
-                      fontSize: "clamp(80px, 12vw, 150px)",
-                      lineHeight: 1,
-                      whiteSpace: "nowrap",
-                      left: "-5px",
-                      top: "50%",
-                      transform: "translateY(-50%)",
-                      color: "#09090b",
-                    }}
-                  >
-                    Products
-                  </span>
-                  {/* Solid foreground */}
-                  <h2 className="relative z-10 font-display font-black leading-none text-white tracking-tight pl-8" style={{ fontSize: "clamp(48px, 7vw, 80px)" }}>
-                    Products
-                  </h2>
-                </div>
-              </div>
-
-              <Link
-                href="/products"
-                className="px-6 py-3.5 bg-zinc-800/80 hover:bg-black border border-white/5 text-white text-xs font-bold tracking-widest uppercase rounded-xl transition-all flex items-center gap-2 group w-fit h-fit self-start md:self-end md:mb-2"
-              >
-                Xem Toàn Bộ Sản Phẩm <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-            </div>
-
-            {/* Filter categories row */}
-            <div className="flex flex-wrap gap-2 border-t border-white/5 pt-6">
-              {[
-                { id: "all", label: "Tất Cả" },
-                { id: "smarthome", label: "Điện Thông Minh" },
-                { id: "lighting", label: "Chiếu Sáng" },
-                { id: "breaker", label: "Cáp & Bảo Vệ" }
-              ].map((cat) => (
-                <button
-                  key={cat.id}
-                  onClick={() => setActiveCategory(cat.id)}
-                  className={`px-4 py-2 text-xs font-bold uppercase tracking-wider rounded transition-all cursor-pointer ${activeCategory === cat.id
-                    ? "bg-primary text-white"
-                    : "bg-zinc-900 border border-white/5 hover:border-white/10 text-zinc-400 hover:text-white"
-                    }`}
-                >
-                  {cat.label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Product cards grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredProducts.map((prod) => (
-              <div
-                key={prod.id}
-                onClick={() => setSelectedProduct(prod)}
-                className="group cursor-pointer flex flex-col bg-card-bg border border-white/5 rounded-xl overflow-hidden hover:border-primary/20 transition-all duration-300"
-              >
-                {/* Product image with play overlay */}
-                <div className="relative aspect-video w-full overflow-hidden bg-zinc-900">
-                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors z-10"></div>
-
-                  {/* Action Play/Details icon on hover */}
-                  <div className="absolute inset-0 flex items-center justify-center z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="w-12 h-12 rounded-full bg-primary hover:bg-primary-light flex items-center justify-center text-white shadow-lg transition-transform group-hover:scale-110">
-                      <ArrowUpRight className="w-5 h-5" />
-                    </div>
-                  </div>
-
-                  <img
-                    src={prod.image}
-                    alt={prod.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-
-                  <span className="absolute bottom-4 left-4 z-20 px-2.5 py-1 bg-black/70 backdrop-blur-sm text-[10px] font-bold uppercase tracking-wider text-primary border border-primary/20 rounded">
-                    {prod.categoryName}
-                  </span>
-                </div>
-
-                {/* Product details */}
-                <div className="p-6 flex flex-col flex-1">
-                  <h3 className="text-lg font-bold text-white mb-2 group-hover:text-primary transition-colors line-clamp-1">
-                    {prod.title}
-                  </h3>
-                  <p className="text-zinc-400 text-xs leading-relaxed mb-4 flex-1 line-clamp-2">
-                    {prod.description}
-                  </p>
-                  <div className="flex items-center justify-between pt-4 border-t border-white/5 text-[11px] font-bold uppercase tracking-widest text-zinc-400 group-hover:text-white transition-colors">
-                    <span>Xem thông số kỹ thuật</span>
-                    <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="text-center mt-12">
-            <button
-              onClick={() => {
-                alert("Danh mục đầy đủ sản phẩm sẽ được gửi qua Zalo/Email. Vui lòng để lại lời nhắn hoặc liên hệ trực tiếp.");
-              }}
-              className="px-8 py-3.5 bg-zinc-900 border border-white/10 hover:border-primary text-white hover:text-primary text-xs font-bold tracking-widest uppercase rounded-xl transition-all cursor-pointer"
-            >
-              Yêu Cầu Tải Báo Giá Catalog PDF
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* 5. BRANDS/PARTNERS SECTION */}
-      <section id="brands" className="py-24 bg-dark-bg relative overflow-hidden">
-        {/* Outlined background text */}
-        <div className="absolute -top-10 left-10 select-none pointer-events-none opacity-20 z-0">
-          <span className="text-stroke-bg text-[10vw] font-display font-extrabold uppercase leading-none">
-            Brands
-          </span>
-        </div>
-
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            {/* Description block */}
-            <div className="lg:col-span-4 flex flex-col items-start">
-              <span className="text-xs md:text-sm font-bold text-primary tracking-widest uppercase block mb-2">
-                03. ĐỐI TÁC TIN CẬY
-              </span>
-              <h2 className="text-3xl md:text-4xl font-display font-black text-white uppercase tracking-tight mb-6">
-                THƯƠNG HIỆU ĐỒNG HÀNH
-              </h2>
-              <p className="text-zinc-400 text-sm leading-relaxed mb-6">
-                Truong Nguyen cam kết phân phối sản phẩm chính hãng 100% từ các thương hiệu thiết bị điện, dây cáp, và giải pháp chiếu sáng hàng đầu trong và ngoài nước. Đảm bảo an toàn tối đa và chế độ bảo hành uy tín cho mọi công trình.
-              </p>
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-primary">
-                <Info className="w-4 h-4" />
-                <span>Bảo hành chính hãng từ 12-24 tháng</span>
-              </div>
-            </div>
-
-            {/* Brands logo grid */}
-            <div className="lg:col-span-8 grid grid-cols-2 sm:grid-cols-4 gap-4">
-              {brands.map((brand, idx) => (
-                <div
-                  key={idx}
-                  className="bg-card-bg border border-white/5 rounded-lg p-6 flex flex-col items-center justify-center min-h-[100px] hover:bg-card-hover transition-colors group cursor-default"
-                >
-                  <span className="font-display text-lg font-black uppercase text-zinc-600 tracking-wider group-hover:text-primary transition-colors">
-                    {brand.logoText}
-                  </span>
-                  <span className="text-[10px] text-zinc-500 uppercase tracking-widest mt-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                    {brand.name}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 6. BLOG / NEWS SECTION */}
-      <section id="blog" className="py-24 bg-zinc-950 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          {/* Section header */}
-          <div className="flex flex-col gap-6 mb-16">
-            {/* Title & Button row */}
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-              <div className="relative flex flex-col items-start w-full md:w-auto">
-                <span className="text-xs md:text-sm font-bold text-primary tracking-widest uppercase block mb-8 relative z-20">
-                  03.
-                </span>
-                
-                {/* Title wrapper */}
-                <div className="relative flex items-center justify-start" style={{ height: "90px", width: "100%" }}>
-                  {/* Ghost: paint-order stroke fill — clean outline, no inner artifacts */}
-                  <span
-                    aria-hidden="true"
-                    suppressHydrationWarning
-                    className="ghost-title absolute font-display font-black pointer-events-none select-none"
-                    style={{
-                      fontSize: "clamp(80px, 12vw, 150px)",
-                      lineHeight: 1,
-                      whiteSpace: "nowrap",
-                      left: "-5px",
-                      top: "50%",
-                      transform: "translateY(-50%)",
-                      color: "#09090b",
-                    }}
-                  >
-                    News
-                  </span>
-                  {/* Solid foreground */}
-                  <h2 className="relative z-10 font-display font-black leading-none text-white tracking-tight pl-8" style={{ fontSize: "clamp(48px, 7vw, 80px)" }}>
-                    News
-                  </h2>
-                </div>
-              </div>
-
+            {/* Mobile Navigation Toggle */}
+            <div className="flex md:hidden items-center gap-4">
               <button
-                onClick={() => alert("Chức năng đang được phát triển. Truong Nguyen sẽ cập nhật các bài viết kỹ thuật sớm nhất.")}
-                className="px-6 py-3.5 bg-zinc-800/80 hover:bg-black border border-white/5 text-white text-xs font-bold tracking-widest uppercase rounded-xl transition-all flex items-center gap-2 group w-fit h-fit self-start md:self-end md:mb-2"
+                onClick={() => setSearchModalOpen(true)}
+                className="text-zinc-400 hover:text-primary transition-colors"
+                aria-label="Tìm kiếm"
               >
-                Xem Thêm Bài Viết <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                <Search className="w-5 h-5" />
+              </button>
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="text-zinc-400 hover:text-white transition-colors"
+                aria-label="Toggle menu"
+              >
+                {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
               </button>
             </div>
-
-            {/* Divider line */}
-            <div className="border-t border-white/5"></div>
           </div>
 
-          {/* Blog grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {blogs.map((blog) => (
-              <article
-                key={blog.id}
-                className="bg-card-bg border border-white/5 rounded-xl overflow-hidden hover:border-primary/20 transition-all duration-300 flex flex-col group"
-              >
-                {/* Blog Image */}
-                <div className="aspect-video w-full overflow-hidden bg-zinc-900 relative">
-                  <img
-                    src={blog.image}
-                    alt={blog.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <span className="absolute top-4 left-4 z-10 px-2.5 py-1 bg-primary text-white text-[9px] font-bold uppercase tracking-wider rounded">
-                    {blog.category}
+          {/* Mobile Menu Panel */}
+          {mobileMenuOpen && (
+            <div className="md:hidden absolute top-full left-0 w-full bg-dark-bg/98 border-b border-white/5 backdrop-blur-lg transition-transform duration-300">
+              <nav className="flex flex-col p-6 gap-4">
+                <a href="#home" onClick={(e) => handleScroll(e, "home")} className="text-base font-semibold text-[#ff5017] py-2 transition-colors border-b border-white/5">
+                  Home
+                </a>
+                <Link href="/services" className="text-base font-semibold text-zinc-300 hover:text-primary py-2 transition-colors border-b border-white/5">
+                  Services
+                </Link>
+                <Link href="/products" className="text-base font-semibold text-zinc-300 hover:text-primary py-2 transition-colors border-b border-white/5">
+                  Product
+                </Link>
+                <a
+                  href="tel:0987654321"
+                  className="mt-4 w-full py-2.5 bg-primary hover:bg-orange-700 text-white text-center text-xs font-bold tracking-wider uppercase rounded-xl transition-colors"
+                >
+                  Let&apos;s Talk
+                </a>
+              </nav>
+            </div>
+          )}
+        </header>
+
+        {/* 2. HERO SECTION */}
+        <section id="home" className="relative min-h-screen flex items-center bg-dark-bg overflow-hidden">
+          {/* Full-screen Background Image */}
+          <div className="absolute inset-0 z-0">
+            <Image
+              src="/truong_hero.png"
+              alt="Truong Nguyen - Hero Background"
+              fill
+              priority
+              className="object-cover object-[70%_top] md:object-[right_top]"
+            />
+            {/* Dark overlay to darken the background image uniformly */}
+            <div className="absolute inset-0 bg-black/20" />
+            {/* Subtle vignette/gradient overlay for text readability */}
+            <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/25 to-transparent md:from-black/70 md:via-black/15 md:to-transparent" />
+            {/* Top gradient overlay to transition with header */}
+            <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-black/85 to-transparent" />
+            {/* Bottom gradient overlay to blend with Services section */}
+            <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-dark-bg to-transparent" />
+          </div>
+
+          <div className="max-w-7xl mx-auto px-6 w-full py-20 md:py-32 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+            {/* Hero text */}
+            <div className="lg:col-span-7 flex flex-col items-start text-left">
+              <span className="text-xs md:text-sm font-bold uppercase tracking-widest text-primary mb-3">
+                XIN CHÀO, TÔI LÀ
+              </span>
+              <h1 className="text-5xl sm:text-6xl md:text-8xl font-display font-black leading-tight text-white mb-6 tracking-tight">
+                Truong<br />
+                <span className="text-white">Nguyen</span>
+              </h1>
+
+              <div className="text-sm md:text-base font-semibold uppercase tracking-widest text-zinc-300 mb-6">
+                Tôi là người bán thiết bị điện
+              </div>
+
+
+              {/* Social handles */}
+              <div className="flex items-center gap-5 mb-8">
+                <a href="https://m.me" target="_blank" rel="noreferrer" className="w-16 h-16 rounded-full bg-zinc-800/80 hover:bg-zinc-600 border border-white/5 hover:border-zinc-500 flex items-center justify-center text-white transition-all hover:-translate-y-1" aria-label="Messenger">
+                  <MessengerIcon className="w-7 h-7" />
+                </a>
+                <a href="https://zalo.me" target="_blank" rel="noreferrer" className="w-16 h-16 rounded-full bg-zinc-800/80 hover:bg-zinc-600 border border-white/5 hover:border-zinc-500 flex items-center justify-center text-white transition-all hover:-translate-y-1" aria-label="Zalo">
+                  <ZaloIcon className="w-7 h-7" />
+                </a>
+                <a href="https://tiktok.com" target="_blank" rel="noreferrer" className="w-16 h-16 rounded-full bg-zinc-800/80 hover:bg-zinc-600 border border-white/5 hover:border-zinc-500 flex items-center justify-center text-white transition-all hover:-translate-y-1" aria-label="Tiktok">
+                  <TiktokIcon className="w-7 h-7" />
+                </a>
+                <a href="https://youtube.com" target="_blank" rel="noreferrer" className="w-16 h-16 rounded-full bg-zinc-800/80 hover:bg-zinc-600 border border-white/5 hover:border-zinc-500 flex items-center justify-center text-white transition-all hover:-translate-y-1" aria-label="Youtube">
+                  <YoutubeIcon className="w-7 h-7" />
+                </a>
+              </div>
+
+            </div>
+
+            {/* Spacer column to keep text aligned to the left and leave the face visible on the right */}
+            <div className="lg:col-span-5 hidden lg:block" />
+          </div>
+        </section>
+
+        {/* 3. SERVICES SECTION */}
+        <section id="services" className="py-24 bg-dark-bg relative overflow-hidden">
+          <div className="max-w-7xl mx-auto px-6 relative z-10">
+            {/* Section header */}
+            <div className="flex flex-col gap-6 mb-16">
+              {/* Title & Button row */}
+              <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                <div className="relative flex flex-col items-start w-full md:w-auto">
+                  <span className="text-xs md:text-sm font-bold text-primary tracking-widest uppercase block mb-8 relative z-20">
+                    01.
+                  </span>
+
+                  {/* Title wrapper */}
+                  <div className="relative flex items-center justify-start" style={{ height: "90px", width: "100%" }}>
+                    {/* Ghost: paint-order stroke fill — clean outline, no inner artifacts */}
+                    <span
+                      aria-hidden="true"
+                      suppressHydrationWarning
+                      className="ghost-title absolute font-display font-black pointer-events-none select-none"
+                      style={{
+                        fontSize: "clamp(80px, 12vw, 150px)",
+                        lineHeight: 1,
+                        whiteSpace: "nowrap",
+                        left: "-5px",
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                      }}
+                    >
+                      Services
+                    </span>
+                    {/* Solid foreground */}
+                    <h2 className="relative z-10 font-display font-black leading-none text-white tracking-tight pl-8" style={{ fontSize: "clamp(48px, 7vw, 80px)" }}>
+                      Services
+                    </h2>
+                  </div>
+                </div>
+
+                <Link
+                  href="/services"
+                  className="px-6 py-3.5 bg-zinc-800/80 hover:bg-black border border-white/5 text-white text-xs font-bold tracking-widest uppercase rounded-xl transition-all flex items-center gap-2 group w-fit h-fit self-start md:self-end md:mb-2"
+                >
+                  Xem Toàn Bộ Dịch Vụ <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+              </div>
+
+              {/* Divider line */}
+              <div className="border-t border-white/5"></div>
+            </div>
+
+            {/* Cards grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
+              {services.map((svc, idx) => (
+                <div
+                  key={idx}
+                  className="bg-card-bg border border-white/5 rounded-xl p-8 hover:bg-card-hover transition-all duration-300 hover:-translate-y-2 group"
+                >
+                  <div className="flex items-center justify-between mb-8">
+                    <div className="p-3 bg-zinc-800/50 rounded-lg border border-white/5 group-hover:bg-primary/10 group-hover:border-primary/20 transition-colors">
+                      {svc.icon}
+                    </div>
+                    <span className="text-3xl font-display font-bold text-zinc-800 group-hover:text-primary/20 transition-colors">
+                      {svc.num}
+                    </span>
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-4 group-hover:text-primary transition-colors">
+                    {svc.title}
+                  </h3>
+                  <p className="text-zinc-400 text-sm leading-relaxed">
+                    {svc.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            {/* Stats Bar */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 bg-card-bg/60 border border-white/5 rounded-2xl p-8 md:p-12 relative overflow-hidden backdrop-blur-sm">
+              <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent pointer-events-none"></div>
+              {stats.map((stat, idx) => (
+                <div key={idx} className="flex flex-col items-center text-center p-4">
+                  <div className="mb-4 bg-zinc-800/40 p-2.5 rounded-full border border-white/5">
+                    {stat.icon}
+                  </div>
+                  <span className="text-3xl md:text-4xl font-display font-black text-primary mb-2">
+                    {stat.value}
+                  </span>
+                  <span className="text-xs md:text-sm font-medium tracking-wide text-zinc-400">
+                    {stat.label}
                   </span>
                 </div>
-
-                {/* Blog Content */}
-                <div className="p-6 flex flex-col flex-1">
-                  <span className="text-zinc-500 text-xs mb-3 block">{blog.date}</span>
-                  <h3 className="text-lg font-bold text-white mb-3 group-hover:text-primary transition-colors line-clamp-2">
-                    {blog.title}
-                  </h3>
-                  <p className="text-zinc-400 text-xs leading-relaxed mb-6 flex-1 line-clamp-3">
-                    {blog.desc}
-                  </p>
-                  <button
-                    onClick={() => {
-                      alert(`Đọc bài viết: ${blog.title}`);
-                    }}
-                    className="text-xs font-bold uppercase tracking-wider text-white group-hover:text-primary flex items-center gap-2 transition-colors cursor-pointer text-left"
-                  >
-                    Đọc Tiếp <ChevronRight className="w-4 h-4" />
-                  </button>
-                </div>
-              </article>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+
+        {/* 4. PRODUCTS SECTION */}
+        <section id="products" className="py-24 bg-zinc-950 relative overflow-hidden">
+          <div className="max-w-7xl mx-auto px-6 relative z-10">
+            {/* Section header */}
+            <div className="flex flex-col gap-6 mb-16">
+              {/* Title & Button row */}
+              <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                <div className="relative flex flex-col items-start w-full md:w-auto">
+                  <span className="text-xs md:text-sm font-bold text-primary tracking-widest uppercase block mb-8 relative z-20">
+                    02.
+                  </span>
+
+                  {/* Title wrapper */}
+                  <div className="relative flex items-center justify-start" style={{ height: "90px", width: "100%" }}>
+                    {/* Ghost: paint-order stroke fill — clean outline, no inner artifacts */}
+                    <span
+                      aria-hidden="true"
+                      suppressHydrationWarning
+                      className="ghost-title absolute font-display font-black pointer-events-none select-none"
+                      style={{
+                        fontSize: "clamp(80px, 12vw, 150px)",
+                        lineHeight: 1,
+                        whiteSpace: "nowrap",
+                        left: "-5px",
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        color: "#09090b",
+                      }}
+                    >
+                      Products
+                    </span>
+                    {/* Solid foreground */}
+                    <h2 className="relative z-10 font-display font-black leading-none text-white tracking-tight pl-8" style={{ fontSize: "clamp(48px, 7vw, 80px)" }}>
+                      Products
+                    </h2>
+                  </div>
+                </div>
+
+                <Link
+                  href="/products"
+                  className="px-6 py-3.5 bg-zinc-800/80 hover:bg-black border border-white/5 text-white text-xs font-bold tracking-widest uppercase rounded-xl transition-all flex items-center gap-2 group w-fit h-fit self-start md:self-end md:mb-2"
+                >
+                  Xem Toàn Bộ Sản Phẩm <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+              </div>
+
+              {/* Filter categories row */}
+              <div className="flex flex-wrap gap-2 border-t border-white/5 pt-6">
+                {[
+                  { id: "all", label: "Tất Cả" },
+                  { id: "smarthome", label: "Điện Thông Minh" },
+                  { id: "lighting", label: "Chiếu Sáng" },
+                  { id: "breaker", label: "Cáp & Bảo Vệ" }
+                ].map((cat) => (
+                  <button
+                    key={cat.id}
+                    onClick={() => setActiveCategory(cat.id)}
+                    className={`px-4 py-2 text-xs font-bold uppercase tracking-wider rounded transition-all cursor-pointer ${activeCategory === cat.id
+                      ? "bg-primary text-white"
+                      : "bg-zinc-900 border border-white/5 hover:border-white/10 text-zinc-400 hover:text-white"
+                      }`}
+                  >
+                    {cat.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Product cards grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredProducts.map((prod) => (
+                <div
+                  key={prod.id}
+                  onClick={() => setSelectedProduct(prod)}
+                  className="group cursor-pointer flex flex-col bg-card-bg border border-white/5 rounded-xl overflow-hidden hover:border-primary/20 transition-all duration-300"
+                >
+                  {/* Product image with play overlay */}
+                  <div className="relative aspect-video w-full overflow-hidden bg-zinc-900">
+                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors z-10"></div>
+
+                    {/* Action Play/Details icon on hover */}
+                    <div className="absolute inset-0 flex items-center justify-center z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="w-12 h-12 rounded-full bg-primary hover:bg-primary-light flex items-center justify-center text-white shadow-lg transition-transform group-hover:scale-110">
+                        <ArrowUpRight className="w-5 h-5" />
+                      </div>
+                    </div>
+
+                    <img
+                      src={prod.image}
+                      alt={prod.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+
+                    <span className="absolute bottom-4 left-4 z-20 px-2.5 py-1 bg-black/70 backdrop-blur-sm text-[10px] font-bold uppercase tracking-wider text-primary border border-primary/20 rounded">
+                      {prod.categoryName}
+                    </span>
+                  </div>
+
+                  {/* Product details */}
+                  <div className="p-6 flex flex-col flex-1">
+                    <h3 className="text-lg font-bold text-white mb-2 group-hover:text-primary transition-colors line-clamp-1">
+                      {prod.title}
+                    </h3>
+                    <p className="text-zinc-400 text-xs leading-relaxed mb-4 flex-1 line-clamp-2">
+                      {prod.description}
+                    </p>
+                    <div className="flex items-center justify-between pt-4 border-t border-white/5 text-[11px] font-bold uppercase tracking-widest text-zinc-400 group-hover:text-white transition-colors">
+                      <span>Xem thông số kỹ thuật</span>
+                      <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="text-center mt-12">
+              <button
+                onClick={() => {
+                  alert("Danh mục đầy đủ sản phẩm sẽ được gửi qua Zalo/Email. Vui lòng để lại lời nhắn hoặc liên hệ trực tiếp.");
+                }}
+                className="px-8 py-3.5 bg-zinc-900 border border-white/10 hover:border-primary text-white hover:text-primary text-xs font-bold tracking-widest uppercase rounded-xl transition-all cursor-pointer"
+              >
+                Yêu Cầu Tải Báo Giá Catalog PDF
+              </button>
+            </div>
+          </div>
+        </section>
+        {/* 5. BRANDS/PARTNERS SECTION — fixed background parallax */}
+        <section
+          id="brands"
+          className="py-20 relative"
+          style={{
+            /* The actual fixed background sits on these pseudo-layers */
+            isolation: "isolate",
+          }}
+        >
+          {/* Layer 1: solid dark background — fixed */}
+          <div
+            className="absolute inset-0 -z-10"
+            style={{
+              backgroundColor: "#0d0d0d",
+              backgroundAttachment: "fixed",
+            }}
+          />
+          {/* Layer 2: orange radial glow — fixed */}
+          <div
+            className="absolute inset-0 -z-10 pointer-events-none"
+            style={{
+              background: `radial-gradient(ellipse 55% 110% at 78% 50%, rgba(255,80,23,0.14) 0%, rgba(255,80,23,0.05) 45%, transparent 68%)`,
+              backgroundAttachment: "fixed",
+            }}
+          />
+          {/* Layer 3: dot grid — fixed */}
+          <div
+            className="absolute inset-0 -z-10 pointer-events-none opacity-25"
+            style={{
+              backgroundImage: `radial-gradient(circle, rgba(255,255,255,0.18) 1px, transparent 1px)`,
+              backgroundSize: "28px 28px",
+              backgroundAttachment: "fixed",
+            }}
+          />
+
+          <div className="max-w-7xl mx-auto px-6 relative flex flex-col md:flex-row items-center justify-between gap-8 md:gap-16">
+            {/* Left: Index & Title */}
+            <div className="flex flex-col items-start">
+              <span className="text-xs md:text-sm font-bold text-primary tracking-widest uppercase block mb-2">
+                03.
+              </span>
+              <h2 className="text-4xl md:text-5xl font-display font-black text-white uppercase tracking-tight">
+                Brand
+              </h2>
+            </div>
+
+            {/* Right: SunnyMax logo */}
+            <span
+              style={{
+                fontFamily: "var(--font-orbitron)",
+                fontWeight: 900,
+                fontSize: "clamp(40px, 6vw, 80px)",
+                color: "white",
+                letterSpacing: "0.04em",
+                lineHeight: 1,
+              }}
+            >
+              SunnyMax
+            </span>
+          </div>
+        </section>
+
+        {/* 6. BLOG / NEWS SECTION */}
+        <section id="blog" className="py-24 bg-zinc-950 relative overflow-hidden">
+          <div className="max-w-7xl mx-auto px-6 relative z-10">
+            {/* Section header */}
+            <div className="flex flex-col gap-6 mb-16">
+              {/* Title & Button row */}
+              <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                <div className="relative flex flex-col items-start w-full md:w-auto">
+                  <span className="text-xs md:text-sm font-bold text-primary tracking-widest uppercase block mb-8 relative z-20">
+                    04.
+                  </span>
+
+                  {/* Title wrapper */}
+                  <div className="relative flex items-center justify-start" style={{ height: "90px", width: "100%" }}>
+                    {/* Ghost: paint-order stroke fill — clean outline, no inner artifacts */}
+                    <span
+                      aria-hidden="true"
+                      suppressHydrationWarning
+                      className="ghost-title absolute font-display font-black pointer-events-none select-none"
+                      style={{
+                        fontSize: "clamp(80px, 12vw, 150px)",
+                        lineHeight: 1,
+                        whiteSpace: "nowrap",
+                        left: "-5px",
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        color: "#09090b",
+                      }}
+                    >
+                      News
+                    </span>
+                    {/* Solid foreground */}
+                    <h2 className="relative z-10 font-display font-black leading-none text-white tracking-tight pl-8" style={{ fontSize: "clamp(48px, 7vw, 80px)" }}>
+                      News
+                    </h2>
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => alert("Chức năng đang được phát triển. Truong Nguyen sẽ cập nhật các bài viết kỹ thuật sớm nhất.")}
+                  className="px-6 py-3.5 bg-zinc-800/80 hover:bg-black border border-white/5 text-white text-xs font-bold tracking-widest uppercase rounded-xl transition-all flex items-center gap-2 group w-fit h-fit self-start md:self-end md:mb-2"
+                >
+                  Xem Thêm Bài Viết <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                </button>
+              </div>
+
+              {/* Divider line */}
+              <div className="border-t border-white/5"></div>
+            </div>
+
+            {/* Blog grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {blogs.map((blog) => (
+                <article
+                  key={blog.id}
+                  className="bg-card-bg border border-white/5 rounded-xl overflow-hidden hover:border-primary/20 transition-all duration-300 flex flex-col group"
+                >
+                  {/* Blog Image */}
+                  <div className="aspect-video w-full overflow-hidden bg-zinc-900 relative">
+                    <img
+                      src={blog.image}
+                      alt={blog.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <span className="absolute top-4 left-4 z-10 px-2.5 py-1 bg-primary text-white text-[9px] font-bold uppercase tracking-wider rounded">
+                      {blog.category}
+                    </span>
+                  </div>
+
+                  {/* Blog Content */}
+                  <div className="p-6 flex flex-col flex-1">
+                    <span className="text-zinc-500 text-xs mb-3 block">{blog.date}</span>
+                    <h3 className="text-lg font-bold text-white mb-3 group-hover:text-primary transition-colors line-clamp-2">
+                      {blog.title}
+                    </h3>
+                    <p className="text-zinc-400 text-xs leading-relaxed mb-6 flex-1 line-clamp-3">
+                      {blog.desc}
+                    </p>
+                    <button
+                      onClick={() => {
+                        alert(`Đọc bài viết: ${blog.title}`);
+                      }}
+                      className="text-xs font-bold uppercase tracking-wider text-white group-hover:text-primary flex items-center gap-2 transition-colors cursor-pointer text-left"
+                    >
+                      Đọc Tiếp <ChevronRight className="w-4 h-4" />
+                    </button>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
 
 
 
