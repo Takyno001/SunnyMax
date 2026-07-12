@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowUpRight, ChevronRight, X, MessageSquare, Phone, Info } from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import Pagination from "../components/Pagination";
 import { CONTENT_STORAGE_KEYS, DashboardCategory, DashboardProduct, readStoredContent } from "../lib/content";
 
 const products = [
@@ -73,6 +74,7 @@ const categories = [
 
 export default function ProductsPage() {
   const [activeCategory, setActiveCategory] = useState("all");
+  const [page, setPage] = useState(1);
   const [selectedProduct, setSelectedProduct] = useState<(typeof products)[0] | DashboardProduct | null>(null);
   const [customProducts, setCustomProducts] = useState<DashboardProduct[]>([]);
   const [customCategories, setCustomCategories] = useState<DashboardCategory[]>([]);
@@ -87,7 +89,21 @@ export default function ProductsPage() {
 
   const allProducts = [...products, ...customProducts];
   const visibleCategories = [...categories, ...customCategories.filter((item) => !categories.some((category) => category.id === item.id))];
-  const filtered = activeCategory === "all" ? allProducts : allProducts.filter((p) => p.category === activeCategory);
+  // Temporary placeholder cards for pagination testing.
+  const placeholderProducts: DashboardProduct[] = Array.from({ length: Math.max(0, 90 - allProducts.length) }, (_, index) => ({
+    id: `placeholder-product-${index + 1}`,
+    code: `PLACEHOLDER-${String(index + 1).padStart(3, "0")}`,
+    title: `Placeholder Sản phẩm ${index + 1}`,
+    category: "smarthome",
+    categoryName: "Placeholder",
+    image: "/truong_hero.png",
+    description: "Nội dung placeholder để kiểm tra phân trang và giao diện thẻ sản phẩm.",
+    spec: "Dữ liệu mẫu tạm thời.",
+  }));
+  const productsWithPlaceholders = [...allProducts, ...placeholderProducts];
+  const filtered = activeCategory === "all" ? productsWithPlaceholders : productsWithPlaceholders.filter((p) => p.category === activeCategory);
+  const pageCount = Math.max(1, Math.ceil(filtered.length / 9));
+  const paginatedProducts = filtered.slice((page - 1) * 9, page * 9);
 
   return (
     <div className="relative min-h-screen text-white font-sans selection:bg-[#ff5017] selection:text-white">
@@ -145,11 +161,11 @@ export default function ProductsPage() {
             {visibleCategories.map((cat) => (
               <button
                 key={cat.id}
-                onClick={() => setActiveCategory(cat.id)}
+                onClick={() => { setActiveCategory(cat.id); setPage(1); }}
                 className={`px-5 py-2 text-xs font-bold uppercase tracking-wider rounded-lg transition-all cursor-pointer ${
                   activeCategory === cat.id
                     ? "bg-[#ff5017] text-white"
-                    : "bg-zinc-900 border border-white/5 hover:border-white/10 text-zinc-400 hover:text-white"
+                    : "bg-zinc-900 border border-white/5  text-zinc-400 hover:text-white"
                 }`}
               >
                 {"name" in cat ? cat.name : cat.label}
@@ -159,11 +175,11 @@ export default function ProductsPage() {
 
           {/* Product Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filtered.map((prod) => (
+            {paginatedProducts.map((prod) => (
               <div
                 key={prod.id}
                 onClick={() => setSelectedProduct(prod)}
-                className="group cursor-pointer flex flex-col bg-[#1e1e1e] border border-white/5 rounded-xl overflow-hidden hover:border-[#ff5017]/20 transition-all duration-300"
+                className="group cursor-pointer flex flex-col bg-[#1e1e1e] border border-white/5 rounded-xl overflow-hidden  transition-all duration-300"
               >
                 <div className="relative aspect-video w-full overflow-hidden bg-zinc-900">
                   <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors z-10" />
@@ -194,11 +210,12 @@ export default function ProductsPage() {
               </div>
             ))}
           </div>
+          <Pagination page={page} pageCount={pageCount} onPageChange={setPage} />
 
           <div className="text-center mt-12">
             <button
               onClick={() => alert("Danh mục đầy đủ sản phẩm sẽ được gửi qua Zalo/Email.")}
-              className="px-8 py-3.5 bg-zinc-900 border border-white/10 hover:border-[#ff5017] text-white hover:text-[#ff5017] text-xs font-bold tracking-widest uppercase rounded transition-all cursor-pointer"
+              className="px-8 py-3.5 bg-zinc-900 border border-white/10  text-white hover:text-[#ff5017] text-xs font-bold tracking-widest uppercase rounded transition-all cursor-pointer"
             >
               Yêu Cầu Tải Báo Giá Catalog PDF
             </button>
@@ -219,7 +236,7 @@ export default function ProductsPage() {
             <a href="tel:0987654321" className="flex items-center gap-2 px-6 py-3 bg-[#ff5017] hover:bg-orange-700 text-white font-bold text-sm uppercase tracking-wider rounded-xl transition-colors">
               <Phone className="w-4 h-4" /> 0987.654.321
             </a>
-            <a href="tel:0987654321" className="flex items-center gap-2 px-6 py-3 border border-white/15 hover:border-[#ff5017] text-white hover:text-[#ff5017] font-bold text-sm uppercase tracking-wider rounded-xl transition-colors">
+            <a href="tel:0987654321" className="flex items-center gap-2 px-6 py-3 border border-white/15  text-white hover:text-[#ff5017] font-bold text-sm uppercase tracking-wider rounded-xl transition-colors">
               Gửi yêu cầu <ChevronRight className="w-4 h-4" />
             </a>
           </div>
@@ -265,7 +282,7 @@ export default function ProductsPage() {
                 </a>
                 <button
                   onClick={() => setSelectedProduct(null)}
-                  className="px-6 py-3 border border-white/10 hover:border-white/20 text-zinc-400 hover:text-white text-xs font-bold tracking-widest uppercase rounded transition-colors cursor-pointer"
+                  className="px-6 py-3 border border-white/10  text-zinc-400 hover:text-white text-xs font-bold tracking-widest uppercase rounded transition-colors cursor-pointer"
                 >
                   Quay Lại
                 </button>

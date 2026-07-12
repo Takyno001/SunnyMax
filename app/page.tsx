@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Footer from "./components/Footer";
@@ -133,8 +133,6 @@ export default function Home() {
     const timer = window.setTimeout(() => setCustomBlogs(readStoredContent<DashboardPost>(CONTENT_STORAGE_KEYS.posts)), 0);
     return () => window.clearTimeout(timer);
   }, []);
-  const contentWrapperRef = useRef<HTMLDivElement>(null);
-  const abstractBackgroundRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScrollState = () => {
@@ -160,32 +158,6 @@ export default function Home() {
     return () => window.removeEventListener("scroll", handleScrollState);
   }, []);
 
-
-  useEffect(() => {
-    const updateAbstractReveal = () => {
-      const contentWrapper = contentWrapperRef.current;
-      const abstractBackground = abstractBackgroundRef.current;
-      if (!contentWrapper || !abstractBackground) return;
-
-      const bottomGap = Math.max(
-        0,
-        window.innerHeight - contentWrapper.getBoundingClientRect().bottom,
-      );
-      abstractBackground.style.setProperty(
-        "--abstract-bottom-inset",
-        `${bottomGap}px`,
-      );
-    };
-
-    updateAbstractReveal();
-    window.addEventListener("scroll", updateAbstractReveal, { passive: true });
-    window.addEventListener("resize", updateAbstractReveal);
-
-    return () => {
-      window.removeEventListener("scroll", updateAbstractReveal);
-      window.removeEventListener("resize", updateAbstractReveal);
-    };
-  }, []);
 
   // Smooth scroll handler
   const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, targetId: string) => {
@@ -342,15 +314,13 @@ export default function Home() {
     <div className="relative min-h-screen text-white font-sans selection:bg-primary selection:text-white">
       {/* Full-page fixed abstract background */}
       <div
-        ref={abstractBackgroundRef}
         className="fixed inset-0 pointer-events-none"
         style={{
-          zIndex: 10,
-          clipPath: "inset(0 0 var(--abstract-bottom-inset, 0px) 0)",
+        zIndex: 0,
         }}
       >
         {/* Base: lighter dark */}
-        <div className="absolute inset-0" style={{ background: "#0f0f12" }} />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(115deg, #2b1610 0%, #171214 48%, #0f0f12 100%)" }} />
 
         {/* Primary glow: blazing orange — bottom-right, much brighter */}
         <div
@@ -431,7 +401,7 @@ export default function Home() {
         />
       </div>
       {/* Scrollable Content Wrapper */}
-      <div ref={contentWrapperRef} className="relative z-20 min-h-screen shadow-2xl">
+      <div className="relative z-20 min-h-screen shadow-2xl">
         {/* 1. HEADER / NAVBAR */}
         <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
           ? "bg-[#121212] shadow-lg"
@@ -578,16 +548,16 @@ export default function Home() {
 
               {/* Social handles */}
               <div className="flex items-center gap-5 mb-8">
-                <a href="https://m.me" target="_blank" rel="noreferrer" className="w-16 h-16 rounded-full bg-zinc-800/80 hover:bg-zinc-600 border border-white/5 hover:border-zinc-500 flex items-center justify-center text-white transition-all hover:-translate-y-1" aria-label="Messenger">
+                <a href="https://m.me" target="_blank" rel="noreferrer" className="w-16 h-16 rounded-full bg-zinc-800/80 hover:bg-zinc-600 border border-white/5  flex items-center justify-center text-white transition-all hover:-translate-y-1" aria-label="Messenger">
                   <MessengerIcon className="w-7 h-7" />
                 </a>
-                <a href="https://zalo.me" target="_blank" rel="noreferrer" className="w-16 h-16 rounded-full bg-zinc-800/80 hover:bg-zinc-600 border border-white/5 hover:border-zinc-500 flex items-center justify-center text-white transition-all hover:-translate-y-1" aria-label="Zalo">
+                <a href="https://zalo.me" target="_blank" rel="noreferrer" className="w-16 h-16 rounded-full bg-zinc-800/80 hover:bg-zinc-600 border border-white/5  flex items-center justify-center text-white transition-all hover:-translate-y-1" aria-label="Zalo">
                   <ZaloIcon className="w-7 h-7" />
                 </a>
-                <a href="https://tiktok.com" target="_blank" rel="noreferrer" className="w-16 h-16 rounded-full bg-zinc-800/80 hover:bg-zinc-600 border border-white/5 hover:border-zinc-500 flex items-center justify-center text-white transition-all hover:-translate-y-1" aria-label="Tiktok">
+                <a href="https://tiktok.com" target="_blank" rel="noreferrer" className="w-16 h-16 rounded-full bg-zinc-800/80 hover:bg-zinc-600 border border-white/5  flex items-center justify-center text-white transition-all hover:-translate-y-1" aria-label="Tiktok">
                   <TiktokIcon className="w-7 h-7" />
                 </a>
-                <a href="https://youtube.com" target="_blank" rel="noreferrer" className="w-16 h-16 rounded-full bg-zinc-800/80 hover:bg-zinc-600 border border-white/5 hover:border-zinc-500 flex items-center justify-center text-white transition-all hover:-translate-y-1" aria-label="Youtube">
+                <a href="https://youtube.com" target="_blank" rel="noreferrer" className="w-16 h-16 rounded-full bg-zinc-800/80 hover:bg-zinc-600 border border-white/5  flex items-center justify-center text-white transition-all hover:-translate-y-1" aria-label="Youtube">
                   <YoutubeIcon className="w-7 h-7" />
                 </a>
               </div>
@@ -656,7 +626,7 @@ export default function Home() {
                   className="bg-card-bg border border-white/5 rounded-xl p-8 hover:bg-card-hover transition-all duration-300 hover:-translate-y-2 group"
                 >
                   <div className="flex items-center justify-between mb-8">
-                    <div className="p-3 bg-zinc-800/50 rounded-lg border border-white/5 group-hover:bg-primary/10 group-hover:border-primary/20 transition-colors">
+                    <div className="p-3 bg-zinc-800/50 rounded-lg border border-white/5 group-hover:bg-primary/10  transition-colors">
                       {svc.icon}
                     </div>
                     <span className="text-3xl font-display font-bold text-zinc-800 group-hover:text-primary/20 transition-colors">
@@ -752,7 +722,7 @@ export default function Home() {
                     onClick={() => setActiveCategory(cat.id)}
                     className={`px-4 py-2 text-xs font-bold uppercase tracking-wider rounded transition-all cursor-pointer ${activeCategory === cat.id
                       ? "bg-primary text-white"
-                      : "bg-zinc-900 border border-white/5 hover:border-white/10 text-zinc-400 hover:text-white"
+                      : "bg-zinc-900 border border-white/5  text-zinc-400 hover:text-white"
                       }`}
                   >
                     {cat.label}
@@ -767,7 +737,7 @@ export default function Home() {
                 <div
                   key={prod.id}
                   onClick={() => setSelectedProduct(prod)}
-                  className="group cursor-pointer flex flex-col bg-card-bg border border-white/5 rounded-xl overflow-hidden hover:border-primary/20 transition-all duration-300"
+                  className="group cursor-pointer flex flex-col bg-card-bg border border-white/5 rounded-xl overflow-hidden  transition-all duration-300"
                 >
                   {/* Product image with play overlay */}
                   <div className="relative aspect-video w-full overflow-hidden bg-zinc-900">
@@ -813,7 +783,7 @@ export default function Home() {
                 onClick={() => {
                   alert("Danh mục đầy đủ sản phẩm sẽ được gửi qua Zalo/Email. Vui lòng để lại lời nhắn hoặc liên hệ trực tiếp.");
                 }}
-                className="px-8 py-3.5 bg-zinc-900 border border-white/10 hover:border-primary text-white hover:text-primary text-xs font-bold tracking-widest uppercase rounded-xl transition-all cursor-pointer"
+                className="px-8 py-3.5 bg-zinc-900 border border-white/10  text-white hover:text-primary text-xs font-bold tracking-widest uppercase rounded-xl transition-all cursor-pointer"
               >
                 Yêu Cầu Tải Báo Giá Catalog PDF
               </button>
@@ -821,26 +791,25 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 5. BRANDS/PARTNERS SECTION — transparent window to abstract background */}
+        {/* 5. BRANDS/PARTNERS SECTION */}
         <section
           id="brands"
           className="py-24 relative overflow-hidden"
-          style={{ background: "transparent" }}
+          style={{
+            backgroundColor: "#202020",
+            backgroundImage: `linear-gradient(120deg, rgba(255,255,255,0.025), transparent 35%), repeating-linear-gradient(105deg, transparent 0, transparent 118px, rgba(0,0,0,0.18) 119px, transparent 121px)`,
+          }}
         >
-          <div className="absolute inset-0 pointer-events-none" style={{ background: `radial-gradient(ellipse 40% 120% at 8% 50%, rgba(255,80,23,0.35) 0%, rgba(255,80,23,0.1) 50%, transparent 75%)` }} />
-          <div className="absolute inset-0 pointer-events-none" style={{ background: `radial-gradient(ellipse 50% 100% at 85% 50%, rgba(255,140,0,0.2) 0%, rgba(255,80,23,0.06) 55%, transparent 75%)` }} />
-          <div className="absolute pointer-events-none" style={{ top: "50%", left: 0, right: 0, height: "1px", background: `linear-gradient(90deg, rgba(255,80,23,0.6) 0%, rgba(255,140,0,0.4) 40%, rgba(255,80,23,0.2) 70%, transparent 100%)`, transform: "translateY(-50%)" }} />
           <div className="max-w-7xl mx-auto px-6 relative z-10 flex flex-col md:flex-row items-center justify-between gap-8 md:gap-16">
             <div className="flex flex-col items-start">
               <span className="text-xs md:text-sm font-bold text-primary tracking-widest uppercase block mb-2">03.</span>
-              <h2 className="text-5xl md:text-6xl font-display font-black text-white uppercase tracking-tight">Brand</h2>
+              <h2 className="text-6xl md:text-8xl font-display font-black text-white tracking-tight">Brand</h2>
             </div>
-            <div className="flex min-w-0 items-center justify-center md:justify-end">
-              <img src="/sunnymax.png" alt="SunnyMax" className="h-auto w-[min(44vw,340px)] object-contain" />
+            <div className="flex min-w-0 items-center justify-center md:justify-end rounded-2xl bg-[#121212]/90 border border-white/10 px-6 py-5 shadow-2xl backdrop-blur-sm">
+              <img src="/sunnymax.png" alt="SunnyMax" className="h-auto w-[min(30vw,240px)] object-contain" />
             </div>
           </div>
         </section>
-
         {/* 6. BLOG / NEWS SECTION */}
         <section id="blog" className="py-24 bg-zinc-950 relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -893,7 +862,7 @@ export default function Home() {
               {blogs.slice(0, 3).map((blog) => (
                 <article
                   key={blog.id}
-                  className="bg-card-bg border border-white/5 rounded-xl overflow-hidden hover:border-primary/20 transition-all duration-300 flex flex-col group"
+                  className="bg-card-bg border border-white/5 rounded-xl overflow-hidden  transition-all duration-300 flex flex-col group"
                 >
                   {/* Blog Image */}
                   <div className="aspect-video w-full overflow-hidden bg-zinc-900 relative">
@@ -983,7 +952,7 @@ export default function Home() {
                 </a>
                 <button
                   onClick={() => setSelectedProduct(null)}
-                  className="px-6 py-3 border border-white/10 hover:border-white/20 text-zinc-400 hover:text-white text-xs font-bold tracking-widest uppercase rounded transition-colors cursor-pointer"
+                  className="px-6 py-3 border border-white/10  text-zinc-400 hover:text-white text-xs font-bold tracking-widest uppercase rounded transition-colors cursor-pointer"
                 >
                   Quay Lại
                 </button>
@@ -1044,7 +1013,7 @@ export default function Home() {
                           setSearchModalOpen(false);
                           setSearchQuery("");
                         }}
-                        className="flex items-center justify-between p-3 bg-zinc-900 hover:bg-zinc-800 rounded border border-white/5 hover:border-primary/20 transition-all cursor-pointer group"
+                        className="flex items-center justify-between p-3 bg-zinc-900 hover:bg-zinc-800 rounded border border-white/5  transition-all cursor-pointer group"
                       >
                         <div className="flex items-center gap-3">
                           <img src={p.image} alt="" className="w-10 h-10 object-cover rounded bg-zinc-800" />

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ChevronRight } from "lucide-react";
 import Footer from "../components/Footer";
+import Pagination from "../components/Pagination";
 import Navbar from "../components/Navbar";
 import { CONTENT_STORAGE_KEYS, type DashboardPost, readStoredContent } from "../lib/content";
 
@@ -47,6 +48,7 @@ const defaultNews: DashboardPost[] = [
 
 export default function NewsPage() {
   const [customNews, setCustomNews] = useState<DashboardPost[]>([]);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -57,6 +59,19 @@ export default function NewsPage() {
   }, []);
 
   const news = [...defaultNews, ...customNews];
+  // Temporary placeholder cards for pagination testing.
+  const placeholderNews: DashboardPost[] = Array.from({ length: Math.max(0, 90 - news.length) }, (_, index) => ({
+    id: `placeholder-news-${index + 1}`,
+    category: "Placeholder",
+    title: `Placeholder Bài viết ${index + 1}`,
+    desc: "Nội dung placeholder để kiểm tra phân trang và giao diện thẻ bài viết.",
+    date: "01/01/2026",
+    image: "/truong_hero.png",
+    sourceUrl: "",
+  }));
+  const newsWithPlaceholders = [...news, ...placeholderNews];
+  const pageCount = Math.max(1, Math.ceil(newsWithPlaceholders.length / 9));
+  const paginatedNews = newsWithPlaceholders.slice((page - 1) * 9, page * 9);
 
   return (
     <div className="relative min-h-screen text-white font-sans selection:bg-[#ff5017] selection:text-white">
@@ -86,8 +101,8 @@ export default function NewsPage() {
           <div className="max-w-7xl mx-auto px-6">
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
-              {news.map((post) => (
-                <article key={post.id} className="bg-card-bg border border-white/5 rounded-xl overflow-hidden hover:border-primary/20 transition-all duration-300 flex flex-col group">
+              {paginatedNews.map((post) => (
+                <article key={post.id} className="bg-card-bg border border-white/5 rounded-xl overflow-hidden  transition-all duration-300 flex flex-col group">
                   <div className="aspect-video w-full overflow-hidden bg-zinc-900 relative">
                     <img src={post.image || "/truong_hero.png"} alt={post.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                     <span className="absolute top-4 left-4 z-10 px-2.5 py-1 bg-primary text-white text-[9px] font-bold uppercase tracking-wider rounded">{post.category}</span>
@@ -105,6 +120,7 @@ export default function NewsPage() {
                 </article>
               ))}
             </div>
+            <Pagination page={page} pageCount={pageCount} onPageChange={setPage} />
           </div>
         </section>
       </main>

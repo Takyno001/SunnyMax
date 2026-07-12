@@ -122,7 +122,7 @@ export default function Footer() {
   return (
     <footer
       ref={footerRef}
-      className="fixed inset-x-0 bottom-0 z-0 bg-[#121212] text-zinc-400 text-sm pt-16 pb-8 overflow-hidden"
+      className="fixed inset-x-0 bottom-0 z-10 bg-[#121212] text-zinc-400 text-sm pt-16 pb-8 overflow-hidden"
     >
       {/* Background topographic pattern overlay */}
       <div 
@@ -245,16 +245,16 @@ export default function Footer() {
           </ul>
           
           <div className="flex items-center gap-3">
-            <a href="https://facebook.com" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-zinc-900 border border-white/5 hover:border-primary flex items-center justify-center text-zinc-400 hover:text-primary transition-all">
+            <a href="https://facebook.com" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-zinc-900 border border-white/5  flex items-center justify-center text-zinc-400 hover:text-primary transition-all">
               <FacebookIcon />
             </a>
-            <a href="https://zalo.me" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-zinc-900 border border-white/5 hover:border-primary flex items-center justify-center text-zinc-400 hover:text-primary transition-all">
+            <a href="https://zalo.me" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-zinc-900 border border-white/5  flex items-center justify-center text-zinc-400 hover:text-primary transition-all">
               <ZaloIcon />
             </a>
-            <a href="https://tiktok.com" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-zinc-900 border border-white/5 hover:border-primary flex items-center justify-center text-zinc-400 hover:text-primary transition-all">
+            <a href="https://tiktok.com" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-zinc-900 border border-white/5  flex items-center justify-center text-zinc-400 hover:text-primary transition-all">
               <TiktokIcon />
             </a>
-            <a href="https://youtube.com" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-zinc-900 border border-white/5 hover:border-primary flex items-center justify-center text-zinc-400 hover:text-primary transition-all">
+            <a href="https://youtube.com" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-zinc-900 border border-white/5  flex items-center justify-center text-zinc-400 hover:text-primary transition-all">
               <YoutubeIcon />
             </a>
           </div>

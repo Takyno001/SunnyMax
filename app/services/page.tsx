@@ -2,9 +2,10 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { Cpu, Zap, Wrench, Home, Lightbulb, Plug, ShieldCheck, Users, Wifi, Briefcase, Layers, Award, ChevronRight, Phone, Mail, MapPin, Info } from "lucide-react";
+import { Cpu, Zap, Wrench, Home, Lightbulb, Plug, ShieldCheck, Wifi, ChevronRight, Phone, Mail, MapPin, Info } from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import Pagination from "../components/Pagination";
 import { CONTENT_STORAGE_KEYS, DashboardService, readStoredContent } from "../lib/content";
 
 const services = [
@@ -34,12 +35,6 @@ const services = [
   },
 ];
 
-const stats = [
-  { icon: <Users className="w-6 h-6 text-[#ff5017]" />, value: "10K+", label: "Khách Hàng Hài Lòng" },
-  { icon: <Briefcase className="w-6 h-6 text-[#ff5017]" />, value: "500+", label: "Dự Án Hoàn Thành" },
-  { icon: <Layers className="w-6 h-6 text-[#ff5017]" />, value: "2,000+", label: "Mặt Hàng Cung Cấp" },
-  { icon: <Award className="w-6 h-6 text-[#ff5017]" />, value: "10+", label: "Năm Trong Ngành" },
-];
 
 const customServiceIconMap = { Cpu, Zap, Wrench, Home, Lightbulb, Plug, ShieldCheck, Wifi };
 function CustomServiceIcon({ name }: { name?: string }) {
@@ -48,6 +43,7 @@ function CustomServiceIcon({ name }: { name?: string }) {
 }
 export default function ServicesPage() {
   const [customServices, setCustomServices] = useState<DashboardService[]>([]);
+  const [page, setPage] = useState(1);
   useEffect(() => {
     const timer = window.setTimeout(() => setCustomServices(readStoredContent<DashboardService>(CONTENT_STORAGE_KEYS.services)), 0);
     return () => window.clearTimeout(timer);
@@ -62,6 +58,18 @@ export default function ServicesPage() {
       icon: <CustomServiceIcon name={service.icon} />,
     })),
   ];
+
+  // Temporary placeholder cards for pagination testing.
+  const placeholderServices = Array.from({ length: Math.max(0, 90 - allServices.length) }, (_, index) => ({
+    num: String(allServices.length + index + 1).padStart(2, "0"),
+    icon: <Wrench className="h-8 w-8 text-[#ff5017]" />,
+    title: `Placeholder Dịch vụ ${index + 1}`,
+    description: "Nội dung placeholder để kiểm tra phân trang và giao diện thẻ dịch vụ.",
+    detail: "Dữ liệu mẫu tạm thời.",
+  }));
+  const servicesWithPlaceholders = [...allServices, ...placeholderServices];
+  const pageCount = Math.max(1, Math.ceil(servicesWithPlaceholders.length / 9));
+  const paginatedServices = servicesWithPlaceholders.slice((page - 1) * 9, page * 9);
 
   return (
     <div className="relative min-h-screen text-white font-sans selection:bg-[#ff5017] selection:text-white">
@@ -115,13 +123,13 @@ export default function ServicesPage() {
       <section className="relative z-10 py-20 bg-[#121212]">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
-            {allServices.map((svc, idx) => (
+            {paginatedServices.map((svc, idx) => (
               <div
                 key={idx}
                 className="bg-[#1e1e1e] border border-white/5 rounded-xl p-8 hover:bg-[#262626] transition-all duration-300 hover:-translate-y-2 group"
               >
                 <div className="flex items-center justify-between mb-8">
-                  <div className="p-3 bg-zinc-800/50 rounded-lg border border-white/5 group-hover:bg-[#ff5017]/10 group-hover:border-[#ff5017]/20 transition-colors">
+                  <div className="p-3 bg-zinc-800/50 rounded-lg border border-white/5 group-hover:bg-[#ff5017]/10  transition-colors">
                     {svc.icon}
                   </div>
                   <span className="text-3xl font-black text-zinc-800 group-hover:text-[#ff5017]/20 transition-colors">
@@ -141,22 +149,8 @@ export default function ServicesPage() {
             ))}
           </div>
 
-          {/* Stats Bar */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 bg-[#1e1e1e]/60 border border-white/5 rounded-2xl p-8 md:p-12 relative overflow-hidden backdrop-blur-sm">
-            <div className="absolute inset-0 bg-gradient-to-r from-[#ff5017]/5 to-transparent pointer-events-none" />
-            {stats.map((stat, idx) => (
-              <div key={idx} className="flex flex-col items-center text-center p-4">
-                <div className="mb-4 bg-zinc-800/40 p-2.5 rounded-full border border-white/5">
-                  {stat.icon}
-                </div>
-                <span className="text-3xl md:text-4xl font-black text-[#ff5017] mb-2">
-                  {stat.value}
-                </span>
-                <span className="text-xs md:text-sm font-medium tracking-wide text-zinc-400">
-                  {stat.label}
-                </span>
-              </div>
-            ))}
+          <div className="mb-16">
+            <Pagination page={page} pageCount={pageCount} onPageChange={setPage} />
           </div>
         </div>
       </section>
@@ -183,7 +177,7 @@ export default function ServicesPage() {
               </a>
               <Link
                 href="/#contact"
-                className="flex items-center gap-2 px-6 py-3 border border-white/15 hover:border-[#ff5017] text-white hover:text-[#ff5017] font-bold text-sm uppercase tracking-wider rounded-xl transition-colors"
+                className="flex items-center gap-2 px-6 py-3 border border-white/15  text-white hover:text-[#ff5017] font-bold text-sm uppercase tracking-wider rounded-xl transition-colors"
               >
                 Gửi yêu cầu <ChevronRight className="w-4 h-4" />
               </Link>
