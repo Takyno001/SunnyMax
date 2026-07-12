@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight, ChevronRight, X, MessageSquare, Phone, Info } from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { CONTENT_STORAGE_KEYS, DashboardCategory, DashboardProduct, readStoredContent } from "../lib/content";
 
 const products = [
   {
@@ -72,9 +73,21 @@ const categories = [
 
 export default function ProductsPage() {
   const [activeCategory, setActiveCategory] = useState("all");
-  const [selectedProduct, setSelectedProduct] = useState<(typeof products)[0] | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<(typeof products)[0] | DashboardProduct | null>(null);
+  const [customProducts, setCustomProducts] = useState<DashboardProduct[]>([]);
+  const [customCategories, setCustomCategories] = useState<DashboardCategory[]>([]);
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setCustomProducts(readStoredContent<DashboardProduct>(CONTENT_STORAGE_KEYS.products));
+      setCustomCategories(readStoredContent<DashboardCategory>(CONTENT_STORAGE_KEYS.categories));
+    }, 0);
+    return () => window.clearTimeout(timer);
+  }, []);
 
-  const filtered = activeCategory === "all" ? products : products.filter((p) => p.category === activeCategory);
+
+  const allProducts = [...products, ...customProducts];
+  const visibleCategories = [...categories, ...customCategories.filter((item) => !categories.some((category) => category.id === item.id))];
+  const filtered = activeCategory === "all" ? allProducts : allProducts.filter((p) => p.category === activeCategory);
 
   return (
     <div className="relative min-h-screen text-white font-sans selection:bg-[#ff5017] selection:text-white">
@@ -129,7 +142,7 @@ export default function ProductsPage() {
         <div className="max-w-7xl mx-auto px-6">
           {/* Filter */}
           <div className="flex flex-wrap gap-3 mb-12">
-            {categories.map((cat) => (
+            {visibleCategories.map((cat) => (
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
@@ -139,7 +152,7 @@ export default function ProductsPage() {
                     : "bg-zinc-900 border border-white/5 hover:border-white/10 text-zinc-400 hover:text-white"
                 }`}
               >
-                {cat.label}
+                {"name" in cat ? cat.name : cat.label}
               </button>
             ))}
           </div>
@@ -160,7 +173,7 @@ export default function ProductsPage() {
                     </div>
                   </div>
                   <img
-                    src={prod.image}
+                    src={prod.image || "/truong_hero.png"}
                     alt={prod.title}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
@@ -228,7 +241,7 @@ export default function ProductsPage() {
               <X className="w-5 h-5" />
             </button>
             <div className="aspect-video w-full relative bg-zinc-900">
-              <img src={selectedProduct.image} alt={selectedProduct.title} className="w-full h-full object-cover" />
+              <img src={selectedProduct.image || "/truong_hero.png"} alt={selectedProduct.title} className="w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#1e1e1e] to-transparent" />
               <span className="absolute bottom-4 left-6 z-10 px-3 py-1 bg-[#ff5017] text-white text-xs font-bold uppercase tracking-wider rounded">
                 {selectedProduct.categoryName}

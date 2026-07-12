@@ -1,10 +1,11 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Cpu, Zap, Wrench, Users, Briefcase, Layers, Award, ChevronRight, Phone, Mail, MapPin, Info } from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { CONTENT_STORAGE_KEYS, DashboardService, readStoredContent } from "../lib/content";
 
 const services = [
   {
@@ -41,6 +42,22 @@ const stats = [
 ];
 
 export default function ServicesPage() {
+  const [customServices, setCustomServices] = useState<DashboardService[]>([]);
+  useEffect(() => {
+    const timer = window.setTimeout(() => setCustomServices(readStoredContent<DashboardService>(CONTENT_STORAGE_KEYS.services)), 0);
+    return () => window.clearTimeout(timer);
+  }, []);
+
+
+  const allServices = [
+    ...services,
+    ...customServices.map((service, index) => ({
+      ...service,
+      num: String(services.length + index + 1).padStart(2, "0"),
+      icon: <Wrench className="h-8 w-8 text-[#ff5017]" />,
+    })),
+  ];
+
   return (
     <div className="relative min-h-screen text-white font-sans selection:bg-[#ff5017] selection:text-white">
       <div className="relative z-20 min-h-screen bg-[#121212] shadow-2xl overflow-x-hidden">
@@ -93,7 +110,7 @@ export default function ServicesPage() {
       <section className="relative z-10 py-20 bg-[#121212]">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
-            {services.map((svc, idx) => (
+            {allServices.map((svc, idx) => (
               <div
                 key={idx}
                 className="bg-[#1e1e1e] border border-white/5 rounded-xl p-8 hover:bg-[#262626] transition-all duration-300 hover:-translate-y-2 group"

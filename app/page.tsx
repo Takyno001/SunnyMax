@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Footer from "./components/Footer";
+import { CONTENT_STORAGE_KEYS, DashboardPost, readStoredContent } from "./lib/content";
 import {
   Menu,
   X,
@@ -116,6 +117,11 @@ export default function Home() {
   const [formData, setFormData] = useState({ name: "", phone: "", email: "", message: "" });
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const [scrolled, setScrolled] = useState(false);
+  const [customBlogs, setCustomBlogs] = useState<DashboardPost[]>([]);
+  useEffect(() => {
+    const timer = window.setTimeout(() => setCustomBlogs(readStoredContent<DashboardPost>(CONTENT_STORAGE_KEYS.posts)), 0);
+    return () => window.clearTimeout(timer);
+  }, []);
   const contentWrapperRef = useRef<HTMLDivElement>(null);
   const abstractBackgroundRef = useRef<HTMLDivElement>(null);
 
@@ -169,6 +175,7 @@ export default function Home() {
       window.removeEventListener("resize", updateAbstractReveal);
     };
   }, []);
+
   // Smooth scroll handler
   const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, targetId: string) => {
     e.preventDefault();
@@ -276,7 +283,7 @@ export default function Home() {
     : products.filter(p => p.category === activeCategory);
 
 
-  const blogs = [
+  const defaultBlogs = [
     {
       id: 1,
       category: "An Toàn Điện",
@@ -302,6 +309,9 @@ export default function Home() {
       image: "https://images.unsplash.com/photo-1585776245991-cf89dd7fc73a?auto=format&fit=crop&w=600&q=80"
     }
   ];
+
+
+  const blogs = [...defaultBlogs, ...customBlogs];
 
   const handleContactSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -912,7 +922,7 @@ export default function Home() {
                   {/* Blog Image */}
                   <div className="aspect-video w-full overflow-hidden bg-zinc-900 relative">
                     <img
-                      src={blog.image}
+                      src={blog.image || "/truong_hero.png"}
                       alt={blog.title}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
