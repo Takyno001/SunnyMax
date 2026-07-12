@@ -803,7 +803,7 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-6 relative z-10 flex flex-col md:flex-row items-center justify-between gap-8 md:gap-16">
             <div className="flex flex-col items-start">
               <span className="text-xs md:text-sm font-bold text-primary tracking-widest uppercase block mb-2">03.</span>
-              <h2 className="text-6xl md:text-8xl font-display font-black text-white tracking-tight">Brand</h2>
+              <h2 className="text-6xl md:text-8xl font-display font-black text-white tracking-tight">Brands</h2>
             </div>
             <div className="flex min-w-0 items-center justify-center md:justify-end rounded-2xl bg-[#121212]/90 border border-white/10 px-6 py-5 shadow-2xl backdrop-blur-sm">
               <img src="/sunnymax.png" alt="SunnyMax" className="h-auto w-[min(30vw,240px)] object-contain" />

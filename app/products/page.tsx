@@ -89,19 +89,7 @@ export default function ProductsPage() {
 
   const allProducts = [...products, ...customProducts];
   const visibleCategories = [...categories, ...customCategories.filter((item) => !categories.some((category) => category.id === item.id))];
-  // Temporary placeholder cards for pagination testing.
-  const placeholderProducts: DashboardProduct[] = Array.from({ length: Math.max(0, 90 - allProducts.length) }, (_, index) => ({
-    id: `placeholder-product-${index + 1}`,
-    code: `PLACEHOLDER-${String(index + 1).padStart(3, "0")}`,
-    title: `Placeholder Sản phẩm ${index + 1}`,
-    category: "smarthome",
-    categoryName: "Placeholder",
-    image: "/truong_hero.png",
-    description: "Nội dung placeholder để kiểm tra phân trang và giao diện thẻ sản phẩm.",
-    spec: "Dữ liệu mẫu tạm thời.",
-  }));
-  const productsWithPlaceholders = [...allProducts, ...placeholderProducts];
-  const filtered = activeCategory === "all" ? productsWithPlaceholders : productsWithPlaceholders.filter((p) => p.category === activeCategory);
+  const filtered = activeCategory === 'all' ? allProducts : allProducts.filter((p) => p.category === activeCategory);
   const pageCount = Math.max(1, Math.ceil(filtered.length / 9));
   const paginatedProducts = filtered.slice((page - 1) * 9, page * 9);
 

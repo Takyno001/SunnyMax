@@ -59,19 +59,8 @@ export default function NewsPage() {
   }, []);
 
   const news = [...defaultNews, ...customNews];
-  // Temporary placeholder cards for pagination testing.
-  const placeholderNews: DashboardPost[] = Array.from({ length: Math.max(0, 90 - news.length) }, (_, index) => ({
-    id: `placeholder-news-${index + 1}`,
-    category: "Placeholder",
-    title: `Placeholder Bài viết ${index + 1}`,
-    desc: "Nội dung placeholder để kiểm tra phân trang và giao diện thẻ bài viết.",
-    date: "01/01/2026",
-    image: "/truong_hero.png",
-    sourceUrl: "",
-  }));
-  const newsWithPlaceholders = [...news, ...placeholderNews];
-  const pageCount = Math.max(1, Math.ceil(newsWithPlaceholders.length / 9));
-  const paginatedNews = newsWithPlaceholders.slice((page - 1) * 9, page * 9);
+  const pageCount = Math.max(1, Math.ceil(news.length / 9));
+  const paginatedNews = news.slice((page - 1) * 9, page * 9);
 
   return (
     <div className="relative min-h-screen text-white font-sans selection:bg-[#ff5017] selection:text-white">
@@ -125,9 +114,9 @@ export default function NewsPage() {
         </section>
       </main>
 
+      </div>
       <div aria-hidden="true" style={{ height: "var(--footer-height, 450px)" }} />
       <Footer />
-      </div>
     </div>
   );
 }

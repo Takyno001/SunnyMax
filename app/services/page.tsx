@@ -59,17 +59,8 @@ export default function ServicesPage() {
     })),
   ];
 
-  // Temporary placeholder cards for pagination testing.
-  const placeholderServices = Array.from({ length: Math.max(0, 90 - allServices.length) }, (_, index) => ({
-    num: String(allServices.length + index + 1).padStart(2, "0"),
-    icon: <Wrench className="h-8 w-8 text-[#ff5017]" />,
-    title: `Placeholder Dịch vụ ${index + 1}`,
-    description: "Nội dung placeholder để kiểm tra phân trang và giao diện thẻ dịch vụ.",
-    detail: "Dữ liệu mẫu tạm thời.",
-  }));
-  const servicesWithPlaceholders = [...allServices, ...placeholderServices];
-  const pageCount = Math.max(1, Math.ceil(servicesWithPlaceholders.length / 9));
-  const paginatedServices = servicesWithPlaceholders.slice((page - 1) * 9, page * 9);
+  const pageCount = Math.max(1, Math.ceil(allServices.length / 9));
+  const paginatedServices = allServices.slice((page - 1) * 9, page * 9);
 
   return (
     <div className="relative min-h-screen text-white font-sans selection:bg-[#ff5017] selection:text-white">
