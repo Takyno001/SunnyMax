@@ -8,7 +8,7 @@ import Footer from "../components/Footer";
 import Pagination from "../components/Pagination";
 import { CONTENT_STORAGE_KEYS, DashboardService, readStoredContent } from "../lib/content";
 
-const services = [
+export const services = [
   {
     num: "01",
     icon: <Cpu className="w-8 h-8 text-[#ff5017]" />,
@@ -50,9 +50,14 @@ export default function ServicesPage() {
   }, []);
 
 
+  const savedDefaultServices = new Map(customServices.map((item) => [item.id, item]));
+  const defaultServiceIds = new Set(services.map((item) => `website-service-${item.num}`));
   const allServices = [
-    ...services,
-    ...customServices.map((service, index) => ({
+    ...services.map((service) => {
+      const saved = savedDefaultServices.get(`website-service-${service.num}`);
+      return saved ? { ...service, ...saved, icon: <CustomServiceIcon name={saved.icon} /> } : service;
+    }),
+    ...customServices.filter((service) => !defaultServiceIds.has(service.id)).map((service, index) => ({
       ...service,
       num: String(services.length + index + 1).padStart(2, "0"),
       icon: <CustomServiceIcon name={service.icon} />,

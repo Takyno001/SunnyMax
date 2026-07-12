@@ -5,10 +5,33 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowDown, ArrowLeft, ArrowUp, GripVertical, BookOpen, ChevronLeft, Check, ChevronDown, Cpu, Home, Lightbulb, Plug, ShieldCheck, Wifi, Zap, Edit3, FolderPlus, ImagePlus, LayoutDashboard, Link2, Package, Plus, RefreshCw, Save, Search, Trash2, Wrench, X } from "lucide-react";
 import { CONTENT_STORAGE_KEYS, DEFAULT_PRODUCT_CATEGORIES, type DashboardCategory, type DashboardPost, type DashboardProduct, type DashboardService, readStoredContent, writeStoredContent } from "../lib/content";
+import { products as websiteProducts } from "../products/page";
+import { services as websiteServices } from "../services/page";
 
 type Section = "overview" | "categories" | "products" | "posts" | "services";
 type ItemType = "categories" | "products" | "posts" | "services";
 type ArticlePreview = { title: string; description: string; image: string; url: string; publishedAt?: string };
+type IdentifiedContent = { id: string };
+
+const defaultDashboardProducts: DashboardProduct[] = websiteProducts.map((product, index) => ({
+  ...product,
+  id: `website-product-${product.id}`,
+  code: `SP-${String(index + 1).padStart(3, "0")}`,
+  categoryName: product.categoryName,
+}));
+
+const defaultDashboardServices: DashboardService[] = websiteServices.map((service, index) => ({
+  ...service,
+  id: `website-service-${service.num}`,
+  icon: ["Cpu", "Zap", "Wrench"][index] ?? "Wrench",
+  createdAt: "2026-01-01T00:00:00.000Z",
+  updatedAt: "2026-01-01T00:00:00.000Z",
+}));
+
+function mergeDefaultContent<T extends IdentifiedContent>(defaults: T[], stored: T[]) {
+  const storedIds = new Set(stored.map((item) => item.id));
+  return [...defaults.filter((item) => !storedIds.has(item.id)), ...stored];
+}
 
 type FieldProps = { label: string; children: ReactNode; hint?: string };
 const inputClass = "w-full rounded-xl border border-white/10 bg-zinc-950/70 px-4 py-3 text-sm text-white outline-none transition placeholder:text-zinc-600 focus:border-[#ff5017]/70 focus:ring-2 focus:ring-[#ff5017]/10";
@@ -140,16 +163,16 @@ export default function DashboardPage() {
       const localPosts = readStoredContent<DashboardPost>(CONTENT_STORAGE_KEYS.posts);
       const localServices = readStoredContent<DashboardService>(CONTENT_STORAGE_KEYS.services);
       const localCategories = readStoredContent<DashboardCategory>(CONTENT_STORAGE_KEYS.categories);
-      setProducts(localProducts);
+      setProducts(mergeDefaultContent(defaultDashboardProducts, localProducts));
       setPosts(localPosts);
-      setServices(localServices);
+      setServices(mergeDefaultContent(defaultDashboardServices, localServices));
       const saved = localCategories;
       if (saved.length) setCategories(saved);
       void fetch("/api/content").then((response) => response.ok ? response.json() : null).then((data: { storedTypes?: string[]; products?: DashboardProduct[]; posts?: DashboardPost[]; services?: DashboardService[]; categories?: DashboardCategory[] } | null) => {
         if (!data) return;
-        if (data.storedTypes?.includes("products")) setProducts(data.products ?? []); else if (localProducts.length) writeStoredContent(CONTENT_STORAGE_KEYS.products, localProducts);
+        if (data.storedTypes?.includes("products")) { const merged = mergeDefaultContent(defaultDashboardProducts, data.products ?? []); setProducts(merged); if (merged.length !== (data.products ?? []).length) writeStoredContent(CONTENT_STORAGE_KEYS.products, merged); } else writeStoredContent(CONTENT_STORAGE_KEYS.products, mergeDefaultContent(defaultDashboardProducts, localProducts));
         if (data.storedTypes?.includes("posts")) setPosts(data.posts ?? []); else if (localPosts.length) writeStoredContent(CONTENT_STORAGE_KEYS.posts, localPosts);
-        if (data.storedTypes?.includes("services")) setServices(data.services ?? []); else if (localServices.length) writeStoredContent(CONTENT_STORAGE_KEYS.services, localServices);
+        if (data.storedTypes?.includes("services")) { const merged = mergeDefaultContent(defaultDashboardServices, data.services ?? []); setServices(merged); if (merged.length !== (data.services ?? []).length) writeStoredContent(CONTENT_STORAGE_KEYS.services, merged); } else writeStoredContent(CONTENT_STORAGE_KEYS.services, mergeDefaultContent(defaultDashboardServices, localServices));
         if (data.storedTypes?.includes("categories")) setCategories(data.categories ?? []); else if (localCategories.length) writeStoredContent(CONTENT_STORAGE_KEYS.categories, localCategories);
       }).catch(() => undefined);
     }, 0);

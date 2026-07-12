@@ -8,7 +8,7 @@ import Footer from "../components/Footer";
 import Pagination from "../components/Pagination";
 import { CONTENT_STORAGE_KEYS, DashboardCategory, DashboardProduct, readStoredContent } from "../lib/content";
 
-const products = [
+export const products = [
   {
     id: 1,
     title: "Công Tắc Thông Minh Viền Kim Loại",
@@ -87,8 +87,11 @@ export default function ProductsPage() {
   }, []);
 
 
-  const allProducts = [...products, ...customProducts];
-  const visibleCategories = [...categories, ...customCategories.filter((item) => !categories.some((category) => category.id === item.id))];
+  const savedDefaultProducts = new Map(customProducts.map((item) => [item.id, item]));
+  const defaultProductIds = new Set(products.map((item) => `website-product-${item.id}`));
+  const allProducts = [...products.map((product) => savedDefaultProducts.get(`website-product-${product.id}`) ? { ...product, ...savedDefaultProducts.get(`website-product-${product.id}`), id: product.id } : product), ...customProducts.filter((item) => !defaultProductIds.has(item.id))];
+  const storedCategoryNames = new Map(customCategories.map((item) => [item.id, item.name]));
+  const visibleCategories = [...categories.map((category) => ({ ...category, label: storedCategoryNames.get(category.id) ?? category.label })), ...customCategories.filter((item) => !categories.some((category) => category.id === item.id))];
   const filtered = activeCategory === 'all' ? allProducts : allProducts.filter((p) => p.category === activeCategory);
   const pageCount = Math.max(1, Math.ceil(filtered.length / 9));
   const paginatedProducts = filtered.slice((page - 1) * 9, page * 9);
@@ -182,7 +185,7 @@ export default function ProductsPage() {
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <span className="absolute bottom-4 left-4 z-20 px-2.5 py-1 bg-black/70 backdrop-blur-sm text-[10px] font-bold uppercase tracking-wider text-[#ff5017] border border-[#ff5017]/20 rounded">
-                    {prod.categoryName}
+                    {storedCategoryNames.get(prod.category) ?? prod.categoryName}
                   </span>
                 </div>
                 <div className="p-6 flex flex-col flex-1">
@@ -249,7 +252,7 @@ export default function ProductsPage() {
               <img src={selectedProduct.image || "/truong_hero.png"} alt={selectedProduct.title} className="w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#1e1e1e] to-transparent" />
               <span className="absolute bottom-4 left-6 z-10 px-3 py-1 bg-[#ff5017] text-white text-xs font-bold uppercase tracking-wider rounded">
-                {selectedProduct.categoryName}
+                {storedCategoryNames.get(selectedProduct.category) ?? selectedProduct.categoryName}
               </span>
             </div>
             <div className="p-8">
