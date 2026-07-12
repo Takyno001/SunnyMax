@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Footer from "./components/Footer";
+import SearchModal from "./components/SearchModal";
+import Navbar from "./components/Navbar";
 import { CONTENT_STORAGE_KEYS, DashboardPost, readStoredContent, type DashboardProduct, type DashboardCategory, type DashboardService } from "./lib/content";
 import {
   Menu,
@@ -23,8 +25,8 @@ import {
   Wifi,
   Users,
   Briefcase,
-  Layers,
-  Award,
+  Music,
+  Megaphone,
   Send,
   CheckCircle2,
   Mail,
@@ -41,6 +43,79 @@ function formatBlogDate(value: string) {
   }
 
   return trimmed.replace("T", " ");
+}
+
+interface CounterProps {
+  end: number;
+  duration?: number;
+  suffix?: string;
+  format?: (val: number) => string;
+}
+
+function Counter({ end, duration = 2000, suffix = "", format }: CounterProps) {
+  const [count, setCount] = useState(0);
+  const hasAnimatedRef = React.useRef(false);
+  const ref = React.useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !("IntersectionObserver" in window)) {
+      setCount(end);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !hasAnimatedRef.current) {
+          hasAnimatedRef.current = true;
+          observer.disconnect();
+          let startTimestamp: number | null = null;
+          const step = (timestamp: number) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            setCount(Math.floor(progress * end));
+            if (progress < 1) {
+              window.requestAnimationFrame(step);
+            } else {
+              setCount(end);
+            }
+          };
+          window.requestAnimationFrame(step);
+        }
+      },
+      { threshold: 0.5, rootMargin: "0px 0px -80px 0px" }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => observer.disconnect();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const displayVal = format ? format(count) : count.toLocaleString("vi-VN");
+
+  const renderSuffix = () => {
+    if (!suffix) return null;
+    if (suffix.includes("+")) {
+      const parts = suffix.split("+");
+      return (
+        <span className="inline-flex items-center">
+          {parts[0]}
+          <span className="font-sans font-bold text-[0.8em] leading-none inline-block -translate-y-[0.03em] ml-1">{"+"}</span>
+          {parts[1]}
+        </span>
+      );
+    }
+    return <span>{suffix}</span>;
+  };
+
+  return (
+    <span ref={ref} className="inline-flex items-center justify-center">
+      <span>{displayVal}</span>
+      {renderSuffix()}
+    </span>
+  );
 }
 
 const FacebookIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -83,6 +158,54 @@ const MessengerIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
+const FAUsersIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    aria-hidden="true"
+    focusable="false"
+    viewBox="0 0 640 512"
+    fill="currentColor"
+    {...props}
+  >
+    <path d="M96 224c35.3 0 64-28.7 64-64s-28.7-64-64-64-64 28.7-64 64 28.7 64 64 64zm448 0c35.3 0 64-28.7 64-64s-28.7-64-64-64-64 28.7-64 64 28.7 64 64 64zm32 32h-64c-17.6 0-33.5 7.1-45.1 18.6 40.3 22.1 68.9 62 75.1 109.4h66c17.7 0 32-14.3 32-32v-32c0-35.3-28.7-64-64-64zm-256 0c61.9 0 112-50.1 112-112S381.9 32 320 32 208 82.1 208 144s50.1 112 112 112zm76.8 32h-8.3c-20.8 10-43.9 16-68.5 16s-47.6-6-68.5-16h-8.3C179.6 288 128 339.6 128 403.2V432c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48v-28.8c0-63.6-51.6-115.2-115.2-115.2zm-223.7-13.4C161.5 263.1 145.6 256 128 256H64c-35.3 0-64 28.7-64 64v32c0 17.7 14.3 32 32 32h65.9c6.3-47.4 34.9-87.3 75.2-109.4z" />
+  </svg>
+);
+
+const FABriefcaseIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    aria-hidden="true"
+    focusable="false"
+    viewBox="0 0 512 512"
+    fill="currentColor"
+    {...props}
+  >
+    <path d="M320 336c0 8.84-7.16 16-16 16h-96c-8.84 0-16-7.16-16-16v-48H0v144c0 25.6 22.4 48 48 48h416c25.6 0 48-22.4 48-48V288H320v48zm144-208h-80V80c0-25.6-22.4-48-48-48H176c-25.6 0-48 22.4-48 48v48H48c-25.6 0-48 22.4-48 48v80h512v-80c0-25.6-22.4-48-48-48zm-144 0H192V96h128v32z" />
+  </svg>
+);
+
+const FALightbulbIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    aria-hidden="true"
+    focusable="false"
+    viewBox="0 0 352 512"
+    fill="currentColor"
+    {...props}
+  >
+    <path d="M176 0C78.8 0 0 78.8 0 176c0 50.8 21.2 96.7 55 129.3 22.3 21.6 33 51.5 33 82.7V400c0 8.8 7.2 16 16 16h144c8.8 0 16-7.2 16-16v-12c0-31.2 10.7-61.1 33-82.7 33.8-32.6 55-78.5 55-129.3C352 78.8 273.2 0 176 0zm-80 448c0 8.8 7.2 16 16 16h128c8.8 0 16-7.2 16-16v-16H96v16zm128 48c0 8.8-7.2 16-16 16h-64c-8.8 0-16-7.2-16-16v-16h96v16z" />
+  </svg>
+);
+
+const FAAwardIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    aria-hidden="true"
+    focusable="false"
+    viewBox="0 0 384 512"
+    fill="currentColor"
+    {...props}
+  >
+    <path d="M192 0c-88.4 0-160 71.6-160 160 0 41.5 15.9 79.4 41.7 108.3L3 429.7c-5.7 12.8-1 27.7 10.9 34.9l80 48c6 3.6 13 4.2 19.4 1.7l81-32.4 81 32.4c6.4 2.5 13.4 1.9 19.4-1.7l80-48c11.9-7.2 16.6-22.1 10.9-34.9L310.3 268.3c25.9-28.9 41.7-66.8 41.7-108.3C352 71.6 280.4 0 192 0zm0 256c-53 0-96-43-96-96s43-96 96-96 96 43 96 96-43 96-96 96z" />
+  </svg>
+);
+
 const ZaloIcon = (props: React.SVGProps<SVGSVGElement>) => {
   const id = React.useId();
   const maskId = `zalo-mask-${id.replace(/:/g, "")}`;
@@ -114,13 +237,13 @@ const ZaloIcon = (props: React.SVGProps<SVGSVGElement>) => {
 
 const TiktokIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
-    viewBox="0 0 16 16"
+    viewBox="0 0 24 24"
     width="24"
     height="24"
     fill="currentColor"
     {...props}
   >
-    <path d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3V0Z" />
+    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.16 8.16 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07Z" />
   </svg>
 );
 
@@ -131,39 +254,52 @@ function CustomServiceIcon({ name }: { name?: string }) {
 }
 
 export default function Home() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchModalOpen, setSearchModalOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState("all");
   const [contactSubmitted, setContactSubmitted] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
+
   const [formData, setFormData] = useState({ name: "", phone: "", email: "", message: "" });
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
-  const [scrolled, setScrolled] = useState(false);
   const [customBlogs, setCustomBlogs] = useState<DashboardPost[]>([]);
   const [customProducts, setCustomProducts] = useState<DashboardProduct[]>([]);
   const [customCategories, setCustomCategories] = useState<DashboardCategory[]>([]);
   const [customServices, setCustomServices] = useState<DashboardService[]>([]);
+  const blogSectionRef = React.useRef<HTMLDivElement>(null);
+  const [blogVisible, setBlogVisible] = useState(false);
+  const [selectedBlog, setSelectedBlog] = useState<DashboardPost | null>(null);
   useEffect(() => {
     const timer = window.setTimeout(() => {
       setCustomBlogs(readStoredContent<DashboardPost>(CONTENT_STORAGE_KEYS.posts));
       setCustomProducts(readStoredContent<DashboardProduct>(CONTENT_STORAGE_KEYS.products));
       setCustomCategories(readStoredContent<DashboardCategory>(CONTENT_STORAGE_KEYS.categories));
       setCustomServices(readStoredContent<DashboardService>(CONTENT_STORAGE_KEYS.services));
+
+      void fetch("/api/content")
+        .then((res) => res.ok ? res.json() : null)
+        .then((data: { products?: DashboardProduct[]; categories?: DashboardCategory[]; posts?: DashboardPost[]; services?: DashboardService[]; storedTypes?: string[] } | null) => {
+          if (!data) return;
+          if (data.storedTypes?.includes("products")) {
+            setCustomProducts(data.products ?? []);
+            window.localStorage.setItem(CONTENT_STORAGE_KEYS.products, JSON.stringify(data.products ?? []));
+          }
+          if (data.storedTypes?.includes("categories")) {
+            setCustomCategories(data.categories ?? []);
+            window.localStorage.setItem(CONTENT_STORAGE_KEYS.categories, JSON.stringify(data.categories ?? []));
+          }
+          if (data.storedTypes?.includes("posts")) {
+            setCustomBlogs(data.posts ?? []);
+            window.localStorage.setItem(CONTENT_STORAGE_KEYS.posts, JSON.stringify(data.posts ?? []));
+          }
+          if (data.storedTypes?.includes("services")) {
+            setCustomServices(data.services ?? []);
+            window.localStorage.setItem(CONTENT_STORAGE_KEYS.services, JSON.stringify(data.services ?? []));
+          }
+        }).catch(() => undefined);
     }, 0);
     return () => window.clearTimeout(timer);
   }, []);
 
   useEffect(() => {
-    const handleScrollState = () => {
-      if (window.scrollY > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
-    window.addEventListener("scroll", handleScrollState);
-    handleScrollState();
-
     // Check search query parameter
     if (typeof window !== "undefined") {
       const params = new URLSearchParams(window.location.search);
@@ -173,55 +309,52 @@ export default function Home() {
         window.history.replaceState({}, "", window.location.pathname);
       }
     }
-
-    return () => window.removeEventListener("scroll", handleScrollState);
   }, []);
 
-
-  // Smooth scroll handler
-  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, targetId: string) => {
-    e.preventDefault();
-    const element = document.getElementById(targetId);
-    if (element) {
-      const headerOffset = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.scrollY - headerOffset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth"
-      });
-      setMobileMenuOpen(false);
+  useEffect(() => {
+    if (typeof window === "undefined" || !("IntersectionObserver" in window)) {
+      setBlogVisible(true);
+      return;
     }
-  };
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setBlogVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -60px 0px" }
+    );
+    const el = blogSectionRef.current;
+    if (el) observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   const services = [
     {
       num: "01",
       icon: <Cpu className="w-8 h-8 text-primary" />,
       title: "Cung Cấp Thiết Bị Điện",
-      description: "Phân phối sỉ & lẻ thiết bị điện dân dụng, công nghiệp chính hãng. Cam kết chất lượng từ dây cáp, công tắc, ổ cắm đến các thiết bị đóng cắt an toàn."
+      description: "Phân phối sỉ & lẻ thiết bị điện dân dụng, công nghiệp chính hãng. Cam kết chất lượng từ dây cáp, công tắc, ổ cắm đến các thiết bị đóng cắt an toàn.",
+      detail: "Hỗ trợ bóc tách bản vẽ kỹ thuật, tư vấn tối ưu chủng loại vật tư thiết bị. Chiết khấu cao cho nhà thầu, thợ điện và các đại lý bán lẻ."
     },
     {
       num: "02",
       icon: <Zap className="w-8 h-8 text-primary" />,
       title: "Giải Pháp Smart Home",
-      description: "Tư vấn, thiết kế và thi công hệ thống nhà thông minh toàn diện. Tự động hóa hệ thống chiếu sáng, rèm cửa, điều hòa, kiểm soát an ninh thông minh."
+      description: "Tư vấn, thiết kế và thi công hệ thống nhà thông minh toàn diện. Tự động hóa hệ thống chiếu sáng, rèm cửa, điều hòa, kiểm soát an ninh thông minh.",
+      detail: "Cài đặt ứng dụng tiếng Việt dễ sử dụng, thiết lập kịch bản thông minh theo thói quen sinh hoạt. Bảo hành chính hãng 24 tháng tận nơi."
     },
     {
       num: "03",
       icon: <Wrench className="w-8 h-8 text-primary" />,
       title: "Thiết Kế Thi Công Điện Nước",
-      description: "Thiết kế bản vẽ kỹ thuật M&E và thi công hệ thống điện nước an toàn, chuẩn kỹ thuật cho nhà phố, biệt thự, quán cafe, văn phòng làm việc."
+      description: "Thiết kế bản vẽ kỹ thuật M&E và thi công hệ thống điện nước an toàn, chuẩn kỹ thuật cho nhà phố, biệt thự, quán cafe, văn phòng làm việc.",
+      detail: "Đội ngũ thợ tay nghề cao trực tiếp thi công. Nghiệm thu bàn giao đo đạc thực tế, sơ đồ hoàn công chi tiết cho chủ nhà."
     }
   ];
 
-  const stats = [
-    { icon: <Users className="w-6 h-6 text-primary" />, value: "10K+", label: "Khách Hàng Hài Lòng" },
-    { icon: <Briefcase className="w-6 h-6 text-primary" />, value: "500+", label: "Dự Án Hoàn Thành" },
-    { icon: <Layers className="w-6 h-6 text-primary" />, value: "2,000+", label: "Mặt Hàng Cung Cấp" },
-    { icon: <Award className="w-6 h-6 text-primary" />, value: "10+", label: "Năm Trong Ngành" }
-  ];
+
 
   const products = [
     {
@@ -290,16 +423,22 @@ export default function Home() {
       })
     : products;
 
-  const storedCategoryNames = new Map(customCategories.map((item) => [item.id, item.name]));
-  const visibleCategories = [
-    { id: "all", label: "Tất Cả" },
-    ...[
-      { id: "smarthome", label: "Điện Thông Minh" },
-      { id: "lighting", label: "Chiếu Sáng" },
-      { id: "breaker", label: "Cáp & Bảo Vệ" }
-    ].map((category) => ({ ...category, label: storedCategoryNames.get(category.id) ?? category.label })),
-    ...customCategories.filter((item) => !["smarthome", "lighting", "breaker"].includes(item.id))
+  const stats = [
+    { icon: <FAUsersIcon />, end: 10, suffix: " K+", label: "Khách Hàng Hài Lòng" },
+    { icon: <FABriefcaseIcon />, end: 50, suffix: " +", label: "Dự Án Hoàn Thành" },
+    { icon: <FALightbulbIcon />, end: allProducts.length, suffix: " +", label: "Mặt Hàng Cung Cấp" },
+    { icon: <FAAwardIcon />, end: 5, suffix: " +", label: "Năm Kinh Nghiệm" }
   ];
+
+  const storedCategoryNames = new Map(customCategories.map((item) => [item.id, item.name]));
+  const visibleCategories = customCategories.length > 0
+    ? [{ id: "all", label: "Tất Cả" }, ...customCategories.map((c) => ({ id: c.id, label: c.name }))]
+    : [
+        { id: "all", label: "Tất Cả" },
+        { id: "smarthome", label: "Điện Thông Minh" },
+        { id: "lighting", label: "Chiếu Sáng" },
+        { id: "breaker", label: "Cáp & Bảo Vệ" }
+      ];
 
   const filteredProducts = activeCategory === "all"
     ? allProducts
@@ -451,111 +590,7 @@ export default function Home() {
       {/* Scrollable Content Wrapper */}
       <div className="relative z-20 min-h-screen shadow-2xl">
         {/* 1. HEADER / NAVBAR */}
-        <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
-          ? "bg-[#121212] shadow-lg"
-          : "bg-transparent"
-          }`}>
-          <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-24">
-            {/* Logo */}
-            <a href="#home" onClick={(e) => handleScroll(e, "home")} className="flex items-center gap-2 group">
-              <img
-                src="/truong_logo_cropped.png"
-                alt="Truong Nguyen Logo"
-                className="h-12 w-auto object-contain"
-              />
-            </a>
-
-            {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center gap-8">
-              <a
-                href="#home"
-                onClick={(e) => handleScroll(e, "home")}
-                className="text-base font-semibold tracking-wider transition-colors duration-200 relative pb-1.5 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:bg-primary after:transition-all after:duration-200 text-white after:w-full"
-              >
-                Home
-              </a>
-              <Link
-                href="/services"
-                className="text-base font-semibold tracking-wider transition-colors duration-200 relative pb-1.5 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:bg-primary after:transition-all after:duration-200 text-zinc-400 hover:text-white after:w-0 hover:after:w-full"
-              >
-                Services
-              </Link>
-              <Link
-                href="/products"
-                className="text-base font-semibold tracking-wider transition-colors duration-200 relative pb-1.5 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:bg-primary after:transition-all after:duration-200 text-zinc-400 hover:text-white after:w-0 hover:after:w-full"
-              >
-                Product
-              </Link>
-              <Link
-                href="/news"
-                className="text-base font-semibold tracking-wider transition-colors duration-200 relative pb-1.5 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:bg-primary after:transition-all after:duration-200 text-zinc-400 hover:text-white after:w-0 hover:after:w-full"
-              >
-                News
-              </Link>
-            </nav>
-
-            {/* Action Tools */}
-            <div className="hidden md:flex items-center gap-6">
-              <button
-                onClick={() => setSearchModalOpen(true)}
-                className="text-zinc-400 hover:text-primary transition-colors cursor-pointer"
-                aria-label="Tìm kiếm"
-              >
-                <Search className="w-5 h-5" />
-              </button>
-              <a
-                href="tel:0987654321"
-                className="px-5 py-2.5 bg-primary hover:bg-orange-700 text-white text-xs font-bold tracking-wider uppercase rounded-xl transition-colors duration-300"
-              >
-                Let&apos;s Talk
-              </a>
-            </div>
-
-            {/* Mobile Navigation Toggle */}
-            <div className="flex md:hidden items-center gap-4">
-              <button
-                onClick={() => setSearchModalOpen(true)}
-                className="text-zinc-400 hover:text-primary transition-colors"
-                aria-label="Tìm kiếm"
-              >
-                <Search className="w-5 h-5" />
-              </button>
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="text-zinc-400 hover:text-white transition-colors"
-                aria-label="Toggle menu"
-              >
-                {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-              </button>
-            </div>
-          </div>
-
-          {/* Mobile Menu Panel */}
-          {mobileMenuOpen && (
-            <div className="md:hidden absolute top-full left-0 w-full bg-dark-bg/98 border-b border-white/5 backdrop-blur-lg transition-transform duration-300">
-              <nav className="flex flex-col p-6 gap-4">
-                <a href="#home" onClick={(e) => handleScroll(e, "home")} className="text-base font-semibold text-[#ff5017] py-2 transition-colors border-b border-white/5">
-                  Home
-                </a>
-                <Link href="/services" className="text-base font-semibold text-zinc-300 hover:text-primary py-2 transition-colors border-b border-white/5">
-                  Services
-                </Link>
-                <Link href="/products" className="text-base font-semibold text-zinc-300 hover:text-primary py-2 transition-colors border-b border-white/5">
-                  Product
-                </Link>
-                <Link href="/news" className="text-base font-semibold text-zinc-300 hover:text-primary py-2 transition-colors border-b border-white/5">
-                  News
-                </Link>
-                <a
-                  href="tel:0987654321"
-                  className="mt-4 w-full py-2.5 bg-primary hover:bg-orange-700 text-white text-center text-xs font-bold tracking-wider uppercase rounded-xl transition-colors"
-                >
-                  Let&apos;s Talk
-                </a>
-              </nav>
-            </div>
-          )}
-        </header>
+        <Navbar onSearchOpen={() => setSearchModalOpen(true)} />
 
         {/* 2. HERO SECTION */}
         <section id="home" className="relative min-h-screen flex items-center bg-dark-bg overflow-hidden">
@@ -578,7 +613,7 @@ export default function Home() {
             <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-dark-bg to-transparent" />
           </div>
 
-          <div className="max-w-7xl mx-auto px-6 w-full py-20 md:py-32 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+          <div className="max-w-7xl mx-auto px-6 w-full pt-24 pb-20 md:pt-32 md:pb-32 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
             {/* Hero text */}
             <div className="lg:col-span-7 flex flex-col items-start text-left">
               <span className="text-xs md:text-sm font-bold uppercase tracking-widest text-primary mb-3">
@@ -668,13 +703,13 @@ export default function Home() {
 
             {/* Cards grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
-              {allServices.map((svc, idx) => (
+              {allServices.slice(0, 3).map((svc, idx) => (
                 <div
                   key={idx}
                   className="bg-card-bg border border-white/5 rounded-xl p-8 hover:bg-card-hover transition-all duration-300 hover:-translate-y-2 group"
                 >
                   <div className="flex items-center justify-between mb-8">
-                    <div className="p-3 bg-zinc-800/50 rounded-lg border border-white/5 group-hover:bg-primary/10  transition-colors">
+                    <div className="w-14 h-14 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:bg-primary/20 transition-colors shadow-[0_0_20px_rgba(255,80,23,0.15)]">
                       {svc.icon}
                     </div>
                     <span className="text-3xl font-display font-bold text-zinc-800 group-hover:text-primary/20 transition-colors">
@@ -687,22 +722,31 @@ export default function Home() {
                   <p className="text-zinc-400 text-sm leading-relaxed">
                     {svc.description}
                   </p>
+                  {svc.detail && (
+                    <p className="text-zinc-500 text-xs leading-relaxed border-t border-white/5 pt-4 mt-4">
+                      {svc.detail}
+                    </p>
+                  )}
                 </div>
               ))}
             </div>
 
             {/* Stats Bar */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 bg-card-bg/60 border border-white/5 rounded-2xl p-8 md:p-12 relative overflow-hidden backdrop-blur-sm">
-              <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent pointer-events-none"></div>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 bg-[#161619] rounded-2xl p-10 md:p-14 relative overflow-hidden">
               {stats.map((stat, idx) => (
-                <div key={idx} className="flex flex-col items-center text-center p-4">
-                  <div className="mb-4 bg-zinc-800/40 p-2.5 rounded-full border border-white/5">
-                    {stat.icon}
+                <div key={idx} className="flex flex-col items-center text-center p-4 group/item transition-transform duration-300 hover:-translate-y-1">
+                  {/* Icon rendered directly (No container box, colored orange) */}
+                  <div className="mb-5 text-[#ff5017] group-hover/item:scale-110 transition-transform duration-300">
+                    {React.cloneElement(stat.icon as React.ReactElement<{ className?: string }>, { className: "w-7 h-7 text-[#ff5017]" })}
                   </div>
-                  <span className="text-3xl md:text-4xl font-display font-black text-primary mb-2">
-                    {stat.value}
+                  
+                  {/* Number (Pure white) */}
+                  <span className="text-3xl md:text-5xl font-display font-black text-white mb-3 whitespace-nowrap">
+                    <Counter end={stat.end} suffix={stat.suffix} />
                   </span>
-                  <span className="text-xs md:text-sm font-medium tracking-wide text-zinc-400">
+                  
+                  {/* Label (Sleek grey) */}
+                  <span className="text-xs md:text-sm font-semibold tracking-wider text-zinc-500 uppercase">
                     {stat.label}
                   </span>
                 </div>
@@ -757,26 +801,12 @@ export default function Home() {
                 </Link>
               </div>
 
-              {/* Filter categories row */}
-              <div className="flex flex-wrap gap-2 border-t border-white/5 pt-6">
-                {visibleCategories.map((cat) => (
-                  <button
-                    key={cat.id}
-                    onClick={() => setActiveCategory(cat.id)}
-                    className={`px-4 py-2 text-xs font-bold uppercase tracking-wider rounded transition-all cursor-pointer ${activeCategory === cat.id
-                      ? "bg-primary text-white"
-                      : "bg-zinc-900 border border-white/5  text-zinc-400 hover:text-white"
-                      }`}
-                  >
-                    {"name" in cat ? cat.name : cat.label}
-                  </button>
-                ))}
-              </div>
+              {/* Divider */}
+              <div className="border-t border-white/5"></div>
             </div>
 
-            {/* Product cards grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredProducts.slice(0, 3).map((prod) => (
+              {allProducts.slice(0, 3).map((prod) => (
                 <div
                   key={prod.id}
                   onClick={() => setSelectedProduct(prod)}
@@ -821,16 +851,7 @@ export default function Home() {
               ))}
             </div>
 
-            <div className="text-center mt-12">
-              <button
-                onClick={() => {
-                  alert("Danh mục đầy đủ sản phẩm sẽ được gửi qua Zalo/Email. Vui lòng để lại lời nhắn hoặc liên hệ trực tiếp.");
-                }}
-                className="px-8 py-3.5 bg-zinc-900 border border-white/10  text-white hover:text-primary text-xs font-bold tracking-widest uppercase rounded-xl transition-all cursor-pointer"
-              >
-                Yêu Cầu Tải Báo Giá Catalog PDF
-              </button>
-            </div>
+
           </div>
         </section>
 
@@ -854,7 +875,7 @@ export default function Home() {
           </div>
         </section>
         {/* 6. BLOG / NEWS SECTION */}
-        <section id="blog" className="py-24 bg-zinc-950 relative overflow-hidden">
+        <section ref={blogSectionRef} id="blog" className="py-24 bg-zinc-950 relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-6 relative z-10">
             {/* Section header */}
             <div className="flex flex-col gap-6 mb-16">
@@ -902,10 +923,15 @@ export default function Home() {
 
             {/* Blog grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {blogs.slice(0, 3).map((blog) => (
+              {blogs.slice(0, 3).map((blog, idx) => (
                 <article
                   key={blog.id}
-                  className="bg-card-bg border border-white/5 rounded-xl overflow-hidden  transition-all duration-300 flex flex-col group"
+                  className={`bg-card-bg border border-white/5 rounded-xl overflow-hidden transition-all duration-700 ease-out flex flex-col group ${
+                    blogVisible
+                      ? "opacity-100 translate-y-0 scale-100"
+                      : "opacity-0 translate-y-16 scale-90 pointer-events-none"
+                  }`}
+                  style={{ transitionDelay: `${idx * 150}ms` }}
                 >
                   {/* Blog Image */}
                   <div className="aspect-video w-full overflow-hidden bg-zinc-900 relative">
@@ -928,9 +954,14 @@ export default function Home() {
                     <p className="text-zinc-400 text-xs leading-relaxed mb-6 flex-1 line-clamp-3">
                       {blog.desc}
                     </p>
-                    <Link href="/news" className="text-xs font-bold uppercase tracking-wider text-white group-hover:text-primary flex items-center gap-2 transition-colors text-left">
-                      Đọc Tiếp <ChevronRight className="w-4 h-4" />
-                    </Link>
+                    <div className="border-t border-white/10 pt-4 mt-auto">
+                      <button
+                        onClick={() => setSelectedBlog(blog as DashboardPost)}
+                        className="text-xs font-bold uppercase tracking-wider text-white group-hover:text-primary flex items-center gap-2 transition-colors text-left cursor-pointer"
+                      >
+                        Đọc Tiếp <ChevronRight className="w-4 h-4" />
+                      </button>
+                    </div>
                   </div>
                 </article>
               ))}
@@ -1005,123 +1036,59 @@ export default function Home() {
         </div>
       )}
 
-      {/* MODAL: SEARCH */}
-      {searchModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-start justify-center p-4 pt-24 bg-black/85 backdrop-blur-md transition-all">
-          <div className="bg-card-bg border border-white/10 rounded-xl max-w-xl w-full p-6 relative shadow-2xl animate-in slide-in-from-top-4 duration-200">
+      {/* MODAL: BLOG DETAIL */}
+      {selectedBlog && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+          onClick={() => setSelectedBlog(null)}
+        >
+          <div
+            className="bg-card-bg border border-white/10 rounded-2xl overflow-hidden max-w-2xl w-full relative shadow-2xl max-h-[90vh] flex flex-col"
+            onClick={(e) => e.stopPropagation()}
+          >
             <button
-              onClick={() => {
-                setSearchModalOpen(false);
-                setSearchQuery("");
-              }}
-              className="absolute top-4 right-4 text-zinc-400 hover:text-white transition-colors cursor-pointer"
+              onClick={() => setSelectedBlog(null)}
+              className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/60 text-white hover:text-primary hover:bg-black/90 flex items-center justify-center transition-colors z-20 cursor-pointer"
               aria-label="Đóng"
             >
               <X className="w-5 h-5" />
             </button>
 
-            <span className="block text-xs font-bold text-primary uppercase tracking-widest mb-4">Tìm kiếm thiết bị / dịch vụ</span>
-
-            <div className="relative flex items-center mb-6">
-              <Search className="absolute left-4 text-zinc-500 w-5 h-5" />
-              <input
-                type="text"
-                autoFocus
-                placeholder="Nhập tên thiết bị điện, hãng sản xuất hoặc dịch vụ..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-zinc-900 border border-white/10 focus:border-primary pl-12 pr-4 py-3.5 rounded text-sm text-white placeholder-zinc-500 outline-none transition-colors"
-              />
-            </div>
-
-            {/* Simulated Search Results */}
-            <div>
-              <span className="block text-[10px] text-zinc-500 uppercase font-bold tracking-widest mb-3">Kết quả gợi ý:</span>
-              <div className="space-y-2 max-h-60 overflow-y-auto pr-1">
-                {searchQuery ? (
-                  allProducts.filter(p =>
-                    p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                    p.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                    (storedCategoryNames.get(p.category) ?? p.categoryName).toLowerCase().includes(searchQuery.toLowerCase())
-                  ).length > 0 ? (
-                    allProducts.filter(p =>
-                      p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                      p.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                      (storedCategoryNames.get(p.category) ?? p.categoryName).toLowerCase().includes(searchQuery.toLowerCase())
-                    ).map(p => (
-                      <div
-                        key={p.id}
-                        onClick={() => {
-                          setSelectedProduct(p);
-                          setSearchModalOpen(false);
-                          setSearchQuery("");
-                        }}
-                        className="flex items-center justify-between p-3 bg-zinc-900 hover:bg-zinc-800 rounded border border-white/5  transition-all cursor-pointer group"
-                      >
-                        <div className="flex items-center gap-3">
-                          <img src={p.image} alt="" className="w-10 h-10 object-cover rounded bg-zinc-800" />
-                          <div>
-                            <span className="block text-sm font-bold text-white group-hover:text-primary transition-colors">{p.title}</span>
-                            <span className="text-[10px] text-zinc-500 uppercase tracking-widest">{storedCategoryNames.get(p.category) ?? p.categoryName}</span>
-                          </div>
-                        </div>
-                        <ChevronRight className="w-4 h-4 text-zinc-500 group-hover:text-white transition-colors" />
-                      </div>
-                    ))
-                  ) : (
-                    <div className="text-center py-6 text-zinc-500 text-xs">
-                      Không tìm thấy thiết bị nào khớp với từ khóa "{searchQuery}"
-                    </div>
-                  )
-                ) : (
-                  <>
-                    {allProducts[0] && (
-                      <div
-                        onClick={() => {
-                          setSelectedProduct(allProducts[0]);
-                          setSearchModalOpen(false);
-                        }}
-                        className="flex items-center justify-between p-3 bg-zinc-900/60 hover:bg-zinc-900 rounded border border-white/5 cursor-pointer text-sm text-zinc-300 hover:text-white"
-                      >
-                        <span>1. {allProducts[0].title}</span>
-                        <span className="text-[10px] text-primary font-bold uppercase tracking-wider">Hot</span>
-                      </div>
-                    )}
-                    {allProducts[1] && (
-                      <div
-                        onClick={() => {
-                          setSelectedProduct(allProducts[1]);
-                          setSearchModalOpen(false);
-                        }}
-                        className="flex items-center justify-between p-3 bg-zinc-900/60 hover:bg-zinc-900 rounded border border-white/5 cursor-pointer text-sm text-zinc-300 hover:text-white"
-                      >
-                        <span>2. {allProducts[1].title}</span>
-                        <span className="text-[10px] text-zinc-500 uppercase tracking-widest">
-                          {storedCategoryNames.get(allProducts[1].category) ?? allProducts[1].categoryName}
-                        </span>
-                      </div>
-                    )}
-                    {allProducts[2] && (
-                      <div
-                        onClick={() => {
-                          setSelectedProduct(allProducts[2]);
-                          setSearchModalOpen(false);
-                        }}
-                        className="flex items-center justify-between p-3 bg-zinc-900/60 hover:bg-zinc-900 rounded border border-white/5 cursor-pointer text-sm text-zinc-300 hover:text-white"
-                      >
-                        <span>3. {allProducts[2].title}</span>
-                        <span className="text-[10px] text-zinc-500 uppercase tracking-widest">
-                          {storedCategoryNames.get(allProducts[2].category) ?? allProducts[2].categoryName}
-                        </span>
-                      </div>
-                    )}
-                  </>
+            {/* Blog thumbnail */}
+            {selectedBlog.image && (
+              <div className="aspect-video w-full relative bg-zinc-900 shrink-0">
+                <img src={selectedBlog.image} alt={selectedBlog.title} className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-card-bg to-transparent" />
+                {selectedBlog.category && (
+                  <span className="absolute bottom-4 left-6 z-10 px-3 py-1 bg-primary text-white text-xs font-bold uppercase tracking-wider rounded">
+                    {selectedBlog.category}
+                  </span>
                 )}
               </div>
+            )}
+
+            {/* Blog content */}
+            <div className="p-8 overflow-y-auto">
+              <span className="text-zinc-500 text-xs mb-3 block">{formatBlogDate(selectedBlog.date)}</span>
+              <h3 className="text-2xl font-display font-black text-white mb-4 leading-tight">
+                {selectedBlog.title}
+              </h3>
+              <p className="text-zinc-300 text-sm leading-relaxed mb-6 whitespace-pre-wrap">
+                {(selectedBlog as DashboardPost & { content?: string }).content || selectedBlog.desc}
+              </p>
+              <button
+                onClick={() => setSelectedBlog(null)}
+                className="px-6 py-3 border border-white/10 text-zinc-400 hover:text-white text-xs font-bold tracking-widest uppercase rounded transition-colors cursor-pointer"
+              >
+                Đóng
+              </button>
             </div>
           </div>
         </div>
       )}
+
+      {/* MODAL: SEARCH */}
+      <SearchModal isOpen={searchModalOpen} onClose={() => setSearchModalOpen(false)} />
     </div>
   );
 }

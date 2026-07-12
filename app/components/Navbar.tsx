@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, Search } from "lucide-react";
+import SearchModal from "./SearchModal";
 
 interface NavbarProps {
   onSearchOpen?: () => void;
@@ -12,6 +13,7 @@ interface NavbarProps {
 export default function Navbar({ onSearchOpen }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [searchModalOpen, setSearchModalOpen] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -40,19 +42,19 @@ export default function Navbar({ onSearchOpen }: NavbarProps) {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b ${
         showSolid
-          ? "bg-[#121212] shadow-lg"
-          : "bg-transparent border-b border-transparent"
+          ? "bg-[#121212] border-transparent shadow-lg"
+          : "bg-transparent border-transparent"
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-24">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 group">
           <img
-            src="/truong_logo_cropped.png"
+            src="/truong_logo_cropped.png?v=3"
             alt="Truong Nguyen Logo"
-            className="h-12 w-auto object-contain"
+            className="h-12 w-auto object-contain brightness-0 invert"
           />
         </Link>
 
@@ -77,23 +79,13 @@ export default function Navbar({ onSearchOpen }: NavbarProps) {
 
         {/* Action Tools */}
         <div className="hidden md:flex items-center gap-6">
-          {onSearchOpen ? (
-            <button
-              onClick={onSearchOpen}
-              className="text-zinc-400 hover:text-[#ff5017] transition-colors cursor-pointer"
-              aria-label="Tìm kiếm"
-            >
-              <Search className="w-5 h-5" />
-            </button>
-          ) : (
-            <Link
-              href="/?search=open"
-              className="text-zinc-400 hover:text-[#ff5017] transition-colors cursor-pointer"
-              aria-label="Tìm kiếm"
-            >
-              <Search className="w-5 h-5" />
-            </Link>
-          )}
+          <button
+            onClick={() => onSearchOpen ? onSearchOpen() : setSearchModalOpen(true)}
+            className="text-zinc-400 hover:text-[#ff5017] transition-colors cursor-pointer"
+            aria-label="Tìm kiếm"
+          >
+            <Search className="w-5 h-5" />
+          </button>
           <a
             href="tel:0987654321"
             className="px-5 py-2.5 bg-[#ff5017] hover:bg-orange-700 text-white text-xs font-bold tracking-wider uppercase rounded-xl transition-colors duration-300"
@@ -104,23 +96,13 @@ export default function Navbar({ onSearchOpen }: NavbarProps) {
 
         {/* Mobile Navigation Toggle */}
         <div className="flex md:hidden items-center gap-4">
-          {onSearchOpen ? (
-            <button
-              onClick={onSearchOpen}
-              className="text-zinc-400 hover:text-[#ff5017] transition-colors"
-              aria-label="Tìm kiếm"
-            >
-              <Search className="w-5 h-5" />
-            </button>
-          ) : (
-            <Link
-              href="/?search=open"
-              className="text-zinc-400 hover:text-[#ff5017] transition-colors"
-              aria-label="Tìm kiếm"
-            >
-              <Search className="w-5 h-5" />
-            </Link>
-          )}
+          <button
+            onClick={() => onSearchOpen ? onSearchOpen() : setSearchModalOpen(true)}
+            className="text-zinc-400 hover:text-[#ff5017] transition-colors cursor-pointer"
+            aria-label="Tìm kiếm"
+          >
+            <Search className="w-5 h-5" />
+          </button>
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="text-zinc-400 hover:text-white transition-colors"
@@ -157,6 +139,7 @@ export default function Navbar({ onSearchOpen }: NavbarProps) {
           </nav>
         </div>
       )}
+      <SearchModal isOpen={searchModalOpen} onClose={() => setSearchModalOpen(false)} />
     </header>
   );
 }

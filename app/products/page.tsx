@@ -82,6 +82,20 @@ export default function ProductsPage() {
     const timer = window.setTimeout(() => {
       setCustomProducts(readStoredContent<DashboardProduct>(CONTENT_STORAGE_KEYS.products));
       setCustomCategories(readStoredContent<DashboardCategory>(CONTENT_STORAGE_KEYS.categories));
+
+      void fetch("/api/content")
+        .then((res) => res.ok ? res.json() : null)
+        .then((data: { products?: DashboardProduct[]; categories?: DashboardCategory[]; storedTypes?: string[] } | null) => {
+          if (!data) return;
+          if (data.storedTypes?.includes("products")) {
+            setCustomProducts(data.products ?? []);
+            window.localStorage.setItem(CONTENT_STORAGE_KEYS.products, JSON.stringify(data.products ?? []));
+          }
+          if (data.storedTypes?.includes("categories")) {
+            setCustomCategories(data.categories ?? []);
+            window.localStorage.setItem(CONTENT_STORAGE_KEYS.categories, JSON.stringify(data.categories ?? []));
+          }
+        }).catch(() => undefined);
     }, 0);
     return () => window.clearTimeout(timer);
   }, []);
@@ -97,7 +111,9 @@ export default function ProductsPage() {
       })
     : products;
   const storedCategoryNames = new Map(customCategories.map((item) => [item.id, item.name]));
-  const visibleCategories = [...categories.map((category) => ({ ...category, label: storedCategoryNames.get(category.id) ?? category.label })), ...customCategories.filter((item) => !categories.some((category) => category.id === item.id))];
+  const visibleCategories = customCategories.length > 0
+    ? [{ id: "all", label: "Tất Cả" }, ...customCategories.map((c) => ({ id: c.id, label: c.name }))]
+    : categories;
   const filtered = activeCategory === 'all' ? allProducts : allProducts.filter((p) => p.category === activeCategory);
   const pageCount = Math.max(1, Math.ceil(filtered.length / 9));
   const paginatedProducts = filtered.slice((page - 1) * 9, page * 9);
@@ -165,7 +181,7 @@ export default function ProductsPage() {
                     : "bg-zinc-900 border border-white/5  text-zinc-400 hover:text-white"
                 }`}
               >
-                {"name" in cat ? cat.name : cat.label}
+                {cat.label}
               </button>
             ))}
           </div>
@@ -209,14 +225,7 @@ export default function ProductsPage() {
           </div>
           <Pagination page={page} pageCount={pageCount} onPageChange={setPage} />
 
-          <div className="text-center mt-12">
-            <button
-              onClick={() => alert("Danh mục đầy đủ sản phẩm sẽ được gửi qua Zalo/Email.")}
-              className="px-8 py-3.5 bg-zinc-900 border border-white/10  text-white hover:text-[#ff5017] text-xs font-bold tracking-widest uppercase rounded transition-all cursor-pointer"
-            >
-              Yêu Cầu Tải Báo Giá Catalog PDF
-            </button>
-          </div>
+
         </div>
       </section>
 

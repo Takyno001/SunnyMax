@@ -53,6 +53,16 @@ export default function NewsPage() {
   useEffect(() => {
     const timer = window.setTimeout(() => {
       setCustomNews(readStoredContent<DashboardPost>(CONTENT_STORAGE_KEYS.posts));
+
+      void fetch("/api/content")
+        .then((res) => res.ok ? res.json() : null)
+        .then((data: { posts?: DashboardPost[]; storedTypes?: string[] } | null) => {
+          if (!data) return;
+          if (data.storedTypes?.includes("posts")) {
+            setCustomNews(data.posts ?? []);
+            window.localStorage.setItem(CONTENT_STORAGE_KEYS.posts, JSON.stringify(data.posts ?? []));
+          }
+        }).catch(() => undefined);
     }, 0);
 
     return () => window.clearTimeout(timer);
@@ -100,11 +110,13 @@ export default function NewsPage() {
                     <span className="text-zinc-500 text-xs mb-3 block">{formatNewsDate(post.date)}</span>
                     <h3 className="text-lg font-bold text-white mb-3 group-hover:text-primary transition-colors line-clamp-2">{post.title}</h3>
                     <p className="text-zinc-400 text-xs leading-relaxed mb-6 flex-1 line-clamp-3">{post.desc}</p>
-                    {post.sourceUrl ? (
-                      <a href={post.sourceUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-white transition-colors hover:text-[#ff5017]">Đọc tiếp <ChevronRight className="h-4 w-4" /></a>
-                    ) : (
-                      <span className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-zinc-500">Đọc tiếp <ChevronRight className="h-4 w-4" /></span>
-                    )}
+                    <div className="border-t border-white/10 pt-4 mt-auto">
+                      {post.sourceUrl ? (
+                        <a href={post.sourceUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-white transition-colors hover:text-[#ff5017]">Đọc tiếp <ChevronRight className="h-4 w-4" /></a>
+                      ) : (
+                        <span className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-zinc-500">Đọc tiếp <ChevronRight className="h-4 w-4" /></span>
+                      )}
+                    </div>
                   </div>
                 </article>
               ))}

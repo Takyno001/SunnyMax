@@ -76,13 +76,13 @@ const ZaloIcon = (props: React.SVGProps<SVGSVGElement>) => {
 
 const TiktokIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
-    viewBox="0 0 16 16"
+    viewBox="0 0 24 24"
     width="18"
     height="18"
     fill="currentColor"
     {...props}
   >
-    <path d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3V0Z" />
+    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.16 8.16 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07Z" />
   </svg>
 );
 
@@ -141,9 +141,9 @@ export default function Footer() {
         <div className="lg:col-span-4 flex flex-col justify-start">
           <Link href="/" className="inline-block mb-4">
             <img
-              src="/truong_logo_cropped.png"
+              src="/truong_logo_cropped.png?v=3"
               alt="Truong Nguyen Logo"
-              className="h-10 w-auto object-contain"
+              className="h-10 w-auto object-contain brightness-0 invert"
             />
           </Link>
           <p className="text-zinc-500 text-xs leading-relaxed mb-6">

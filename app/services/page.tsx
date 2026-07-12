@@ -45,7 +45,19 @@ export default function ServicesPage() {
   const [customServices, setCustomServices] = useState<DashboardService[]>([]);
   const [page, setPage] = useState(1);
   useEffect(() => {
-    const timer = window.setTimeout(() => setCustomServices(readStoredContent<DashboardService>(CONTENT_STORAGE_KEYS.services)), 0);
+    const timer = window.setTimeout(() => {
+      setCustomServices(readStoredContent<DashboardService>(CONTENT_STORAGE_KEYS.services));
+
+      void fetch("/api/content")
+        .then((res) => res.ok ? res.json() : null)
+        .then((data: { services?: DashboardService[]; storedTypes?: string[] } | null) => {
+          if (!data) return;
+          if (data.storedTypes?.includes("services")) {
+            setCustomServices(data.services ?? []);
+            window.localStorage.setItem(CONTENT_STORAGE_KEYS.services, JSON.stringify(data.services ?? []));
+          }
+        }).catch(() => undefined);
+    }, 0);
     return () => window.clearTimeout(timer);
   }, []);
 
