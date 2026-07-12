@@ -98,15 +98,18 @@ export default function Footer() {
   };
 
   return (
-    <footer 
-      className="bg-[#121212] text-zinc-400 text-sm pt-16 pb-8 sticky bottom-0 z-10 overflow-hidden"
-      style={{
-        backgroundImage: "url('/footer-bg.png')",
-        backgroundPosition: "bottom center",
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-      }}
-    >
+    <footer className="bg-[#121212] text-zinc-400 text-sm pt-16 pb-8 sticky bottom-0 z-10 overflow-hidden">
+      {/* Background topographic pattern overlay */}
+      <div 
+        className="absolute bottom-0 left-0 right-0 h-[190px] pointer-events-none opacity-80 z-0"
+        style={{
+          backgroundImage: "url('/footer-bg.png')",
+          backgroundPosition: "bottom",
+          backgroundRepeat: "repeat-x",
+          backgroundSize: "auto 190px",
+        }}
+      />
+
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 mb-16 relative z-10">
         
         {/* Column 1: Brand & Newsletter */}
