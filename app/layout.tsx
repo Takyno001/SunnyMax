@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Outfit, Inter, Playfair_Display } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -18,6 +19,11 @@ const playfair = Playfair_Display({
   weight: ["700", "800", "900"],
 });
 
+const squadHeavy = localFont({
+  src: "../public/fonts/squad-heavy.woff2",
+  variable: "--font-squad-heavy",
+});
+
 export const metadata: Metadata = {
   title: "Truong Nguyen - Thiết Bị Điện & Giải Pháp Smart Home",
   description: "Trang web portfolio giới thiệu sản phẩm thiết bị điện chất lượng cao và giải pháp cơ điện thông minh từ kỹ sư Truong Nguyen.",
@@ -31,7 +37,7 @@ export default function RootLayout({
   return (
     <html
       lang="vi"
-      className={`${outfit.variable} ${inter.variable} ${playfair.variable} h-full antialiased`}
+      className={`${outfit.variable} ${inter.variable} ${playfair.variable} ${squadHeavy.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans bg-dark-bg text-white">{children}</body>
     </html>

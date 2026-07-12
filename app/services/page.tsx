@@ -49,7 +49,7 @@ export default function ServicesPage() {
         <div className="relative z-10 flex flex-col items-center text-center px-6">
 
           {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest mb-6">
+          <nav className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest mb-20 relative z-20">
             <Link href="/" className="text-[#ff5017] hover:underline">Home</Link>
             <span className="text-zinc-500">›</span>
             <span className="text-white">Services</span>
@@ -74,7 +74,7 @@ export default function ServicesPage() {
               Services
             </span>
             {/* Solid foreground */}
-            <h1 className="relative z-10 font-display font-black leading-none text-white tracking-tight" style={{ fontSize: "clamp(48px, 7vw, 80px)" }}>
+            <h1 className="relative z-10 font-display font-black leading-none text-white tracking-tight" style={{ fontSize: "clamp(56px, 8.5vw, 96px)" }}>
               Services
             </h1>
           </div>
@@ -88,7 +88,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Service Cards */}
-      <section className="py-20 bg-[#121212]">
+      <section className="relative z-10 py-20 bg-[#121212]">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
             {services.map((svc, idx) => (
