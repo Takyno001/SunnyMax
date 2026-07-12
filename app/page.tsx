@@ -348,8 +348,7 @@ export default function Home() {
               <Search className="w-5 h-5" />
             </button>
             <a
-              href="#contact"
-              onClick={(e) => handleScroll(e, "contact")}
+              href="tel:0987654321"
               className="px-5 py-2.5 bg-primary hover:bg-orange-700 text-white text-xs font-bold tracking-wider uppercase rounded-xl transition-colors duration-300"
             >
               Let&apos;s Talk
@@ -389,8 +388,7 @@ export default function Home() {
                 Product
               </Link>
               <a
-                href="#contact"
-                onClick={(e) => handleScroll(e, "contact")}
+                href="tel:0987654321"
                 className="mt-4 w-full py-2.5 bg-primary hover:bg-orange-700 text-white text-center text-xs font-bold tracking-wider uppercase rounded-xl transition-colors"
               >
                 Let&apos;s Talk
@@ -732,30 +730,52 @@ export default function Home() {
 
       {/* 6. BLOG / NEWS SECTION */}
       <section id="blog" className="py-24 bg-zinc-950 relative overflow-hidden border-t border-white/5">
-        {/* Outlined background text */}
-        <div className="absolute -top-10 right-10 select-none pointer-events-none opacity-20 z-0">
-          <span className="text-stroke-bg text-[10vw] font-display font-extrabold uppercase leading-none">
-            News
-          </span>
-        </div>
-
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           {/* Section header */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
-            <div>
-              <span className="text-xs md:text-sm font-bold text-primary tracking-widest uppercase block mb-2">
-                04. TIN TỨC & KỸ THUẬT
-              </span>
-              <h2 className="text-3xl md:text-5xl font-display font-black text-white uppercase tracking-tight">
-                KIẾN THỨC BỔ ÍCH
-              </h2>
+          <div className="flex flex-col gap-6 mb-16">
+            {/* Title & Button row */}
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+              <div className="relative flex flex-col items-start w-full md:w-auto">
+                <span className="text-xs md:text-sm font-bold text-primary tracking-widest uppercase block mb-8 relative z-20">
+                  03.
+                </span>
+                
+                {/* Title wrapper */}
+                <div className="relative flex items-center justify-start" style={{ height: "90px", width: "100%" }}>
+                  {/* Ghost: paint-order stroke fill — clean outline, no inner artifacts */}
+                  <span
+                    aria-hidden="true"
+                    suppressHydrationWarning
+                    className="ghost-title absolute font-display font-black pointer-events-none select-none"
+                    style={{
+                      fontSize: "clamp(80px, 12vw, 150px)",
+                      lineHeight: 1,
+                      whiteSpace: "nowrap",
+                      left: "-5px",
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      color: "#09090b",
+                    }}
+                  >
+                    News
+                  </span>
+                  {/* Solid foreground */}
+                  <h2 className="relative z-10 font-display font-black leading-none text-white tracking-tight pl-8" style={{ fontSize: "clamp(48px, 7vw, 80px)" }}>
+                    News
+                  </h2>
+                </div>
+              </div>
+
+              <button
+                onClick={() => alert("Chức năng đang được phát triển. Truong Nguyen sẽ cập nhật các bài viết kỹ thuật sớm nhất.")}
+                className="px-6 py-3.5 bg-zinc-800/80 hover:bg-black border border-white/5 text-white text-xs font-bold tracking-widest uppercase rounded-xl transition-all flex items-center gap-2 group w-fit h-fit self-start md:self-end md:mb-2"
+              >
+                Xem Thêm Bài Viết <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </button>
             </div>
-            <button
-              onClick={() => alert("Chức năng đang được phát triển. Truong Nguyen sẽ cập nhật các bài viết kỹ thuật sớm nhất.")}
-              className="px-6 py-2.5 border border-white/15 hover:border-primary text-white hover:text-primary text-xs font-bold tracking-widest uppercase rounded transition-all flex items-center gap-2 group w-fit"
-            >
-              Xem Thêm Bài Viết <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-            </button>
+
+            {/* Divider line */}
+            <div className="border-t border-white/5"></div>
           </div>
 
           {/* Blog grid */}
@@ -801,146 +821,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 7. CONTACT SECTION */}
-      <section id="contact" className="py-24 bg-dark-bg relative overflow-hidden border-t border-white/5">
-        {/* Outlined background text */}
-        <div className="absolute -top-10 left-10 select-none pointer-events-none opacity-20 z-0">
-          <span className="text-stroke-bg text-[10vw] font-display font-extrabold uppercase leading-none">
-            Contact
-          </span>
-        </div>
 
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          {/* Main banner block with grid splitting */}
-          <div className="bg-card-bg border border-white/5 rounded-2xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 relative shadow-2xl">
-            {/* Background elements */}
-            <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
-
-            {/* Left Column: Form & Details */}
-            <div className="lg:col-span-7 p-8 md:p-12 lg:p-16 flex flex-col justify-between">
-              <div>
-                <span className="text-xs md:text-sm font-bold text-primary tracking-widest uppercase block mb-2">
-                  05. KẾT NỐI
-                </span>
-                <h2 className="text-3xl md:text-4xl font-display font-black text-white uppercase tracking-tight mb-4">
-                  HÃY NÓI VỀ YÊU CẦU CỦA BẠN
-                </h2>
-                <p className="text-zinc-400 text-sm leading-relaxed mb-8 max-w-lg">
-                  Hãy gửi tin nhắn hoặc gọi trực tiếp cho Truong Nguyen. Truong Nguyen sẽ tư vấn kỹ thuật, gợi ý sản phẩm phù hợp và báo giá chiết khấu đại lý tốt nhất cho công trình của bạn.
-                </p>
-
-                {/* Direct info list */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-                  <a href="tel:0987654321" className="flex items-center gap-3 p-3 bg-zinc-900/60 border border-white/5 hover:border-primary/30 rounded-lg group transition-colors">
-                    <div className="p-2 bg-primary/10 rounded-md text-primary">
-                      <Phone className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <span className="block text-[10px] text-zinc-500 uppercase font-bold tracking-wider">Hotline / Zalo</span>
-                      <span className="text-sm font-bold text-white group-hover:text-primary transition-colors">0987.654.321</span>
-                    </div>
-                  </a>
-                  <a href="mailto:truong.electric@gmail.com" className="flex items-center gap-3 p-3 bg-zinc-900/60 border border-white/5 hover:border-primary/30 rounded-lg group transition-colors">
-                    <div className="p-2 bg-primary/10 rounded-md text-primary">
-                      <Mail className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <span className="block text-[10px] text-zinc-500 uppercase font-bold tracking-wider">Email liên hệ</span>
-                      <span className="text-sm font-bold text-white group-hover:text-primary transition-colors">truong.electric@gmail.com</span>
-                    </div>
-                  </a>
-                  <div className="flex items-center gap-3 p-3 bg-zinc-900/60 border border-white/5 rounded-lg">
-                    <div className="p-2 bg-primary/10 rounded-md text-primary">
-                      <MapPin className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <span className="block text-[10px] text-zinc-500 uppercase font-bold tracking-wider">Địa chỉ giao dịch</span>
-                      <span className="text-sm font-bold text-white">Quận 1, TP. Hồ Chí Minh</span>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3 p-3 bg-zinc-900/60 border border-white/5 rounded-lg">
-                    <div className="p-2 bg-primary/10 rounded-md text-primary">
-                      <Info className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <span className="block text-[10px] text-zinc-500 uppercase font-bold tracking-wider">Giờ hoạt động</span>
-                      <span className="text-sm font-bold text-white">7:30 - 20:00 (Thứ 2 - CN)</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Message form */}
-              <form onSubmit={handleContactSubmit} className="space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    placeholder="Họ và tên của bạn"
-                    required
-                    className="w-full bg-zinc-900 border border-white/10 focus:border-primary p-3 rounded text-sm text-white placeholder-zinc-500 outline-none transition-colors"
-                  />
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    placeholder="Số điện thoại Zalo"
-                    required
-                    className="w-full bg-zinc-900 border border-white/10 focus:border-primary p-3 rounded text-sm text-white placeholder-zinc-500 outline-none transition-colors"
-                  />
-                </div>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  placeholder="Địa chỉ Email (nếu có)"
-                  className="w-full bg-zinc-900 border border-white/10 focus:border-primary p-3 rounded text-sm text-white placeholder-zinc-500 outline-none transition-colors"
-                />
-                <textarea
-                  name="message"
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  rows={4}
-                  placeholder="Mô tả yêu cầu sản phẩm hoặc công trình của bạn..."
-                  required
-                  className="w-full bg-zinc-900 border border-white/10 focus:border-primary p-3 rounded text-sm text-white placeholder-zinc-500 outline-none transition-colors resize-none"
-                />
-
-                {contactSubmitted ? (
-                  <div className="bg-emerald-950/60 border border-emerald-500/30 p-4 rounded-lg flex items-center gap-3 text-emerald-400 text-sm">
-                    <CheckCircle2 className="w-5 h-5 flex-shrink-0" />
-                    <span>Yêu cầu của bạn đã được gửi thành công! Truong Nguyen sẽ chủ động liên hệ lại qua điện thoại/Zalo sớm nhất có thể.</span>
-                  </div>
-                ) : (
-                  <button
-                    type="submit"
-                    className="px-8 py-3.5 bg-primary hover:bg-primary-light text-white text-xs font-bold tracking-widest uppercase rounded flex items-center justify-center gap-2 group transition-all duration-300 cursor-pointer w-full sm:w-auto animate-none outline-none"
-                  >
-                    Gửi Yêu Cầu <Send className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                  </button>
-                )}
-              </form>
-            </div>
-
-            {/* Right Column: Contact portrait */}
-            <div className="lg:col-span-5 hidden lg:block relative min-h-[500px] bg-zinc-900 border-l border-white/5">
-              <div className="absolute inset-0 bg-gradient-to-t from-dark-bg via-transparent to-transparent z-10"></div>
-              <img
-                src="/truong_contact.png"
-                alt="Truong Nguyen - Liên hệ tư vấn"
-                className="absolute inset-0 w-full h-full object-cover"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80";
-                }}
-              />
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* 8. FOOTER */}
       <footer className="bg-zinc-950 text-zinc-500 text-sm border-t border-white/5 py-12">

@@ -93,12 +93,12 @@ export default function Navbar({ onSearchOpen }: NavbarProps) {
               <Search className="w-5 h-5" />
             </Link>
           )}
-          <Link
-            href="/#contact"
+          <a
+            href="tel:0987654321"
             className="px-5 py-2.5 bg-[#ff5017] hover:bg-orange-700 text-white text-xs font-bold tracking-wider uppercase rounded-xl transition-colors duration-300"
           >
             Let&apos;s Talk
-          </Link>
+          </a>
         </div>
 
         {/* Mobile Navigation Toggle */}
@@ -146,13 +146,13 @@ export default function Navbar({ onSearchOpen }: NavbarProps) {
                 {label}
               </Link>
             ))}
-            <Link
-              href="/#contact"
+            <a
+              href="tel:0987654321"
               onClick={() => setMobileMenuOpen(false)}
               className="mt-4 w-full py-2.5 bg-[#ff5017] hover:bg-orange-700 text-white text-center text-xs font-bold tracking-wider uppercase rounded-xl transition-colors"
             >
               Let&apos;s Talk
-            </Link>
+            </a>
           </nav>
         </div>
       )}
