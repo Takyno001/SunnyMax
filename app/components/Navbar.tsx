@@ -41,7 +41,7 @@ export default function Navbar({ onSearchOpen }: NavbarProps) {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         showSolid
-          ? "bg-[#1a1a1a] shadow-lg"
+          ? "bg-[#121212] shadow-lg"
           : "bg-transparent border-b border-transparent"
       }`}
     >
