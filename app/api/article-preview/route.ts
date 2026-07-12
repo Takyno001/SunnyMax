@@ -58,7 +58,7 @@ export async function GET(request: Request) {
     const title = getMeta(html, "og:title") || getMeta(html, "twitter:title") || (titleMatch ? decodeHtml(titleMatch[1].trim()) : "");
     const description = getMeta(html, "og:description") || getMeta(html, "description") || getMeta(html, "twitter:description");
     const image = absoluteUrl(getMeta(html, "og:image") || getMeta(html, "twitter:image"), articleUrl.toString());
-    const publishedAt = getMeta(html, "article:published_time") || getMeta(html, "datepublished") || getMeta(html, "publishdate") || getMeta(html, "date");
+    const publishedAt = getMeta(html, "article:published_time") || getMeta(html, "datepublished") || getMeta(html, "publishdate") || getMeta(html, "date") || html.match(/"datePublished"\s*:\s*"([^"]+)"/i)?.[1] || "";
 
     if (!title && !description && !image) {
       return Response.json({ error: "Không tìm thấy metadata đại diện trên trang này." }, { status: 422 });
