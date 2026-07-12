@@ -291,7 +291,7 @@ export default function Home() {
 
   return (
     <div className="relative min-h-screen text-white font-sans selection:bg-primary selection:text-white">
-      {/* ── Full-page fixed abstract background ── */}
+      {/* Full-page fixed abstract background */}
       <div
         className="fixed inset-0 pointer-events-none"
         style={{ zIndex: 0 }}
@@ -377,9 +377,8 @@ export default function Home() {
           }}
         />
       </div>
-
       {/* Scrollable Content Wrapper */}
-      <div className="relative shadow-2xl" style={{ zIndex: 20 }}>
+      <div className="relative z-20 min-h-screen shadow-2xl">
         {/* 1. HEADER / NAVBAR */}
         <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
           ? "bg-[#121212] shadow-lg"
@@ -912,10 +911,13 @@ export default function Home() {
               ))}
             </div>
           </div>
-        </section>        {/* 8. FOOTER — inside z-20 wrapper so it has solid bg */}
-        <Footer />
+        </section>
+
 
       </div>{/* END z-20 scrollable wrapper */}
+
+      <div aria-hidden="true" style={{ height: "var(--footer-height, 450px)" }} />
+      <Footer />
 
 
       {/* MODAL: PRODUCT DETAILS */}

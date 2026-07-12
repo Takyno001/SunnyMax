@@ -77,8 +77,8 @@ export default function ProductsPage() {
   const filtered = activeCategory === "all" ? products : products.filter((p) => p.category === activeCategory);
 
   return (
-    <div className="relative min-h-screen bg-[#121212] text-white font-sans selection:bg-[#ff5017] selection:text-white">
-      <div className="relative z-20 bg-[#121212] shadow-2xl overflow-x-hidden">
+    <div className="relative min-h-screen text-white font-sans selection:bg-[#ff5017] selection:text-white">
+      <div className="relative z-20 min-h-screen bg-[#121212] shadow-2xl overflow-x-hidden">
         <Navbar />
 
       {/* Hero Banner */}
@@ -214,7 +214,7 @@ export default function ProductsPage() {
       </section>
 
       </div>
-      {/* Footer */}
+      <div aria-hidden="true" style={{ height: "var(--footer-height, 450px)" }} />
       <Footer />
 
       {/* Product Modal */}

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Phone, Mail, MapPin, Send } from "lucide-react";
 
@@ -88,6 +88,28 @@ const TiktokIcon = (props: React.SVGProps<SVGSVGElement>) => (
 
 export default function Footer() {
   const [email, setEmail] = useState("");
+  const footerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const footer = footerRef.current;
+    if (!footer) return;
+
+    const updateFooterHeight = () => {
+      document.documentElement.style.setProperty(
+        "--footer-height",
+        `${footer.getBoundingClientRect().height}px`,
+      );
+    };
+
+    updateFooterHeight();
+    const resizeObserver = new ResizeObserver(updateFooterHeight);
+    resizeObserver.observe(footer);
+
+    return () => {
+      resizeObserver.disconnect();
+      document.documentElement.style.removeProperty("--footer-height");
+    };
+  }, []);
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -98,10 +120,13 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-[#121212] text-zinc-400 text-sm pt-16 pb-8 overflow-hidden relative">
+    <footer
+      ref={footerRef}
+      className="fixed inset-x-0 bottom-0 z-10 bg-[#121212] text-zinc-400 text-sm pt-16 pb-8 overflow-hidden"
+    >
       {/* Background topographic pattern overlay */}
       <div 
-        className="absolute bottom-0 left-0 right-0 h-[190px] pointer-events-none opacity-80 z-0"
+        className="absolute bottom-0 left-0 right-0 h-[190px] pointer-events-none opacity-10 z-0"
         style={{
           backgroundImage: "url('/footer-bg.png')",
           backgroundPosition: "bottom",
