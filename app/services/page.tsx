@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { Cpu, Zap, Wrench, Users, Briefcase, Layers, Award, ChevronRight, Phone, Mail, MapPin, Info } from "lucide-react";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const services = [
   {
@@ -41,8 +42,9 @@ const stats = [
 
 export default function ServicesPage() {
   return (
-    <div className="flex flex-col min-h-screen bg-[#121212] text-white font-sans selection:bg-[#ff5017] selection:text-white">
-      <Navbar />
+    <div className="relative min-h-screen bg-[#121212] text-white font-sans selection:bg-[#ff5017] selection:text-white overflow-x-hidden">
+      <div className="relative z-20 bg-[#121212] shadow-2xl">
+        <Navbar />
 
       {/* Hero Banner */}
       <section className="relative pt-32 pb-12 bg-[#121212] overflow-hidden">
@@ -138,7 +140,7 @@ export default function ServicesPage() {
       </section>
 
       {/* CTA / Contact strip */}
-      <section className="py-20 bg-zinc-950 border-t border-white/5">
+      <section className="py-20 bg-zinc-950">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
             <span className="text-sm font-bold text-[#ff5017] tracking-[0.2em] uppercase block mb-4">
@@ -184,20 +186,9 @@ export default function ServicesPage() {
         </div>
       </section>
 
+      </div>
       {/* Footer */}
-      <footer className="bg-zinc-950 text-zinc-500 text-sm border-t border-white/5 py-10">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex flex-col items-center md:items-start gap-2">
-            <img src="/truong_logo_cropped.png" alt="Truong Nguyen Logo" className="h-8 w-auto object-contain" />
-            <p className="text-xs text-zinc-600">© 2026 Truong Nguyen. Tất cả quyền được bảo lưu.</p>
-          </div>
-          <div className="flex flex-wrap justify-center gap-6 text-xs font-bold tracking-wider">
-            <Link href="/" className="hover:text-[#ff5017] transition-colors">Home</Link>
-            <Link href="/services" className="hover:text-[#ff5017] transition-colors">Services</Link>
-            <Link href="/products" className="hover:text-[#ff5017] transition-colors">Product</Link>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

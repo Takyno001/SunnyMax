@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import Footer from "./components/Footer";
 import {
   Menu,
   X,
@@ -299,11 +300,13 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-dark-bg text-white font-sans selection:bg-primary selection:text-white">
+    <div className="relative min-h-screen bg-[#121212] text-white font-sans selection:bg-primary selection:text-white">
+      {/* Scrollable Content Wrapper */}
+      <div className="relative z-20 bg-[#121212] shadow-2xl">
       {/* 1. HEADER / NAVBAR */}
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
-        ? "backdrop-blur-md bg-[#121212]/95 border-b border-white/10 shadow-lg"
-        : "bg-transparent border-b border-transparent"
+        ? "bg-[#121212] shadow-lg"
+        : "bg-transparent"
         }`}>
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-24">
           {/* Logo */}
@@ -553,7 +556,7 @@ export default function Home() {
       </section>
 
       {/* 4. PRODUCTS SECTION */}
-      <section id="products" className="py-24 bg-zinc-950 relative overflow-hidden border-t border-b border-white/5">
+      <section id="products" className="py-24 bg-zinc-950 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           {/* Section header */}
           <div className="flex flex-col gap-6 mb-16">
@@ -729,7 +732,7 @@ export default function Home() {
       </section>
 
       {/* 6. BLOG / NEWS SECTION */}
-      <section id="blog" className="py-24 bg-zinc-950 relative overflow-hidden border-t border-white/5">
+      <section id="blog" className="py-24 bg-zinc-950 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           {/* Section header */}
           <div className="flex flex-col gap-6 mb-16">
@@ -823,38 +826,10 @@ export default function Home() {
 
 
 
+      </div>
+
       {/* 8. FOOTER */}
-      <footer className="bg-zinc-950 text-zinc-500 text-sm border-t border-white/5 py-12">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex flex-col items-center md:items-start gap-2">
-            <img
-              src="/truong_logo_cropped.png"
-              alt="Truong Nguyen Logo"
-              className="h-8 w-auto object-contain"
-            />
-            <p className="text-xs text-zinc-600">
-              © 2026 Truong Nguyen. Tất cả quyền được bảo lưu. Thiết kế và phát triển dựa trên Persona Template.
-            </p>
-          </div>
-
-          <div className="flex flex-wrap justify-center gap-6 text-xs font-bold tracking-wider">
-            <a href="#home" onClick={(e) => handleScroll(e, "home")} className="hover:text-primary transition-colors">Home</a>
-            <Link href="/services" className="hover:text-primary transition-colors">Services</Link>
-            <Link href="/products" className="hover:text-primary transition-colors">Product</Link>
-          </div>
-
-          {/* Quick Zalo chat float button replacement link */}
-          <a
-            href="https://zalo.me"
-            target="_blank"
-            rel="noreferrer"
-            className="flex items-center gap-2 px-4 py-2 bg-[#0068ff] text-white text-xs font-bold rounded-full hover:scale-105 transition-transform"
-          >
-            <ZaloIcon className="w-4 h-4" />
-            <span>Chat Zalo</span>
-          </a>
-        </div>
-      </footer>
+      <Footer />
 
       {/* MODAL: PRODUCT DETAILS */}
       {selectedProduct && (

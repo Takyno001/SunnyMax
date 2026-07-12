@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight, ChevronRight, X, MessageSquare, Phone, Info } from "lucide-react";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const products = [
   {
@@ -76,8 +77,9 @@ export default function ProductsPage() {
   const filtered = activeCategory === "all" ? products : products.filter((p) => p.category === activeCategory);
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#121212] text-white font-sans selection:bg-[#ff5017] selection:text-white">
-      <Navbar />
+    <div className="relative min-h-screen bg-[#121212] text-white font-sans selection:bg-[#ff5017] selection:text-white overflow-x-hidden">
+      <div className="relative z-20 bg-[#121212] shadow-2xl">
+        <Navbar />
 
       {/* Hero Banner */}
       <section className="relative pt-32 pb-12 bg-[#121212] overflow-hidden">
@@ -192,7 +194,7 @@ export default function ProductsPage() {
       </section>
 
       {/* Contact Strip */}
-      <section className="py-16 bg-zinc-950 border-t border-white/5">
+      <section className="py-16 bg-zinc-950">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8">
           <div>
             <h2 className="text-3xl md:text-4xl font-black uppercase text-white mb-3">
@@ -204,27 +206,16 @@ export default function ProductsPage() {
             <a href="tel:0987654321" className="flex items-center gap-2 px-6 py-3 bg-[#ff5017] hover:bg-orange-700 text-white font-bold text-sm uppercase tracking-wider rounded-xl transition-colors">
               <Phone className="w-4 h-4" /> 0987.654.321
             </a>
-            <Link href="/#contact" className="flex items-center gap-2 px-6 py-3 border border-white/15 hover:border-[#ff5017] text-white hover:text-[#ff5017] font-bold text-sm uppercase tracking-wider rounded-xl transition-colors">
+            <a href="tel:0987654321" className="flex items-center gap-2 px-6 py-3 border border-white/15 hover:border-[#ff5017] text-white hover:text-[#ff5017] font-bold text-sm uppercase tracking-wider rounded-xl transition-colors">
               Gửi yêu cầu <ChevronRight className="w-4 h-4" />
-            </Link>
+            </a>
           </div>
         </div>
       </section>
 
+      </div>
       {/* Footer */}
-      <footer className="bg-zinc-950 text-zinc-500 text-sm border-t border-white/5 py-10">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex flex-col items-center md:items-start gap-2">
-            <img src="/truong_logo_cropped.png" alt="Truong Nguyen Logo" className="h-8 w-auto object-contain" />
-            <p className="text-xs text-zinc-600">© 2026 Truong Nguyen. Tất cả quyền được bảo lưu.</p>
-          </div>
-          <div className="flex flex-wrap justify-center gap-6 text-xs font-bold tracking-wider">
-            <Link href="/" className="hover:text-[#ff5017] transition-colors">Home</Link>
-            <Link href="/services" className="hover:text-[#ff5017] transition-colors">Services</Link>
-            <Link href="/products" className="hover:text-[#ff5017] transition-colors">Product</Link>
-          </div>
-        </div>
-      </footer>
+      <Footer />
 
       {/* Product Modal */}
       {selectedProduct && (
