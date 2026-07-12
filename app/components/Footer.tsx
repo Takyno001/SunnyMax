@@ -98,7 +98,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-[#121212] text-zinc-400 text-sm pt-16 pb-8 sticky bottom-0 z-10 overflow-hidden">
+    <footer className="bg-[#121212] text-zinc-400 text-sm pt-16 pb-8 overflow-hidden relative">
       {/* Background topographic pattern overlay */}
       <div 
         className="absolute bottom-0 left-0 right-0 h-[190px] pointer-events-none opacity-80 z-0"

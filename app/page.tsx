@@ -290,9 +290,96 @@ export default function Home() {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#121212] text-white font-sans selection:bg-primary selection:text-white">
+    <div className="relative min-h-screen text-white font-sans selection:bg-primary selection:text-white">
+      {/* ── Full-page fixed abstract background ── */}
+      <div
+        className="fixed inset-0 pointer-events-none"
+        style={{ zIndex: 0 }}
+      >
+        {/* Base: lighter dark */}
+        <div className="absolute inset-0" style={{ background: "#0f0f12" }} />
+
+        {/* Primary glow: blazing orange — bottom-right, much brighter */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `radial-gradient(ellipse 75% 60% at 95% 95%, rgba(255,80,23,0.85) 0%, rgba(255,80,23,0.4) 30%, rgba(255,80,23,0.1) 55%, transparent 70%)`,
+          }}
+        />
+
+        {/* Secondary glow: deep amber — top-left, brighter */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `radial-gradient(ellipse 60% 50% at 5% 5%, rgba(255,150,0,0.6) 0%, rgba(255,100,0,0.25) 40%, transparent 65%)`,
+          }}
+        />
+
+        {/* Accent glow: blue-purple — top-right */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `radial-gradient(ellipse 45% 40% at 90% 5%, rgba(120,80,255,0.35) 0%, rgba(90,50,220,0.12) 45%, transparent 65%)`,
+          }}
+        />
+
+        {/* Center mid-glow: warm light in the middle */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `radial-gradient(ellipse 60% 50% at 50% 50%, rgba(255,100,30,0.08) 0%, transparent 70%)`,
+          }}
+        />
+
+        {/* Grid lines — brighter */}
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(255,255,255,0.07) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(255,255,255,0.07) 1px, transparent 1px)
+            `,
+            backgroundSize: "60px 60px",
+          }}
+        />
+
+        {/* Sub-grid */}
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)
+            `,
+            backgroundSize: "20px 20px",
+          }}
+        />
+
+        {/* Diagonal orange streaks — brighter */}
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `repeating-linear-gradient(
+              -60deg,
+              transparent,
+              transparent 120px,
+              rgba(255,80,23,0.08) 120px,
+              rgba(255,80,23,0.08) 121px
+            )`,
+          }}
+        />
+
+        {/* Softer vignette */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `radial-gradient(ellipse 110% 110% at 50% 50%, transparent 50%, rgba(0,0,0,0.35) 100%)`,
+          }}
+        />
+      </div>
+
       {/* Scrollable Content Wrapper */}
-      <div className="relative z-20 bg-[#121212] shadow-2xl">
+      <div className="relative shadow-2xl" style={{ zIndex: 20 }}>
         {/* 1. HEADER / NAVBAR */}
         <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
           ? "bg-[#121212] shadow-lg"
@@ -672,42 +759,41 @@ export default function Home() {
             </div>
           </div>
         </section>
-        {/* 5. BRANDS/PARTNERS SECTION — fixed background parallax */}
+
+        {/* 5. BRANDS/PARTNERS SECTION — transparent window to abstract background */}
         <section
           id="brands"
-          className="py-20 relative"
-          style={{
-            /* The actual fixed background sits on these pseudo-layers */
-            isolation: "isolate",
-          }}
+          className="py-24 relative overflow-hidden"
+          style={{ background: "transparent" }}
         >
-          {/* Layer 1: solid dark background — fixed */}
+          {/* Glow 1: orange burst behind "Brand" text — left side */}
           <div
-            className="absolute inset-0 -z-10"
+            className="absolute inset-0 pointer-events-none"
             style={{
-              backgroundColor: "#0d0d0d",
-              backgroundAttachment: "fixed",
+              background: `radial-gradient(ellipse 40% 120% at 8% 50%, rgba(255,80,23,0.35) 0%, rgba(255,80,23,0.1) 50%, transparent 75%)`,
             }}
           />
-          {/* Layer 2: orange radial glow — fixed */}
+          {/* Glow 2: warm amber flowing toward SunnyMax — right side */}
           <div
-            className="absolute inset-0 -z-10 pointer-events-none"
+            className="absolute inset-0 pointer-events-none"
             style={{
-              background: `radial-gradient(ellipse 55% 110% at 78% 50%, rgba(255,80,23,0.14) 0%, rgba(255,80,23,0.05) 45%, transparent 68%)`,
-              backgroundAttachment: "fixed",
+              background: `radial-gradient(ellipse 50% 100% at 85% 50%, rgba(255,140,0,0.2) 0%, rgba(255,80,23,0.06) 55%, transparent 75%)`,
             }}
           />
-          {/* Layer 3: dot grid — fixed */}
+          {/* Horizontal connector beam left→right */}
           <div
-            className="absolute inset-0 -z-10 pointer-events-none opacity-25"
+            className="absolute pointer-events-none"
             style={{
-              backgroundImage: `radial-gradient(circle, rgba(255,255,255,0.18) 1px, transparent 1px)`,
-              backgroundSize: "28px 28px",
-              backgroundAttachment: "fixed",
+              top: "50%",
+              left: 0,
+              right: 0,
+              height: "1px",
+              background: `linear-gradient(90deg, rgba(255,80,23,0.6) 0%, rgba(255,140,0,0.4) 40%, rgba(255,80,23,0.2) 70%, transparent 100%)`,
+              transform: "translateY(-50%)",
             }}
           />
 
-          <div className="max-w-7xl mx-auto px-6 relative flex flex-col md:flex-row items-center justify-between gap-8 md:gap-16">
+          <div className="max-w-7xl mx-auto px-6 relative z-10 flex flex-col md:flex-row items-center justify-between gap-8 md:gap-16">
             {/* Left: Index & Title */}
             <div className="flex flex-col items-start">
               <span className="text-xs md:text-sm font-bold text-primary tracking-widest uppercase block mb-2">
@@ -727,6 +813,7 @@ export default function Home() {
                 color: "white",
                 letterSpacing: "0.04em",
                 lineHeight: 1,
+                textShadow: "0 0 40px rgba(255,140,0,0.4), 0 0 80px rgba(255,80,23,0.2)",
               }}
             >
               SunnyMax
@@ -825,14 +912,11 @@ export default function Home() {
               ))}
             </div>
           </div>
-        </section>
+        </section>        {/* 8. FOOTER — inside z-20 wrapper so it has solid bg */}
+        <Footer />
 
+      </div>{/* END z-20 scrollable wrapper */}
 
-
-      </div>
-
-      {/* 8. FOOTER */}
-      <Footer />
 
       {/* MODAL: PRODUCT DETAILS */}
       {selectedProduct && (

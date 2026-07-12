@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Outfit, Inter, Playfair_Display, Orbitron } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
+import ScrollToTop from "./components/ScrollToTop";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -45,7 +46,10 @@ export default function RootLayout({
       lang="vi"
       className={`${outfit.variable} ${inter.variable} ${playfair.variable} ${squadHeavy.variable} ${orbitron.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-sans bg-dark-bg text-white">{children}</body>
+      <body className="min-h-full flex flex-col font-sans bg-dark-bg text-white">
+        {children}
+        <ScrollToTop />
+      </body>
     </html>
   );
 }
