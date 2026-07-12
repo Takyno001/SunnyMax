@@ -126,6 +126,17 @@ export default function Home() {
     };
     window.addEventListener("scroll", handleScrollState);
     handleScrollState();
+
+    // Check search query parameter
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("search") === "open") {
+        setSearchModalOpen(true);
+        // Clean URL query parameter without triggering reload
+        window.history.replaceState({}, "", window.location.pathname);
+      }
+    }
+
     return () => window.removeEventListener("scroll", handleScrollState);
   }, []);
 
@@ -291,7 +302,7 @@ export default function Home() {
     <div className="flex flex-col min-h-screen bg-dark-bg text-white font-sans selection:bg-primary selection:text-white">
       {/* 1. HEADER / NAVBAR */}
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
-        ? "backdrop-blur-md bg-dark-bg/90 border-b border-white/5"
+        ? "backdrop-blur-md bg-[#121212]/95 border-b border-white/10 shadow-lg"
         : "bg-transparent border-b border-transparent"
         }`}>
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-24">
@@ -451,31 +462,51 @@ export default function Home() {
 
       {/* 3. SERVICES SECTION */}
       <section id="services" className="py-24 bg-dark-bg relative overflow-hidden">
-        {/* Outlined background text */}
-        <div className="absolute -top-10 left-10 select-none pointer-events-none opacity-20 z-0">
-          <span className="text-stroke-bg text-[10vw] font-display font-extrabold uppercase leading-none">
-            Services
-          </span>
-        </div>
-
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           {/* Section header */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
-            <div>
-              <span className="text-xs md:text-sm font-bold text-primary tracking-widest uppercase block mb-2">
-                01. DỊCH VỤ
-              </span>
-              <h2 className="text-3xl md:text-5xl font-display font-black text-white uppercase tracking-tight">
-                TÔI CÓ THỂ GIÚP GÌ?
-              </h2>
+          <div className="flex flex-col gap-6 mb-16">
+            {/* Title & Button row */}
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+              <div className="relative flex flex-col items-start w-full md:w-auto">
+                <span className="text-xs md:text-sm font-bold text-primary tracking-widest uppercase block mb-8 relative z-20">
+                  01.
+                </span>
+                
+                {/* Title wrapper */}
+                <div className="relative flex items-center justify-start" style={{ height: "90px", width: "100%" }}>
+                  {/* Ghost: paint-order stroke fill — clean outline, no inner artifacts */}
+                  <span
+                    aria-hidden="true"
+                    suppressHydrationWarning
+                    className="ghost-title absolute font-display font-black pointer-events-none select-none"
+                    style={{
+                      fontSize: "clamp(80px, 12vw, 150px)",
+                      lineHeight: 1,
+                      whiteSpace: "nowrap",
+                      left: "-5px",
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                    }}
+                  >
+                    Services
+                  </span>
+                  {/* Solid foreground */}
+                  <h2 className="relative z-10 font-display font-black leading-none text-white tracking-tight pl-8" style={{ fontSize: "clamp(48px, 7vw, 80px)" }}>
+                    Services
+                  </h2>
+                </div>
+              </div>
+
+              <Link
+                href="/services"
+                className="px-6 py-3.5 bg-zinc-800/80 hover:bg-black border border-white/5 text-white text-xs font-bold tracking-widest uppercase rounded-xl transition-all flex items-center gap-2 group w-fit h-fit self-start md:self-end md:mb-2"
+              >
+                Xem Toàn Bộ Dịch Vụ <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </Link>
             </div>
-            <a
-              href="#contact"
-              onClick={(e) => handleScroll(e, "contact")}
-              className="px-6 py-2.5 border border-white/15 hover:border-primary text-white hover:text-primary text-xs font-bold tracking-widest uppercase rounded transition-all flex items-center gap-2 group w-fit"
-            >
-              Yêu Cầu Dịch Vụ <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-            </a>
+
+            {/* Divider line */}
+            <div className="border-t border-white/5"></div>
           </div>
 
           {/* Cards grid */}
@@ -525,27 +556,52 @@ export default function Home() {
 
       {/* 4. PRODUCTS SECTION */}
       <section id="products" className="py-24 bg-zinc-950 relative overflow-hidden border-t border-b border-white/5">
-        {/* Outlined background text */}
-        <div className="absolute -top-10 right-10 select-none pointer-events-none opacity-20 z-0">
-          <span className="text-stroke-bg text-[10vw] font-display font-extrabold uppercase leading-none">
-            Products
-          </span>
-        </div>
-
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           {/* Section header */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
-            <div>
-              <span className="text-xs md:text-sm font-bold text-primary tracking-widest uppercase block mb-2">
-                02. SẢN PHẨM NỔI BẬT
-              </span>
-              <h2 className="text-3xl md:text-5xl font-display font-black text-white uppercase tracking-tight">
-                THIẾT BỊ ĐIỆN CAO CẤP
-              </h2>
+          <div className="flex flex-col gap-6 mb-16">
+            {/* Title & Button row */}
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+              <div className="relative flex flex-col items-start w-full md:w-auto">
+                <span className="text-xs md:text-sm font-bold text-primary tracking-widest uppercase block mb-8 relative z-20">
+                  02.
+                </span>
+                
+                {/* Title wrapper */}
+                <div className="relative flex items-center justify-start" style={{ height: "90px", width: "100%" }}>
+                  {/* Ghost: paint-order stroke fill — clean outline, no inner artifacts */}
+                  <span
+                    aria-hidden="true"
+                    suppressHydrationWarning
+                    className="ghost-title absolute font-display font-black pointer-events-none select-none"
+                    style={{
+                      fontSize: "clamp(80px, 12vw, 150px)",
+                      lineHeight: 1,
+                      whiteSpace: "nowrap",
+                      left: "-5px",
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      color: "#09090b",
+                    }}
+                  >
+                    Products
+                  </span>
+                  {/* Solid foreground */}
+                  <h2 className="relative z-10 font-display font-black leading-none text-white tracking-tight pl-8" style={{ fontSize: "clamp(48px, 7vw, 80px)" }}>
+                    Products
+                  </h2>
+                </div>
+              </div>
+
+              <Link
+                href="/products"
+                className="px-6 py-3.5 bg-zinc-800/80 hover:bg-black border border-white/5 text-white text-xs font-bold tracking-widest uppercase rounded-xl transition-all flex items-center gap-2 group w-fit h-fit self-start md:self-end md:mb-2"
+              >
+                Xem Toàn Bộ Sản Phẩm <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </Link>
             </div>
 
-            {/* Filter categories */}
-            <div className="flex flex-wrap gap-2">
+            {/* Filter categories row */}
+            <div className="flex flex-wrap gap-2 border-t border-white/5 pt-6">
               {[
                 { id: "all", label: "Tất Cả" },
                 { id: "smarthome", label: "Điện Thông Minh" },
@@ -618,7 +674,7 @@ export default function Home() {
               onClick={() => {
                 alert("Danh mục đầy đủ sản phẩm sẽ được gửi qua Zalo/Email. Vui lòng để lại lời nhắn hoặc liên hệ trực tiếp.");
               }}
-              className="px-8 py-3.5 bg-zinc-900 border border-white/10 hover:border-primary text-white hover:text-primary text-xs font-bold tracking-widest uppercase rounded transition-all cursor-pointer"
+              className="px-8 py-3.5 bg-zinc-900 border border-white/10 hover:border-primary text-white hover:text-primary text-xs font-bold tracking-widest uppercase rounded-xl transition-all cursor-pointer"
             >
               Yêu Cầu Tải Báo Giá Catalog PDF
             </button>

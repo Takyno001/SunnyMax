@@ -76,7 +76,7 @@ export default function Navbar({ onSearchOpen }: NavbarProps) {
 
         {/* Action Tools */}
         <div className="hidden md:flex items-center gap-6">
-          {onSearchOpen && (
+          {onSearchOpen ? (
             <button
               onClick={onSearchOpen}
               className="text-zinc-400 hover:text-[#ff5017] transition-colors cursor-pointer"
@@ -84,6 +84,14 @@ export default function Navbar({ onSearchOpen }: NavbarProps) {
             >
               <Search className="w-5 h-5" />
             </button>
+          ) : (
+            <Link
+              href="/?search=open"
+              className="text-zinc-400 hover:text-[#ff5017] transition-colors cursor-pointer"
+              aria-label="Tìm kiếm"
+            >
+              <Search className="w-5 h-5" />
+            </Link>
           )}
           <Link
             href="/#contact"
@@ -95,7 +103,7 @@ export default function Navbar({ onSearchOpen }: NavbarProps) {
 
         {/* Mobile Navigation Toggle */}
         <div className="flex md:hidden items-center gap-4">
-          {onSearchOpen && (
+          {onSearchOpen ? (
             <button
               onClick={onSearchOpen}
               className="text-zinc-400 hover:text-[#ff5017] transition-colors"
@@ -103,6 +111,14 @@ export default function Navbar({ onSearchOpen }: NavbarProps) {
             >
               <Search className="w-5 h-5" />
             </button>
+          ) : (
+            <Link
+              href="/?search=open"
+              className="text-zinc-400 hover:text-[#ff5017] transition-colors"
+              aria-label="Tìm kiếm"
+            >
+              <Search className="w-5 h-5" />
+            </Link>
           )}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
