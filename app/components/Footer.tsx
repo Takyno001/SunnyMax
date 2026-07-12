@@ -122,7 +122,7 @@ export default function Footer() {
   return (
     <footer
       ref={footerRef}
-      className="fixed inset-x-0 bottom-0 z-10 bg-[#121212] text-zinc-400 text-sm pt-16 pb-8 overflow-hidden"
+      className="fixed inset-x-0 bottom-0 z-0 bg-[#121212] text-zinc-400 text-sm pt-16 pb-8 overflow-hidden"
     >
       {/* Background topographic pattern overlay */}
       <div 

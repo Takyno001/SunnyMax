@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Footer from "./components/Footer";
@@ -116,6 +116,8 @@ export default function Home() {
   const [formData, setFormData] = useState({ name: "", phone: "", email: "", message: "" });
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const [scrolled, setScrolled] = useState(false);
+  const contentWrapperRef = useRef<HTMLDivElement>(null);
+  const abstractBackgroundRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScrollState = () => {
@@ -141,6 +143,32 @@ export default function Home() {
     return () => window.removeEventListener("scroll", handleScrollState);
   }, []);
 
+
+  useEffect(() => {
+    const updateAbstractReveal = () => {
+      const contentWrapper = contentWrapperRef.current;
+      const abstractBackground = abstractBackgroundRef.current;
+      if (!contentWrapper || !abstractBackground) return;
+
+      const bottomGap = Math.max(
+        0,
+        window.innerHeight - contentWrapper.getBoundingClientRect().bottom,
+      );
+      abstractBackground.style.setProperty(
+        "--abstract-bottom-inset",
+        `${bottomGap}px`,
+      );
+    };
+
+    updateAbstractReveal();
+    window.addEventListener("scroll", updateAbstractReveal, { passive: true });
+    window.addEventListener("resize", updateAbstractReveal);
+
+    return () => {
+      window.removeEventListener("scroll", updateAbstractReveal);
+      window.removeEventListener("resize", updateAbstractReveal);
+    };
+  }, []);
   // Smooth scroll handler
   const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, targetId: string) => {
     e.preventDefault();
@@ -293,8 +321,12 @@ export default function Home() {
     <div className="relative min-h-screen text-white font-sans selection:bg-primary selection:text-white">
       {/* Full-page fixed abstract background */}
       <div
+        ref={abstractBackgroundRef}
         className="fixed inset-0 pointer-events-none"
-        style={{ zIndex: 0 }}
+        style={{
+          zIndex: 10,
+          clipPath: "inset(0 0 var(--abstract-bottom-inset, 0px) 0)",
+        }}
       >
         {/* Base: lighter dark */}
         <div className="absolute inset-0" style={{ background: "#0f0f12" }} />
@@ -378,7 +410,7 @@ export default function Home() {
         />
       </div>
       {/* Scrollable Content Wrapper */}
-      <div className="relative z-20 min-h-screen shadow-2xl">
+      <div ref={contentWrapperRef} className="relative z-20 min-h-screen shadow-2xl">
         {/* 1. HEADER / NAVBAR */}
         <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
           ? "bg-[#121212] shadow-lg"
