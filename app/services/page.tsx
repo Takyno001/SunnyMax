@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { Cpu, Zap, Wrench, Users, Briefcase, Layers, Award, ChevronRight, Phone, Mail, MapPin, Info } from "lucide-react";
+import { Cpu, Zap, Wrench, Home, Lightbulb, Plug, ShieldCheck, Users, Wifi, Briefcase, Layers, Award, ChevronRight, Phone, Mail, MapPin, Info } from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { CONTENT_STORAGE_KEYS, DashboardService, readStoredContent } from "../lib/content";
@@ -41,6 +41,11 @@ const stats = [
   { icon: <Award className="w-6 h-6 text-[#ff5017]" />, value: "10+", label: "Năm Trong Ngành" },
 ];
 
+const customServiceIconMap = { Cpu, Zap, Wrench, Home, Lightbulb, Plug, ShieldCheck, Wifi };
+function CustomServiceIcon({ name }: { name?: string }) {
+  const Icon = customServiceIconMap[name as keyof typeof customServiceIconMap] ?? Wrench;
+  return <Icon className="h-8 w-8 text-[#ff5017]" />;
+}
 export default function ServicesPage() {
   const [customServices, setCustomServices] = useState<DashboardService[]>([]);
   useEffect(() => {
@@ -54,7 +59,7 @@ export default function ServicesPage() {
     ...customServices.map((service, index) => ({
       ...service,
       num: String(services.length + index + 1).padStart(2, "0"),
-      icon: <Wrench className="h-8 w-8 text-[#ff5017]" />,
+      icon: <CustomServiceIcon name={service.icon} />,
     })),
   ];
 

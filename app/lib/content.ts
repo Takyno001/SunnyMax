@@ -21,6 +21,7 @@ export type DashboardProduct = {
   spec: string;
   sourceUrl?: string;
   createdAt?: string;
+  updatedAt?: string;
 };
 
 export type DashboardPost = {
@@ -32,6 +33,7 @@ export type DashboardPost = {
   image: string;
   sourceUrl?: string;
   createdAt?: string;
+  updatedAt?: string;
 };
 
 export type DashboardService = {
@@ -40,6 +42,9 @@ export type DashboardService = {
   title: string;
   description: string;
   detail: string;
+  icon?: string;
+  createdAt?: string;
+  updatedAt?: string;
 };
 
 export const CONTENT_STORAGE_KEYS = {
@@ -65,4 +70,6 @@ export function readStoredContent<T>(key: string): T[] {
 
 export function writeStoredContent<T>(key: string, items: T[]) {
   window.localStorage.setItem(key, JSON.stringify(items));
+  const type = key === CONTENT_STORAGE_KEYS.products ? "products" : key === CONTENT_STORAGE_KEYS.posts ? "posts" : key === CONTENT_STORAGE_KEYS.services ? "services" : key === CONTENT_STORAGE_KEYS.categories ? "categories" : "";
+  if (type) void fetch("/api/content", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ type, items }) });
 }

@@ -27,6 +27,17 @@ import {
   Info
 } from "lucide-react";
 
+function formatBlogDate(value: string) {
+  const trimmed = value.trim();
+  const isoMatch = trimmed.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/);
+
+  if (isoMatch) {
+    return `${isoMatch[3]}/${isoMatch[2]}/${isoMatch[1]} ${isoMatch[4]}:${isoMatch[5]}`;
+  }
+
+  return trimmed.replace("T", " ");
+}
+
 const FacebookIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     viewBox="0 0 24 24"
@@ -807,58 +818,17 @@ export default function Home() {
           className="py-24 relative overflow-hidden"
           style={{ background: "transparent" }}
         >
-          {/* Glow 1: orange burst behind "Brand" text — left side */}
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              background: `radial-gradient(ellipse 40% 120% at 8% 50%, rgba(255,80,23,0.35) 0%, rgba(255,80,23,0.1) 50%, transparent 75%)`,
-            }}
-          />
-          {/* Glow 2: warm amber flowing toward SunnyMax — right side */}
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              background: `radial-gradient(ellipse 50% 100% at 85% 50%, rgba(255,140,0,0.2) 0%, rgba(255,80,23,0.06) 55%, transparent 75%)`,
-            }}
-          />
-          {/* Horizontal connector beam left→right */}
-          <div
-            className="absolute pointer-events-none"
-            style={{
-              top: "50%",
-              left: 0,
-              right: 0,
-              height: "1px",
-              background: `linear-gradient(90deg, rgba(255,80,23,0.6) 0%, rgba(255,140,0,0.4) 40%, rgba(255,80,23,0.2) 70%, transparent 100%)`,
-              transform: "translateY(-50%)",
-            }}
-          />
-
+          <div className="absolute inset-0 pointer-events-none" style={{ background: `radial-gradient(ellipse 40% 120% at 8% 50%, rgba(255,80,23,0.35) 0%, rgba(255,80,23,0.1) 50%, transparent 75%)` }} />
+          <div className="absolute inset-0 pointer-events-none" style={{ background: `radial-gradient(ellipse 50% 100% at 85% 50%, rgba(255,140,0,0.2) 0%, rgba(255,80,23,0.06) 55%, transparent 75%)` }} />
+          <div className="absolute pointer-events-none" style={{ top: "50%", left: 0, right: 0, height: "1px", background: `linear-gradient(90deg, rgba(255,80,23,0.6) 0%, rgba(255,140,0,0.4) 40%, rgba(255,80,23,0.2) 70%, transparent 100%)`, transform: "translateY(-50%)" }} />
           <div className="max-w-7xl mx-auto px-6 relative z-10 flex flex-col md:flex-row items-center justify-between gap-8 md:gap-16">
-            {/* Left: Index & Title */}
             <div className="flex flex-col items-start">
-              <span className="text-xs md:text-sm font-bold text-primary tracking-widest uppercase block mb-2">
-                03.
-              </span>
-              <h2 className="text-4xl md:text-5xl font-display font-black text-white uppercase tracking-tight">
-                Brand
-              </h2>
+              <span className="text-xs md:text-sm font-bold text-primary tracking-widest uppercase block mb-2">03.</span>
+              <h2 className="text-5xl md:text-6xl font-display font-black text-white uppercase tracking-tight">Brand</h2>
             </div>
-
-            {/* Right: SunnyMax logo */}
-            <span
-              style={{
-                fontFamily: "var(--font-orbitron)",
-                fontWeight: 900,
-                fontSize: "clamp(40px, 6vw, 80px)",
-                color: "white",
-                letterSpacing: "0.04em",
-                lineHeight: 1,
-                textShadow: "0 0 40px rgba(255,140,0,0.4), 0 0 80px rgba(255,80,23,0.2)",
-              }}
-            >
-              SunnyMax
-            </span>
+            <div className="flex min-w-0 items-center justify-center md:justify-end">
+              <img src="/sunnymax.png" alt="SunnyMax" className="h-auto w-[min(44vw,340px)] object-contain" />
+            </div>
           </div>
         </section>
 
@@ -933,7 +903,7 @@ export default function Home() {
 
                   {/* Blog Content */}
                   <div className="p-6 flex flex-col flex-1">
-                    <span className="text-zinc-500 text-xs mb-3 block">{blog.date}</span>
+                    <span className="text-zinc-500 text-xs mb-3 block">{formatBlogDate(blog.date)}</span>
                     <h3 className="text-lg font-bold text-white mb-3 group-hover:text-primary transition-colors line-clamp-2">
                       {blog.title}
                     </h3>
