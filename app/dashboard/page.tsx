@@ -7,6 +7,7 @@ import { ArrowDown, ArrowLeft, ArrowUp, GripVertical, BookOpen, ChevronLeft, Che
 import { CONTENT_STORAGE_KEYS, DEFAULT_PRODUCT_CATEGORIES, type DashboardCategory, type DashboardPost, type DashboardProduct, type DashboardService, readStoredContent, writeStoredContent } from "../lib/content";
 import { products as websiteProducts } from "../products/page";
 import { services as websiteServices } from "../services/page";
+import { defaultNews as websiteNews } from "../news/page";
 
 type Section = "overview" | "categories" | "products" | "posts" | "services";
 type ItemType = "categories" | "products" | "posts" | "services";
@@ -26,6 +27,11 @@ const defaultDashboardServices: DashboardService[] = websiteServices.map((servic
   icon: ["Cpu", "Zap", "Wrench"][index] ?? "Wrench",
   createdAt: "2026-01-01T00:00:00.000Z",
   updatedAt: "2026-01-01T00:00:00.000Z",
+}));
+
+const defaultDashboardPosts: DashboardPost[] = websiteNews.map((post) => ({
+  ...post,
+  id: post.id,
 }));
 
 function mergeDefaultContent<T extends IdentifiedContent>(defaults: T[], stored: T[]) {
@@ -117,10 +123,10 @@ const emptyPost: Omit<DashboardPost, "id"> = { category: "Kiến thức điện"
 const emptyService: Omit<DashboardService, "id" | "num"> = { title: "", description: "", detail: "", icon: "Wrench" };
 const navItems: { id: Section; label: string; icon: typeof LayoutDashboard }[] = [
   { id: "overview", label: "Tổng quan", icon: LayoutDashboard },
+  { id: "services", label: "Dịch vụ", icon: Wrench },
   { id: "categories", label: "Danh mục", icon: FolderPlus },
   { id: "products", label: "Sản phẩm", icon: Package },
   { id: "posts", label: "Bài viết", icon: BookOpen },
-  { id: "services", label: "Dịch vụ", icon: Wrench },
 ];
 
 function Field({ label, children, hint }: FieldProps) {
@@ -164,14 +170,14 @@ export default function DashboardPage() {
       const localServices = readStoredContent<DashboardService>(CONTENT_STORAGE_KEYS.services);
       const localCategories = readStoredContent<DashboardCategory>(CONTENT_STORAGE_KEYS.categories);
       setProducts(mergeDefaultContent(defaultDashboardProducts, localProducts));
-      setPosts(localPosts);
+      setPosts(mergeDefaultContent(defaultDashboardPosts, localPosts));
       setServices(mergeDefaultContent(defaultDashboardServices, localServices));
       const saved = localCategories;
       if (saved.length) setCategories(saved);
       void fetch("/api/content").then((response) => response.ok ? response.json() : null).then((data: { storedTypes?: string[]; products?: DashboardProduct[]; posts?: DashboardPost[]; services?: DashboardService[]; categories?: DashboardCategory[] } | null) => {
         if (!data) return;
         if (data.storedTypes?.includes("products")) { const merged = mergeDefaultContent(defaultDashboardProducts, data.products ?? []); setProducts(merged); if (merged.length !== (data.products ?? []).length) writeStoredContent(CONTENT_STORAGE_KEYS.products, merged); } else writeStoredContent(CONTENT_STORAGE_KEYS.products, mergeDefaultContent(defaultDashboardProducts, localProducts));
-        if (data.storedTypes?.includes("posts")) setPosts(data.posts ?? []); else if (localPosts.length) writeStoredContent(CONTENT_STORAGE_KEYS.posts, localPosts);
+        if (data.storedTypes?.includes("posts")) { const merged = mergeDefaultContent(defaultDashboardPosts, data.posts ?? []); setPosts(merged); if (merged.length !== (data.posts ?? []).length) writeStoredContent(CONTENT_STORAGE_KEYS.posts, merged); } else writeStoredContent(CONTENT_STORAGE_KEYS.posts, mergeDefaultContent(defaultDashboardPosts, localPosts));
         if (data.storedTypes?.includes("services")) { const merged = mergeDefaultContent(defaultDashboardServices, data.services ?? []); setServices(merged); if (merged.length !== (data.services ?? []).length) writeStoredContent(CONTENT_STORAGE_KEYS.services, merged); } else writeStoredContent(CONTENT_STORAGE_KEYS.services, mergeDefaultContent(defaultDashboardServices, localServices));
         if (data.storedTypes?.includes("categories")) setCategories(data.categories ?? []); else if (localCategories.length) writeStoredContent(CONTENT_STORAGE_KEYS.categories, localCategories);
       }).catch(() => undefined);

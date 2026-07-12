@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Footer from "./components/Footer";
-import { CONTENT_STORAGE_KEYS, DashboardPost, readStoredContent } from "./lib/content";
+import { CONTENT_STORAGE_KEYS, DashboardPost, readStoredContent, type DashboardProduct, type DashboardCategory, type DashboardService } from "./lib/content";
 import {
   Menu,
   X,
@@ -16,6 +16,11 @@ import {
   Cpu,
   Wrench,
   Zap,
+  Home as HomeIcon,
+  Lightbulb,
+  Plug,
+  ShieldCheck,
+  Wifi,
   Users,
   Briefcase,
   Layers,
@@ -119,6 +124,12 @@ const TiktokIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
+const customServiceIconMap = { Cpu, Zap, Wrench, Home: HomeIcon, Lightbulb, Plug, ShieldCheck, Wifi };
+function CustomServiceIcon({ name }: { name?: string }) {
+  const Icon = customServiceIconMap[name as keyof typeof customServiceIconMap] ?? Wrench;
+  return <Icon className="w-8 h-8 text-primary" />;
+}
+
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchModalOpen, setSearchModalOpen] = useState(false);
@@ -129,8 +140,16 @@ export default function Home() {
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const [scrolled, setScrolled] = useState(false);
   const [customBlogs, setCustomBlogs] = useState<DashboardPost[]>([]);
+  const [customProducts, setCustomProducts] = useState<DashboardProduct[]>([]);
+  const [customCategories, setCustomCategories] = useState<DashboardCategory[]>([]);
+  const [customServices, setCustomServices] = useState<DashboardService[]>([]);
   useEffect(() => {
-    const timer = window.setTimeout(() => setCustomBlogs(readStoredContent<DashboardPost>(CONTENT_STORAGE_KEYS.posts)), 0);
+    const timer = window.setTimeout(() => {
+      setCustomBlogs(readStoredContent<DashboardPost>(CONTENT_STORAGE_KEYS.posts));
+      setCustomProducts(readStoredContent<DashboardProduct>(CONTENT_STORAGE_KEYS.products));
+      setCustomCategories(readStoredContent<DashboardCategory>(CONTENT_STORAGE_KEYS.categories));
+      setCustomServices(readStoredContent<DashboardService>(CONTENT_STORAGE_KEYS.services));
+    }, 0);
     return () => window.clearTimeout(timer);
   }, []);
 
@@ -261,9 +280,30 @@ export default function Home() {
     }
   ];
 
+  const allProducts = customProducts.length > 0
+    ? customProducts.map((item) => {
+        if (item.id.startsWith("website-product-")) {
+          const numId = parseInt(item.id.replace("website-product-", ""), 10);
+          return { ...item, id: numId };
+        }
+        return item;
+      })
+    : products;
+
+  const storedCategoryNames = new Map(customCategories.map((item) => [item.id, item.name]));
+  const visibleCategories = [
+    { id: "all", label: "Tất Cả" },
+    ...[
+      { id: "smarthome", label: "Điện Thông Minh" },
+      { id: "lighting", label: "Chiếu Sáng" },
+      { id: "breaker", label: "Cáp & Bảo Vệ" }
+    ].map((category) => ({ ...category, label: storedCategoryNames.get(category.id) ?? category.label })),
+    ...customCategories.filter((item) => !["smarthome", "lighting", "breaker"].includes(item.id))
+  ];
+
   const filteredProducts = activeCategory === "all"
-    ? products
-    : products.filter(p => p.category === activeCategory);
+    ? allProducts
+    : allProducts.filter(p => p.category === activeCategory);
 
 
   const defaultBlogs = [
@@ -294,7 +334,15 @@ export default function Home() {
   ];
 
 
-  const blogs = [...defaultBlogs, ...customBlogs];
+  const allServices = customServices.length > 0
+    ? customServices.map((service, index) => ({
+        ...service,
+        num: String(index + 1).padStart(2, "0"),
+        icon: <CustomServiceIcon name={service.icon} />,
+      }))
+    : services;
+
+  const blogs = customBlogs.length > 0 ? customBlogs : defaultBlogs;
 
   const handleContactSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -620,7 +668,7 @@ export default function Home() {
 
             {/* Cards grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
-              {services.map((svc, idx) => (
+              {allServices.map((svc, idx) => (
                 <div
                   key={idx}
                   className="bg-card-bg border border-white/5 rounded-xl p-8 hover:bg-card-hover transition-all duration-300 hover:-translate-y-2 group"
@@ -711,12 +759,7 @@ export default function Home() {
 
               {/* Filter categories row */}
               <div className="flex flex-wrap gap-2 border-t border-white/5 pt-6">
-                {[
-                  { id: "all", label: "Tất Cả" },
-                  { id: "smarthome", label: "Điện Thông Minh" },
-                  { id: "lighting", label: "Chiếu Sáng" },
-                  { id: "breaker", label: "Cáp & Bảo Vệ" }
-                ].map((cat) => (
+                {visibleCategories.map((cat) => (
                   <button
                     key={cat.id}
                     onClick={() => setActiveCategory(cat.id)}
@@ -725,7 +768,7 @@ export default function Home() {
                       : "bg-zinc-900 border border-white/5  text-zinc-400 hover:text-white"
                       }`}
                   >
-                    {cat.label}
+                    {"name" in cat ? cat.name : cat.label}
                   </button>
                 ))}
               </div>
@@ -757,7 +800,7 @@ export default function Home() {
                     />
 
                     <span className="absolute bottom-4 left-4 z-20 px-2.5 py-1 bg-black/70 backdrop-blur-sm text-[10px] font-bold uppercase tracking-wider text-primary border border-primary/20 rounded">
-                      {prod.categoryName}
+                      {storedCategoryNames.get(prod.category) ?? prod.categoryName}
                     </span>
                   </div>
 
@@ -922,7 +965,7 @@ export default function Home() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-card-bg to-transparent"></div>
               <span className="absolute bottom-4 left-6 z-10 px-3 py-1 bg-primary text-white text-xs font-bold uppercase tracking-wider rounded">
-                {selectedProduct.categoryName}
+                {storedCategoryNames.get(selectedProduct.category) ?? selectedProduct.categoryName}
               </span>
             </div>
 
@@ -996,15 +1039,15 @@ export default function Home() {
               <span className="block text-[10px] text-zinc-500 uppercase font-bold tracking-widest mb-3">Kết quả gợi ý:</span>
               <div className="space-y-2 max-h-60 overflow-y-auto pr-1">
                 {searchQuery ? (
-                  products.filter(p =>
+                  allProducts.filter(p =>
                     p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                     p.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                    p.categoryName.toLowerCase().includes(searchQuery.toLowerCase())
+                    (storedCategoryNames.get(p.category) ?? p.categoryName).toLowerCase().includes(searchQuery.toLowerCase())
                   ).length > 0 ? (
-                    products.filter(p =>
+                    allProducts.filter(p =>
                       p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                       p.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                      p.categoryName.toLowerCase().includes(searchQuery.toLowerCase())
+                      (storedCategoryNames.get(p.category) ?? p.categoryName).toLowerCase().includes(searchQuery.toLowerCase())
                     ).map(p => (
                       <div
                         key={p.id}
@@ -1019,7 +1062,7 @@ export default function Home() {
                           <img src={p.image} alt="" className="w-10 h-10 object-cover rounded bg-zinc-800" />
                           <div>
                             <span className="block text-sm font-bold text-white group-hover:text-primary transition-colors">{p.title}</span>
-                            <span className="text-[10px] text-zinc-500 uppercase tracking-widest">{p.categoryName}</span>
+                            <span className="text-[10px] text-zinc-500 uppercase tracking-widest">{storedCategoryNames.get(p.category) ?? p.categoryName}</span>
                           </div>
                         </div>
                         <ChevronRight className="w-4 h-4 text-zinc-500 group-hover:text-white transition-colors" />
@@ -1032,36 +1075,46 @@ export default function Home() {
                   )
                 ) : (
                   <>
-                    <div
-                      onClick={() => {
-                        setSelectedProduct(products[0]);
-                        setSearchModalOpen(false);
-                      }}
-                      className="flex items-center justify-between p-3 bg-zinc-900/60 hover:bg-zinc-900 rounded border border-white/5 cursor-pointer text-sm text-zinc-300 hover:text-white"
-                    >
-                      <span>1. Công tắc thông minh cảm ứng</span>
-                      <span className="text-[10px] text-primary font-bold uppercase tracking-wider">Hot</span>
-                    </div>
-                    <div
-                      onClick={() => {
-                        setSelectedProduct(products[1]);
-                        setSearchModalOpen(false);
-                      }}
-                      className="flex items-center justify-between p-3 bg-zinc-900/60 hover:bg-zinc-900 rounded border border-white/5 cursor-pointer text-sm text-zinc-300 hover:text-white"
-                    >
-                      <span>2. Hệ đèn ray nam châm chìm trần</span>
-                      <span className="text-[10px] text-zinc-500 uppercase tracking-widest">Chiếu sáng</span>
-                    </div>
-                    <div
-                      onClick={() => {
-                        setSelectedProduct(products[2]);
-                        setSearchModalOpen(false);
-                      }}
-                      className="flex items-center justify-between p-3 bg-zinc-900/60 hover:bg-zinc-900 rounded border border-white/5 cursor-pointer text-sm text-zinc-300 hover:text-white"
-                    >
-                      <span>3. Aptomat chống giật Panasonic</span>
-                      <span className="text-[10px] text-zinc-500 uppercase tracking-widest">Bảo vệ</span>
-                    </div>
+                    {allProducts[0] && (
+                      <div
+                        onClick={() => {
+                          setSelectedProduct(allProducts[0]);
+                          setSearchModalOpen(false);
+                        }}
+                        className="flex items-center justify-between p-3 bg-zinc-900/60 hover:bg-zinc-900 rounded border border-white/5 cursor-pointer text-sm text-zinc-300 hover:text-white"
+                      >
+                        <span>1. {allProducts[0].title}</span>
+                        <span className="text-[10px] text-primary font-bold uppercase tracking-wider">Hot</span>
+                      </div>
+                    )}
+                    {allProducts[1] && (
+                      <div
+                        onClick={() => {
+                          setSelectedProduct(allProducts[1]);
+                          setSearchModalOpen(false);
+                        }}
+                        className="flex items-center justify-between p-3 bg-zinc-900/60 hover:bg-zinc-900 rounded border border-white/5 cursor-pointer text-sm text-zinc-300 hover:text-white"
+                      >
+                        <span>2. {allProducts[1].title}</span>
+                        <span className="text-[10px] text-zinc-500 uppercase tracking-widest">
+                          {storedCategoryNames.get(allProducts[1].category) ?? allProducts[1].categoryName}
+                        </span>
+                      </div>
+                    )}
+                    {allProducts[2] && (
+                      <div
+                        onClick={() => {
+                          setSelectedProduct(allProducts[2]);
+                          setSearchModalOpen(false);
+                        }}
+                        className="flex items-center justify-between p-3 bg-zinc-900/60 hover:bg-zinc-900 rounded border border-white/5 cursor-pointer text-sm text-zinc-300 hover:text-white"
+                      >
+                        <span>3. {allProducts[2].title}</span>
+                        <span className="text-[10px] text-zinc-500 uppercase tracking-widest">
+                          {storedCategoryNames.get(allProducts[2].category) ?? allProducts[2].categoryName}
+                        </span>
+                      </div>
+                    )}
                   </>
                 )}
               </div>

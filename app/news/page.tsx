@@ -19,7 +19,7 @@ function formatNewsDate(value: string) {
   return trimmed.replace("T", " ");
 }
 
-const defaultNews: DashboardPost[] = [
+export const defaultNews: DashboardPost[] = [
   {
     id: "default-safety-cable",
     category: "An Toàn Điện",
@@ -58,7 +58,7 @@ export default function NewsPage() {
     return () => window.clearTimeout(timer);
   }, []);
 
-  const news = [...defaultNews, ...customNews];
+  const news = customNews.length > 0 ? customNews : defaultNews;
   const pageCount = Math.max(1, Math.ceil(news.length / 9));
   const paginatedNews = news.slice((page - 1) * 9, page * 9);
 

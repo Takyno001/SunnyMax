@@ -50,19 +50,13 @@ export default function ServicesPage() {
   }, []);
 
 
-  const savedDefaultServices = new Map(customServices.map((item) => [item.id, item]));
-  const defaultServiceIds = new Set(services.map((item) => `website-service-${item.num}`));
-  const allServices = [
-    ...services.map((service) => {
-      const saved = savedDefaultServices.get(`website-service-${service.num}`);
-      return saved ? { ...service, ...saved, icon: <CustomServiceIcon name={saved.icon} /> } : service;
-    }),
-    ...customServices.filter((service) => !defaultServiceIds.has(service.id)).map((service, index) => ({
-      ...service,
-      num: String(services.length + index + 1).padStart(2, "0"),
-      icon: <CustomServiceIcon name={service.icon} />,
-    })),
-  ];
+  const allServices = customServices.length > 0
+    ? customServices.map((service, index) => ({
+        ...service,
+        num: String(index + 1).padStart(2, "0"),
+        icon: <CustomServiceIcon name={service.icon} />,
+      }))
+    : services;
 
   const pageCount = Math.max(1, Math.ceil(allServices.length / 9));
   const paginatedServices = allServices.slice((page - 1) * 9, page * 9);

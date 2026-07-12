@@ -87,9 +87,15 @@ export default function ProductsPage() {
   }, []);
 
 
-  const savedDefaultProducts = new Map(customProducts.map((item) => [item.id, item]));
-  const defaultProductIds = new Set(products.map((item) => `website-product-${item.id}`));
-  const allProducts = [...products.map((product) => savedDefaultProducts.get(`website-product-${product.id}`) ? { ...product, ...savedDefaultProducts.get(`website-product-${product.id}`), id: product.id } : product), ...customProducts.filter((item) => !defaultProductIds.has(item.id))];
+  const allProducts = customProducts.length > 0
+    ? customProducts.map((item) => {
+        if (item.id.startsWith("website-product-")) {
+          const numId = parseInt(item.id.replace("website-product-", ""), 10);
+          return { ...item, id: numId };
+        }
+        return item;
+      })
+    : products;
   const storedCategoryNames = new Map(customCategories.map((item) => [item.id, item.name]));
   const visibleCategories = [...categories.map((category) => ({ ...category, label: storedCategoryNames.get(category.id) ?? category.label })), ...customCategories.filter((item) => !categories.some((category) => category.id === item.id))];
   const filtered = activeCategory === 'all' ? allProducts : allProducts.filter((p) => p.category === activeCategory);
