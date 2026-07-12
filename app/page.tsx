@@ -468,6 +468,12 @@ export default function Home() {
               >
                 Product
               </Link>
+              <Link
+                href="/news"
+                className="text-base font-semibold tracking-wider transition-colors duration-200 relative pb-1.5 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:bg-primary after:transition-all after:duration-200 text-zinc-400 hover:text-white after:w-0 hover:after:w-full"
+              >
+                News
+              </Link>
             </nav>
 
             {/* Action Tools */}
@@ -518,6 +524,9 @@ export default function Home() {
                 </Link>
                 <Link href="/products" className="text-base font-semibold text-zinc-300 hover:text-primary py-2 transition-colors border-b border-white/5">
                   Product
+                </Link>
+                <Link href="/news" className="text-base font-semibold text-zinc-300 hover:text-primary py-2 transition-colors border-b border-white/5">
+                  News
                 </Link>
                 <a
                   href="tel:0987654321"
@@ -754,7 +763,7 @@ export default function Home() {
 
             {/* Product cards grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredProducts.map((prod) => (
+              {filteredProducts.slice(0, 3).map((prod) => (
                 <div
                   key={prod.id}
                   onClick={() => setSelectedProduct(prod)}
@@ -870,12 +879,9 @@ export default function Home() {
                   </div>
                 </div>
 
-                <button
-                  onClick={() => alert("Chức năng đang được phát triển. Truong Nguyen sẽ cập nhật các bài viết kỹ thuật sớm nhất.")}
-                  className="px-6 py-3.5 bg-zinc-800/80 hover:bg-black border border-white/5 text-white text-xs font-bold tracking-widest uppercase rounded-xl transition-all flex items-center gap-2 group w-fit h-fit self-start md:self-end md:mb-2"
-                >
+                <Link href="/news" className="px-6 py-3.5 bg-zinc-800/80 hover:bg-black border border-white/5 text-white text-xs font-bold tracking-widest uppercase rounded-xl transition-all flex items-center gap-2 group w-fit h-fit self-start md:self-end md:mb-2">
                   Xem Thêm Bài Viết <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                </button>
+                </Link>
               </div>
 
               {/* Divider line */}
@@ -884,7 +890,7 @@ export default function Home() {
 
             {/* Blog grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {blogs.map((blog) => (
+              {blogs.slice(0, 3).map((blog) => (
                 <article
                   key={blog.id}
                   className="bg-card-bg border border-white/5 rounded-xl overflow-hidden hover:border-primary/20 transition-all duration-300 flex flex-col group"
@@ -910,14 +916,9 @@ export default function Home() {
                     <p className="text-zinc-400 text-xs leading-relaxed mb-6 flex-1 line-clamp-3">
                       {blog.desc}
                     </p>
-                    <button
-                      onClick={() => {
-                        alert(`Đọc bài viết: ${blog.title}`);
-                      }}
-                      className="text-xs font-bold uppercase tracking-wider text-white group-hover:text-primary flex items-center gap-2 transition-colors cursor-pointer text-left"
-                    >
+                    <Link href="/news" className="text-xs font-bold uppercase tracking-wider text-white group-hover:text-primary flex items-center gap-2 transition-colors text-left">
                       Đọc Tiếp <ChevronRight className="w-4 h-4" />
-                    </button>
+                    </Link>
                   </div>
                 </article>
               ))}

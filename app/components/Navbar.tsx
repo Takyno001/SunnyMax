@@ -27,7 +27,7 @@ export default function Navbar({ onSearchOpen }: NavbarProps) {
     { href: "/", label: "Home" },
     { href: "/services", label: "Services" },
     { href: "/products", label: "Product" },
-    { href: "/dashboard", label: "Dashboard" },
+    { href: "/news", label: "News" },
   ];
 
   const isActive = (href: string) => {
