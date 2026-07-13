@@ -453,7 +453,33 @@ export default function DashboardPage() {
   </div>;
 }
 
-function FormHeading({ title, onClose, onClear }: { title: string; onClose: () => void; onClear?: () => void }) { return <div className="mb-6 flex items-center justify-between border-b border-white/10 pb-4"><div><p className="text-xs font-bold uppercase tracking-wider text-[#ff5017]">Biểu mẫu nội dung</p><h2 className="mt-1 text-xl font-black">{title}</h2></div><div className="flex items-center gap-2">{onClear && <button type="button" onClick={onClear} className="rounded-lg px-3 py-2 text-xs font-bold text-zinc-500 hover:bg-white/5 hover:text-[#ff5017]">Xoá toàn bộ</button>}<button type="button" onClick={onClose} className="rounded-lg p-2 text-zinc-500 hover:bg-white/5 hover:text-white" aria-label="Đóng"><X className="h-5 w-5" /></button></div></div>; }
+function FormHeading({ title, onClose, onClear }: { title: string; onClose: () => void; onClear?: () => void }) {
+  const [confirmOpen, setConfirmOpen] = useState(false);
+
+  return <>
+    <div className="mb-6 flex items-center justify-between border-b border-white/10 pb-4">
+      <div>
+        <p className="text-xs font-bold uppercase tracking-wider text-[#ff5017]">Biểu mẫu nội dung</p>
+        <h2 className="mt-1 text-xl font-black">{title}</h2>
+      </div>
+      <div className="flex items-center gap-2">
+        {onClear && <button type="button" onClick={() => setConfirmOpen(true)} className="inline-flex items-center gap-2 rounded-xl border border-red-400/20 bg-red-500/[0.06] px-3 py-2 text-xs font-bold text-red-300 transition-colors hover:border-red-400/40 hover:bg-red-500/15 hover:text-red-200"><Trash2 className="h-3.5 w-3.5" />Xoá toàn bộ</button>}
+        <button type="button" onClick={onClose} className="rounded-xl p-2 text-zinc-500 transition-colors hover:bg-white/5 hover:text-white" aria-label="Đóng"><X className="h-5 w-5" /></button>
+      </div>
+    </div>
+
+    {confirmOpen && <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm">
+      <div role="dialog" aria-modal="true" aria-labelledby="clear-confirm-title" className="w-full max-w-md rounded-2xl border border-white/10 bg-[#1b1b1f] p-6 shadow-[0_24px_80px_rgba(0,0,0,.65)]">
+        <div className="mb-5 flex items-center gap-3"><div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-red-500/10 text-red-400"><Trash2 className="h-6 w-6" /></div><h3 id="clear-confirm-title" className="text-lg font-black text-white">Xoá toàn bộ nội dung?</h3></div>
+        <p className="mt-2 text-sm leading-6 text-zinc-400">Tất cả dữ liệu bạn vừa nhập trong biểu mẫu sẽ bị xoá và không thể hoàn tác.</p>
+        <div className="mt-6 flex justify-end gap-3">
+          <button type="button" onClick={() => setConfirmOpen(false)} className="rounded-xl border border-white/10 px-4 py-2.5 text-sm font-bold text-zinc-400 transition-colors hover:bg-white/5 hover:text-white">Huỷ</button>
+          <button type="button" onClick={() => { onClear?.(); setConfirmOpen(false); }} className="inline-flex items-center gap-2 rounded-xl bg-red-500 px-4 py-2.5 text-sm font-bold text-white transition-colors hover:bg-red-600"><Trash2 className="h-4 w-4" />Xoá toàn bộ</button>
+        </div>
+      </div>
+    </div>}
+  </>;
+}
 function Empty({ text }: { text: string }) { return <div className="rounded-xl border border-dashed border-white/10 py-10 text-center text-sm text-zinc-500">{text}</div>; }
 function Summary({ label, value, icon: Icon, onClick }: { label: string; value: number; icon: typeof ShoppingBag; onClick: () => void }) { return <button type="button" onClick={onClick} className="rounded-2xl border border-white/5 bg-[#1a1a1e] p-5 text-left "><div className="mb-5 flex items-center justify-between"><span className="text-xs font-bold uppercase tracking-wider text-zinc-500">{label}</span><Icon className="h-5 w-5 text-[#ff5017]" /></div><span className="text-3xl font-black">{value}</span><span className="mt-1 block text-xs text-zinc-600">mục đang quản lý</span></button>; }
 function ContentRow({ title, meta, image, iconName, index, total, sorting, onMove, onEdit, onRemove, onDragStart, onDragEnter, onDragEnd, onDrop, dragging, dragOver }: { title: string; meta: string; image?: string; iconName?: string; index: number; total: number; sorting: boolean; onMove: (target: number) => void; onEdit: () => void; onRemove: () => void; onDragStart: () => void; onDragEnter?: () => void; onDragEnd?: () => void; onDrop: () => void; dragging?: boolean; dragOver?: boolean }) {

@@ -90,8 +90,7 @@ function Counter({ end, duration = 2000, suffix = "", format }: CounterProps) {
     }
 
     return () => observer.disconnect();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [end, duration]);
 
   const displayVal = format ? format(count) : count.toLocaleString("vi-VN");
 
