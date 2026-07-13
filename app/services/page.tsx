@@ -90,14 +90,14 @@ export default function ServicesPage() {
           </nav>
 
           {/* Title wrapper */}
-          <div className="relative flex items-center justify-center mb-5" style={{ height: "110px" }}>
+          <div className="relative flex items-center justify-center mb-5" style={{ height: "clamp(85px, 18vw, 110px)" }}>
             {/* Ghost: paint-order stroke fill — clean outline, no inner artifacts */}
             <span
               aria-hidden="true"
               suppressHydrationWarning
-              className="ghost-title absolute font-display font-black pointer-events-none select-none"
+              className="ghost-title absolute font-display font-black pointer-events-none select-none text-[clamp(42px,18vw,200px)] md:text-[200px]"
               style={{
-                fontSize: "200px",
+
                 lineHeight: 1,
                 whiteSpace: "nowrap",
                 top: "50%",
@@ -108,7 +108,7 @@ export default function ServicesPage() {
               Services
             </span>
             {/* Solid foreground */}
-            <h1 className="relative z-10 font-display font-black leading-none text-white tracking-tight" style={{ fontSize: "clamp(56px, 8.5vw, 96px)" }}>
+            <h1 className="relative z-10 font-display font-black leading-none text-white tracking-tight" style={{ fontSize: "clamp(44px, 8.5vw, 96px)" }}>
               Services
             </h1>
           </div>
@@ -128,13 +128,13 @@ export default function ServicesPage() {
             {paginatedServices.map((svc, idx) => (
               <div
                 key={idx}
-                className="bg-[#1e1e1e] border border-white/5 rounded-xl p-8 hover:bg-[#262626] transition-all duration-300 hover:-translate-y-2 group"
+                className="bg-[#1e1e1e] border border-white/5 rounded-xl p-8 text-center md:text-left hover:bg-[#262626] transition-all duration-300 hover:-translate-y-2 group"
               >
-                <div className="flex items-center justify-between mb-8">
+                <div className="flex items-center justify-center gap-4 mb-8 md:justify-between">
                   <div className="p-3 bg-zinc-800/50 rounded-lg border border-white/5 group-hover:bg-[#ff5017]/10  transition-colors">
                     {svc.icon}
                   </div>
-                  <span className="text-3xl font-black text-zinc-800 group-hover:text-[#ff5017]/20 transition-colors">
+                  <span className="hidden md:inline text-3xl font-black text-zinc-800 group-hover:text-[#ff5017]/20 transition-colors">
                     {svc.num}
                   </span>
                 </div>

@@ -110,7 +110,7 @@ export default function Footer() {
     >
       {/* Background topographic pattern overlay */}
       <div 
-        className="absolute bottom-0 left-0 right-0 h-[220px] pointer-events-none opacity-25 z-0"
+        className="absolute bottom-0 left-0 right-0 h-[220px] pointer-events-none opacity-60 z-0"
         style={{
           backgroundImage: "url('/footer-bg.png')",
           backgroundPosition: "bottom",

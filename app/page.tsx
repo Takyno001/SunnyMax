@@ -498,94 +498,6 @@ export default function Home() {
 
   return (
     <div className="relative min-h-screen text-white font-sans selection:bg-primary selection:text-white">
-      {/* Full-page fixed abstract background */}
-      <div
-        className="fixed inset-0 pointer-events-none"
-        style={{
-        zIndex: 0,
-        }}
-      >
-        {/* Base: lighter dark */}
-        <div className="absolute inset-0" style={{ background: "linear-gradient(115deg, #2b1610 0%, #171214 48%, #0f0f12 100%)" }} />
-
-        {/* Primary glow: blazing orange — bottom-right, much brighter */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background: `radial-gradient(ellipse 75% 60% at 95% 95%, rgba(255,80,23,0.85) 0%, rgba(255,80,23,0.4) 30%, rgba(255,80,23,0.1) 55%, transparent 70%)`,
-          }}
-        />
-
-        {/* Secondary glow: deep amber — top-left, brighter */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background: `radial-gradient(ellipse 60% 50% at 5% 5%, rgba(255,150,0,0.6) 0%, rgba(255,100,0,0.25) 40%, transparent 65%)`,
-          }}
-        />
-
-        {/* Accent glow: blue-purple — top-right */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background: `radial-gradient(ellipse 45% 40% at 90% 5%, rgba(120,80,255,0.35) 0%, rgba(90,50,220,0.12) 45%, transparent 65%)`,
-          }}
-        />
-
-        {/* Center mid-glow: warm light in the middle */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background: `radial-gradient(ellipse 60% 50% at 50% 50%, rgba(255,100,30,0.08) 0%, transparent 70%)`,
-          }}
-        />
-
-        {/* Grid lines — brighter */}
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(255,255,255,0.07) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(255,255,255,0.07) 1px, transparent 1px)
-            `,
-            backgroundSize: "60px 60px",
-          }}
-        />
-
-        {/* Sub-grid */}
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)
-            `,
-            backgroundSize: "20px 20px",
-          }}
-        />
-
-        {/* Diagonal orange streaks — brighter */}
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `repeating-linear-gradient(
-              -60deg,
-              transparent,
-              transparent 120px,
-              rgba(255,80,23,0.08) 120px,
-              rgba(255,80,23,0.08) 121px
-            )`,
-          }}
-        />
-
-        {/* Softer vignette */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background: `radial-gradient(ellipse 110% 110% at 50% 50%, transparent 50%, rgba(0,0,0,0.35) 100%)`,
-          }}
-        />
-      </div>
       {/* Scrollable Content Wrapper */}
       <div className="relative z-20 min-h-screen shadow-2xl">
         {/* 1. HEADER / NAVBAR */}
@@ -600,7 +512,7 @@ export default function Home() {
               alt="Truong Nguyen - Hero Background"
               fill
               priority
-              className="object-cover object-[70%_top] md:object-[right_top]"
+              className="object-cover object-[center_top] md:object-[right_top]"
             />
             {/* Dark overlay to darken the background image uniformly */}
             <div className="absolute inset-0 bg-black/20" />
@@ -614,7 +526,7 @@ export default function Home() {
 
           <div className="max-w-7xl mx-auto px-6 w-full pt-24 pb-20 md:pt-32 md:pb-32 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
             {/* Hero text */}
-            <div className="lg:col-span-7 flex flex-col items-start text-left">
+            <div className="lg:col-span-7 flex flex-col items-center text-center lg:items-start lg:text-left">
               <span className="text-xs md:text-sm font-bold uppercase tracking-widest text-primary mb-3">
                 XIN CHÀO, TÔI LÀ
               </span>
@@ -629,18 +541,18 @@ export default function Home() {
 
 
               {/* Social handles */}
-              <div className="flex items-center gap-5 mb-8">
-                <a href="https://m.me" target="_blank" rel="noreferrer" className="w-16 h-16 rounded-full bg-zinc-800/80 hover:bg-zinc-600 border border-white/5  flex items-center justify-center text-white transition-all hover:-translate-y-1" aria-label="Messenger">
-                  <MessengerIcon className="w-7 h-7" />
+              <div className="flex items-center justify-center gap-3 mb-8 md:justify-start md:gap-5">
+                <a href="https://m.me" target="_blank" rel="noreferrer" className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-zinc-800/80 hover:bg-zinc-600 border border-white/5  flex items-center justify-center text-white transition-all hover:-translate-y-1" aria-label="Messenger">
+                  <MessengerIcon className="w-6 h-6 md:w-7 md:h-7" />
                 </a>
-                <a href="https://zalo.me" target="_blank" rel="noreferrer" className="w-16 h-16 rounded-full bg-zinc-800/80 hover:bg-zinc-600 border border-white/5  flex items-center justify-center text-white transition-all hover:-translate-y-1" aria-label="Zalo">
-                  <ZaloIcon className="w-7 h-7" />
+                <a href="https://zalo.me" target="_blank" rel="noreferrer" className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-zinc-800/80 hover:bg-zinc-600 border border-white/5  flex items-center justify-center text-white transition-all hover:-translate-y-1" aria-label="Zalo">
+                  <ZaloIcon className="w-6 h-6 md:w-7 md:h-7" />
                 </a>
-                <a href="https://tiktok.com" target="_blank" rel="noreferrer" className="w-16 h-16 rounded-full bg-zinc-800/80 hover:bg-zinc-600 border border-white/5  flex items-center justify-center text-white transition-all hover:-translate-y-1" aria-label="Tiktok">
-                  <TiktokIcon className="w-7 h-7" />
+                <a href="https://tiktok.com" target="_blank" rel="noreferrer" className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-zinc-800/80 hover:bg-zinc-600 border border-white/5  flex items-center justify-center text-white transition-all hover:-translate-y-1" aria-label="Tiktok">
+                  <TiktokIcon className="w-6 h-6 md:w-7 md:h-7" />
                 </a>
-                <a href="https://youtube.com" target="_blank" rel="noreferrer" className="w-16 h-16 rounded-full bg-zinc-800/80 hover:bg-zinc-600 border border-white/5  flex items-center justify-center text-white transition-all hover:-translate-y-1" aria-label="Youtube">
-                  <YoutubeIcon className="w-7 h-7" />
+                <a href="https://youtube.com" target="_blank" rel="noreferrer" className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-zinc-800/80 hover:bg-zinc-600 border border-white/5  flex items-center justify-center text-white transition-all hover:-translate-y-1" aria-label="Youtube">
+                  <YoutubeIcon className="w-6 h-6 md:w-7 md:h-7" />
                 </a>
               </div>
 
@@ -658,31 +570,31 @@ export default function Home() {
             <div className="flex flex-col gap-6 mb-16">
               {/* Title & Button row */}
               <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-                <div className="relative flex flex-col items-start w-full md:w-auto">
+                <div className="relative flex flex-col items-center text-center w-full md:items-start md:text-left md:w-auto">
                   <span className="text-xs md:text-sm font-bold text-primary tracking-widest uppercase block mb-8 relative z-20">
                     01.
                   </span>
 
                   {/* Title wrapper */}
-                  <div className="relative flex items-center justify-start" style={{ height: "90px", width: "100%" }}>
+                  <div className="relative flex items-center justify-center md:justify-start" style={{ height: "90px", width: "100%" }}>
                     {/* Ghost: paint-order stroke fill — clean outline, no inner artifacts */}
                     <span
                       aria-hidden="true"
                       suppressHydrationWarning
-                      className="ghost-title absolute font-display font-black pointer-events-none select-none"
+                      className="ghost-title absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 font-display font-black pointer-events-none select-none md:left-[-5px] md:translate-x-0"
                       style={{
                         fontSize: "clamp(80px, 12vw, 150px)",
                         lineHeight: 1,
                         whiteSpace: "nowrap",
-                        left: "-5px",
+
                         top: "50%",
-                        transform: "translateY(-50%)",
+
                       }}
                     >
                       Services
                     </span>
                     {/* Solid foreground */}
-                    <h2 className="relative z-10 font-display font-black leading-none text-white tracking-tight pl-8" style={{ fontSize: "clamp(48px, 7vw, 80px)" }}>
+                    <h2 className="relative z-10 font-display font-black leading-none text-white tracking-tight pl-0 md:pl-8" style={{ fontSize: "clamp(48px, 7vw, 80px)" }}>
                       Services
                     </h2>
                   </div>
@@ -690,7 +602,7 @@ export default function Home() {
 
                 <Link
                   href="/services"
-                  className="px-6 py-3.5 bg-zinc-800/80 hover:bg-black border border-white/5 text-white text-xs font-bold tracking-widest uppercase rounded-xl transition-all flex items-center gap-2 group w-fit h-fit self-start md:self-end md:mb-2"
+                  className="px-6 py-3.5 bg-zinc-800/80 hover:bg-black border border-white/5 text-white text-xs font-bold tracking-widest uppercase rounded-xl transition-all flex items-center gap-2 group w-fit h-fit self-center md:self-end md:mb-2"
                 >
                   Xem Toàn Bộ Dịch Vụ <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </Link>
@@ -705,13 +617,13 @@ export default function Home() {
               {allServices.slice(0, 3).map((svc, idx) => (
                 <div
                   key={idx}
-                  className="bg-card-bg border border-white/5 rounded-xl p-8 hover:bg-card-hover transition-all duration-300 hover:-translate-y-2 group"
+                  className="bg-card-bg border border-white/5 rounded-xl p-8 text-center md:text-left hover:bg-card-hover transition-all duration-300 hover:-translate-y-2 group"
                 >
-                  <div className="flex items-center justify-between mb-8">
+                  <div className="flex items-center justify-center gap-4 mb-8 md:justify-between">
                     <div className="w-14 h-14 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:bg-primary/20 transition-colors shadow-[0_0_20px_rgba(255,80,23,0.15)]">
                       {svc.icon}
                     </div>
-                    <span className="text-3xl font-display font-bold text-zinc-800 group-hover:text-primary/20 transition-colors">
+                    <span className="hidden md:inline text-3xl font-display font-bold text-zinc-800 group-hover:text-primary/20 transition-colors">
                       {svc.num}
                     </span>
                   </div>
@@ -731,7 +643,7 @@ export default function Home() {
             </div>
 
             {/* Stats Bar */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 bg-[#161619] rounded-2xl p-10 md:p-14 relative overflow-hidden">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 bg-[#161619] rounded-2xl p-8 md:p-14 relative overflow-hidden">
               {stats.map((stat, idx) => (
                 <div key={idx} className="flex flex-col items-center text-center p-4 group/item transition-transform duration-300 hover:-translate-y-1">
                   {/* Icon rendered directly (No container box, colored orange) */}
@@ -761,32 +673,32 @@ export default function Home() {
             <div className="flex flex-col gap-6 mb-16">
               {/* Title & Button row */}
               <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-                <div className="relative flex flex-col items-start w-full md:w-auto">
+                <div className="relative flex flex-col items-center text-center w-full md:items-start md:text-left md:w-auto">
                   <span className="text-xs md:text-sm font-bold text-primary tracking-widest uppercase block mb-8 relative z-20">
                     02.
                   </span>
 
                   {/* Title wrapper */}
-                  <div className="relative flex items-center justify-start" style={{ height: "90px", width: "100%" }}>
+                  <div className="relative flex items-center justify-center md:justify-start" style={{ height: "90px", width: "100%" }}>
                     {/* Ghost: paint-order stroke fill — clean outline, no inner artifacts */}
                     <span
                       aria-hidden="true"
                       suppressHydrationWarning
-                      className="ghost-title absolute font-display font-black pointer-events-none select-none"
+                      className="ghost-title absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 font-display font-black pointer-events-none select-none md:left-[-5px] md:translate-x-0"
                       style={{
                         fontSize: "clamp(80px, 12vw, 150px)",
                         lineHeight: 1,
                         whiteSpace: "nowrap",
-                        left: "-5px",
+
                         top: "50%",
-                        transform: "translateY(-50%)",
+
                         color: "#09090b",
                       }}
                     >
                       Products
                     </span>
                     {/* Solid foreground */}
-                    <h2 className="relative z-10 font-display font-black leading-none text-white tracking-tight pl-8" style={{ fontSize: "clamp(48px, 7vw, 80px)" }}>
+                    <h2 className="relative z-10 font-display font-black leading-none text-white tracking-tight pl-0 md:pl-8" style={{ fontSize: "clamp(48px, 7vw, 80px)" }}>
                       Products
                     </h2>
                   </div>
@@ -794,7 +706,7 @@ export default function Home() {
 
                 <Link
                   href="/products"
-                  className="px-6 py-3.5 bg-zinc-800/80 hover:bg-black border border-white/5 text-white text-xs font-bold tracking-widest uppercase rounded-xl transition-all flex items-center gap-2 group w-fit h-fit self-start md:self-end md:mb-2"
+                  className="px-6 py-3.5 bg-zinc-800/80 hover:bg-black border border-white/5 text-white text-xs font-bold tracking-widest uppercase rounded-xl transition-all flex items-center gap-2 group w-fit h-fit self-center md:self-end md:mb-2"
                 >
                   Xem Toàn Bộ Sản Phẩm <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </Link>
@@ -868,8 +780,8 @@ export default function Home() {
               <span className="text-xs md:text-sm font-bold text-primary tracking-widest uppercase block mb-2">03.</span>
               <h2 className="text-6xl md:text-8xl font-display font-black text-white tracking-tight">Brands</h2>
             </div>
-            <div className="flex min-w-0 items-center justify-center md:justify-end rounded-2xl bg-[#121212]/90 px-6 py-5 shadow-2xl backdrop-blur-sm">
-              <img src="/sunnymax.png" alt="SunnyMax" className="h-auto w-[min(30vw,240px)] object-contain" />
+            <div className="flex min-w-0 items-center justify-center rounded-xl bg-[#121212]/90 px-0 py-0 shadow-2xl backdrop-blur-sm md:-translate-x-8">
+              <img src="/sunnymax.png" alt="SunnyMax" className="block h-auto w-[170px] max-w-full -translate-x-[2%] object-contain sm:w-[200px] md:w-[230px]" />
             </div>
           </div>
         </section>
@@ -880,38 +792,38 @@ export default function Home() {
             <div className="flex flex-col gap-6 mb-16">
               {/* Title & Button row */}
               <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-                <div className="relative flex flex-col items-start w-full md:w-auto">
+                <div className="relative flex flex-col items-center text-center w-full md:items-start md:text-left md:w-auto">
                   <span className="text-xs md:text-sm font-bold text-primary tracking-widest uppercase block mb-8 relative z-20">
                     04.
                   </span>
 
                   {/* Title wrapper */}
-                  <div className="relative flex items-center justify-start" style={{ height: "90px", width: "100%" }}>
+                  <div className="relative flex items-center justify-center md:justify-start" style={{ height: "90px", width: "100%" }}>
                     {/* Ghost: paint-order stroke fill — clean outline, no inner artifacts */}
                     <span
                       aria-hidden="true"
                       suppressHydrationWarning
-                      className="ghost-title absolute font-display font-black pointer-events-none select-none"
+                      className="ghost-title absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 font-display font-black pointer-events-none select-none md:left-[-5px] md:translate-x-0"
                       style={{
                         fontSize: "clamp(80px, 12vw, 150px)",
                         lineHeight: 1,
                         whiteSpace: "nowrap",
-                        left: "-5px",
+
                         top: "50%",
-                        transform: "translateY(-50%)",
+
                         color: "#09090b",
                       }}
                     >
                       News
                     </span>
                     {/* Solid foreground */}
-                    <h2 className="relative z-10 font-display font-black leading-none text-white tracking-tight pl-8" style={{ fontSize: "clamp(48px, 7vw, 80px)" }}>
+                    <h2 className="relative z-10 font-display font-black leading-none text-white tracking-tight pl-0 md:pl-8" style={{ fontSize: "clamp(48px, 7vw, 80px)" }}>
                       News
                     </h2>
                   </div>
                 </div>
 
-                <Link href="/news" className="px-6 py-3.5 bg-zinc-800/80 hover:bg-black border border-white/5 text-white text-xs font-bold tracking-widest uppercase rounded-xl transition-all flex items-center gap-2 group w-fit h-fit self-start md:self-end md:mb-2">
+                <Link href="/news" className="px-6 py-3.5 bg-zinc-800/80 hover:bg-black border border-white/5 text-white text-xs font-bold tracking-widest uppercase rounded-xl transition-all flex items-center gap-2 group w-fit h-fit self-center md:self-end md:mb-2">
                   Xem Thêm Bài Viết <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </Link>
               </div>
@@ -925,12 +837,12 @@ export default function Home() {
               {blogs.slice(0, 3).map((blog, idx) => (
                 <article
                   key={blog.id}
-                  className={`bg-card-bg border border-white/5 rounded-xl overflow-hidden transition-all duration-700 ease-out flex flex-col group ${
+                  className={`scroll-reveal-card bg-card-bg border border-white/5 rounded-xl overflow-hidden transition-all duration-[420ms] ease-out flex flex-col group ${
                     blogVisible
                       ? "opacity-100 translate-y-0 scale-100"
-                      : "opacity-0 translate-y-16 scale-90 pointer-events-none"
+                      : "opacity-0 translate-y-16 pointer-events-none"
                   }`}
-                  style={{ transitionDelay: `${idx * 150}ms` }}
+                  style={{ transitionDelay: `${idx * 500}ms` }}
                 >
                   {/* Blog Image */}
                   <div className="aspect-video w-full overflow-hidden bg-zinc-900 relative">
@@ -954,12 +866,23 @@ export default function Home() {
                       {blog.desc}
                     </p>
                     <div className="border-t border-white/10 pt-4 mt-auto">
-                      <button
-                        onClick={() => setSelectedBlog(blog as DashboardPost)}
-                        className="text-xs font-bold uppercase tracking-wider text-white group-hover:text-primary flex items-center gap-2 transition-colors text-left cursor-pointer"
-                      >
-                        Đọc Tiếp <ChevronRight className="w-4 h-4" />
-                      </button>
+                      {blog.sourceUrl ? (
+                        <a
+                          href={blog.sourceUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-xs font-bold uppercase tracking-wider text-white group-hover:text-primary flex items-center gap-2 transition-colors text-left"
+                        >
+                          Đọc Tiếp <ChevronRight className="w-4 h-4" />
+                        </a>
+                      ) : (
+                        <button
+                          onClick={() => setSelectedBlog(blog as DashboardPost)}
+                          className="text-xs font-bold uppercase tracking-wider text-white group-hover:text-primary flex items-center gap-2 transition-colors text-left cursor-pointer"
+                        >
+                          Đọc Tiếp <ChevronRight className="w-4 h-4" />
+                        </button>
+                      )}
                     </div>
                   </div>
                 </article>

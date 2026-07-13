@@ -20,7 +20,7 @@ export default function Pagination({ page, pageCount, onPageChange }: Pagination
   };
 
   return (
-    <nav className="mt-12 flex justify-center" aria-label="Phân trang">
+    <nav className="relative z-50 mt-12 flex justify-center overflow-visible" aria-label="Phân trang">
       <div className="inline-flex items-center gap-1 rounded-2xl border border-white/10 bg-[#151515] p-1.5 shadow-lg">
         <button
           type="button"
@@ -59,7 +59,7 @@ export default function Pagination({ page, pageCount, onPageChange }: Pagination
           {pageMenuOpen && (
             <div
               role="listbox"
-              className="absolute left-1/2 top-full z-50 mt-2 max-h-64 w-36 -translate-x-1/2 overflow-y-auto rounded-xl border border-white/10 bg-[#1a1a1a] p-1.5 shadow-2xl"
+              className="absolute left-1/2 top-full z-[100] mt-2 max-h-64 w-36 -translate-x-1/2 overflow-y-auto rounded-xl border border-white/10 bg-[#1a1a1a] p-1.5 shadow-2xl"
             >
               {Array.from({ length: pageCount }, (_, index) => index + 1).map((pageNumber) => (
                 <button

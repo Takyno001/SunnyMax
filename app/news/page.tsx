@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ChevronRight } from "lucide-react";
 import Footer from "../components/Footer";
 import Pagination from "../components/Pagination";
@@ -49,6 +49,7 @@ export const defaultNews: DashboardPost[] = [
 export default function NewsPage() {
   const [customNews, setCustomNews] = useState<DashboardPost[]>([]);
   const [page, setPage] = useState(1);
+  const cardsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -68,13 +69,50 @@ export default function NewsPage() {
     return () => window.clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }, []);
+
+  useEffect(() => {
+    if (page === 1) return;
+    cardsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [page]);
+
+
+
   const news = customNews.length > 0 ? customNews : defaultNews;
   const pageCount = Math.max(1, Math.ceil(news.length / 9));
   const paginatedNews = news.slice((page - 1) * 9, page * 9);
 
+  useEffect(() => {
+    const cards = Array.from(document.querySelectorAll<HTMLElement>("[data-news-card]"));
+    if (!("IntersectionObserver" in window)) {
+      cards.forEach((card) => card.classList.add("is-visible"));
+      return;
+    }
+    const observer = new IntersectionObserver((entries) => {
+      const visibleEntries = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => cards.indexOf(a.target as HTMLElement) - cards.indexOf(b.target as HTMLElement));
+      visibleEntries.forEach((entry, index) => {
+        const card = entry.target as HTMLElement;
+        card.style.setProperty("--reveal-delay", `${index * 100}ms`);
+        card.classList.add("is-visible");
+        observer.unobserve(card);
+      });
+    }, { threshold: 0.01, rootMargin: "0px" });
+    const observeFrame = window.requestAnimationFrame(() => {
+      cards.forEach((card) => observer.observe(card));
+    });
+    return () => {
+      window.cancelAnimationFrame(observeFrame);
+      observer.disconnect();
+    };
+  }, [page, news.length]);
+
   return (
-    <div className="relative min-h-screen text-white font-sans selection:bg-[#ff5017] selection:text-white">
-      <div className="relative z-20 min-h-screen bg-[#121212] shadow-2xl overflow-x-hidden">
+    <div className="news-page-enter relative min-h-screen text-white font-sans selection:bg-[#ff5017] selection:text-white">
+      <div className="relative z-20 min-h-screen bg-[#121212] shadow-2xl overflow-x-clip">
       <Navbar />
 
       <main>
@@ -87,8 +125,8 @@ export default function NewsPage() {
             </nav>
 
             <div className="relative flex items-center justify-center mb-5" style={{ height: "110px" }}>
-              <span aria-hidden="true" suppressHydrationWarning className="ghost-title absolute font-display font-black pointer-events-none select-none" style={{ fontSize: "200px", lineHeight: 1, whiteSpace: "nowrap", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>News</span>
-              <h1 className="relative z-10 font-display font-black leading-none text-white tracking-tight" style={{ fontSize: "clamp(56px, 8.5vw, 96px)" }}>News</h1>
+              <span aria-hidden="true" suppressHydrationWarning className="ghost-title absolute font-display font-black pointer-events-none select-none text-[clamp(42px,18vw,200px)] md:text-[200px]" style={{ lineHeight: 1, whiteSpace: "nowrap", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>News</span>
+              <h1 className="relative z-10 font-display font-black leading-none text-white tracking-tight" style={{ fontSize: "clamp(44px, 8.5vw, 96px)" }}>News</h1>
             </div>
             <p className="text-zinc-400 text-base md:text-lg max-w-2xl leading-relaxed">
               Kiến thức, xu hướng và giải pháp mới nhất về thiết bị điện và Smart Home.
@@ -99,9 +137,9 @@ export default function NewsPage() {
         <section className="relative z-10 py-20 bg-[#121212]">
           <div className="max-w-7xl mx-auto px-6">
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
-              {paginatedNews.map((post) => (
-                <article key={post.id} className="bg-card-bg border border-white/5 rounded-xl overflow-hidden  transition-all duration-300 flex flex-col group">
+            <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24 scroll-mt-24">
+              {paginatedNews.map((post, index) => (
+                <article key={post.id} data-news-card="true" className="scroll-reveal-card news-card-page-enter bg-card-bg border border-white/5 rounded-xl overflow-hidden flex flex-col group">
                   <div className="aspect-video w-full overflow-hidden bg-zinc-900 relative">
                     <img src={post.image || "/truong_hero.png"} alt={post.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                     <span className="absolute top-4 left-4 z-10 px-2.5 py-1 bg-primary text-white text-[9px] font-bold uppercase tracking-wider rounded">{post.category}</span>

@@ -29,13 +29,69 @@ body {
   color: #ffffff;
 }
 
+
+@keyframes mobile-menu-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes mobile-menu-fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes mobile-menu-content-out {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(8px) scale(0.99); }
+}
+
+@keyframes mobile-menu-content-in {
+  from { transform: translateY(18px) scale(0.98); }
+  to { transform: translateY(0); }
+}
+
+.mobile-menu-enter { animation: mobile-menu-fade-in 320ms ease-out both; }
+.mobile-menu-content-enter { opacity: 1; animation: mobile-menu-content-in 420ms cubic-bezier(0.22, 1, 0.36, 1) 80ms both; }
+
+
+.mobile-menu-exit { animation: mobile-menu-fade-out 300ms ease-in-out both; }
+.mobile-menu-content-exit { animation: mobile-menu-content-out 280ms ease-in-out both; }
+.mobile-menu-close-spin { animation: mobile-menu-close-spin 300ms ease-in-out both; }
+
+@keyframes mobile-menu-close-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(180deg); }
+}
+
+.scroll-reveal-card {
+  will-change: transform, opacity;
+}
+.news-card-page-enter {
+  opacity: 0;
+  transform: translateY(70px);
+  will-change: transform, opacity, box-shadow;
+  transition: opacity 420ms ease-out, transform 420ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 320ms ease;
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.news-card-page-enter.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+@keyframes news-card-page-enter {
+  from { opacity: 0; transform: translateY(24px) scale(0.96); filter: blur(3px); }
+  65% { opacity: 1; transform: translateY(-3px) scale(1.01); filter: blur(0); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 /* Custom Text Stroke Utility */
 .text-stroke-bg {
   -webkit-text-stroke: 1px rgba(255, 255, 255, 0.08);
   color: transparent;
 }
 
-/* Ghost title: clean outline via paint-order — stroke renders under fill, no inner artifacts */
+/* Ghost title: clean outline via paint-order â€” stroke renders under fill, no inner artifacts */
 .ghost-title {
   -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.2);
   color: #121212;

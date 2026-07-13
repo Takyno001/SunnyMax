@@ -142,9 +142,9 @@ export default function ProductsPage() {
             <span
               aria-hidden="true"
               suppressHydrationWarning
-              className="ghost-title absolute font-display font-black pointer-events-none select-none"
+              className="ghost-title absolute font-display font-black pointer-events-none select-none text-[clamp(42px,18vw,200px)] md:text-[200px]"
               style={{
-                fontSize: "200px",
+
                 lineHeight: 1,
                 whiteSpace: "nowrap",
                 top: "50%",
@@ -155,7 +155,7 @@ export default function ProductsPage() {
               Products
             </span>
             {/* Solid foreground */}
-            <h1 className="relative z-10 font-display font-black leading-none text-white tracking-tight" style={{ fontSize: "clamp(56px, 8.5vw, 96px)" }}>
+            <h1 className="relative z-10 font-display font-black leading-none text-white tracking-tight" style={{ fontSize: "clamp(44px, 8.5vw, 96px)" }}>
               Products
             </h1>
           </div>
