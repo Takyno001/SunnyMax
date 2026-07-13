@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Outfit, Inter, Playfair_Display, Orbitron } from "next/font/google";
-import localFont from "next/font/local";
+
 import "./globals.css";
 import ScrollToTop from "./components/ScrollToTop";
 
@@ -18,11 +18,6 @@ const playfair = Playfair_Display({
   variable: "--font-playfair",
   subsets: ["latin"],
   weight: ["700", "800", "900"],
-});
-
-const squadHeavy = localFont({
-  src: "../public/fonts/squad-heavy.woff2",
-  variable: "--font-squad-heavy",
 });
 
 const orbitron = Orbitron({
@@ -44,7 +39,7 @@ export default function RootLayout({
   return (
     <html
       lang="vi"
-      className={`${outfit.variable} ${inter.variable} ${playfair.variable} ${squadHeavy.variable} ${orbitron.variable} h-full antialiased`}
+      className={`${outfit.variable} ${inter.variable} ${playfair.variable} ${orbitron.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans bg-dark-bg text-white">
         {children}

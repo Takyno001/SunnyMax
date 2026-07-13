@@ -2,25 +2,9 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { Phone, Mail, MapPin, Send } from "lucide-react";
+import { Phone, Mail, MapPin } from "lucide-react";
 
 // Social media SVG icons
-const FacebookIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg
-    viewBox="0 0 24 24"
-    width="18"
-    height="18"
-    stroke="currentColor"
-    strokeWidth="2"
-    fill="none"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    {...props}
-  >
-    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
-  </svg>
-);
-
 const YoutubeIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     viewBox="0 0 24 24"
@@ -122,11 +106,11 @@ export default function Footer() {
   return (
     <footer
       ref={footerRef}
-      className="fixed inset-x-0 bottom-0 z-10 bg-[#121212] text-zinc-400 text-sm pt-16 pb-8 overflow-hidden"
+      className="fixed inset-x-0 bottom-0 z-10 bg-[#171717] text-zinc-400 text-sm pt-16 pb-8 overflow-hidden border-t border-white/10"
     >
       {/* Background topographic pattern overlay */}
       <div 
-        className="absolute bottom-0 left-0 right-0 h-[190px] pointer-events-none opacity-10 z-0"
+        className="absolute bottom-0 left-0 right-0 h-[220px] pointer-events-none opacity-25 z-0"
         style={{
           backgroundImage: "url('/footer-bg.png')",
           backgroundPosition: "bottom",
@@ -147,7 +131,7 @@ export default function Footer() {
             />
           </Link>
           <p className="text-zinc-500 text-xs leading-relaxed mb-6">
-            Thiết bị điện cao cấp & Giải pháp Smart Home chuyên nghiệp cho mọi công trình. Kiến tạo không gian sống tiện nghi, sang trọng và tiết kiệm năng lượng.
+            Thiết bị điện cao cấp và giải pháp Smart Home chuyên nghiệp cho nhà ở, văn phòng và công trình hiện đại.
           </p>
           <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-3">
             Đăng ký nhận bản tin
@@ -173,7 +157,7 @@ export default function Footer() {
         {/* Column 2: Quick Links */}
         <div className="lg:col-span-2">
           <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4">
-            Liên Kết Nhanh
+            Điều Hướng
           </h4>
           <ul className="space-y-3 text-xs font-semibold">
             <li>
@@ -202,7 +186,7 @@ export default function Footer() {
         {/* Column 3: Featured Services */}
         <div className="lg:col-span-3">
           <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4">
-            Dịch Vụ Nổi Bật
+            Giải Pháp Nổi Bật
           </h4>
           <ul className="space-y-3 text-xs">
             <li className="text-zinc-500">
@@ -223,7 +207,7 @@ export default function Footer() {
         {/* Column 4: Contact Us */}
         <div className="lg:col-span-3">
           <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4">
-            Thông Tin Liên Hệ
+            Kết Nối Với Chúng Tôi
           </h4>
           <ul className="space-y-3 text-xs mb-6">
             <li className="flex items-center gap-2.5">
@@ -245,16 +229,16 @@ export default function Footer() {
           </ul>
           
           <div className="flex items-center gap-3">
-            <a href="https://facebook.com" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-zinc-900 border border-white/5  flex items-center justify-center text-zinc-400 hover:text-primary transition-all">
-              <FacebookIcon />
+            <a href="https://m.me" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-zinc-900 border border-white/5 flex items-center justify-center text-zinc-400 hover:text-primary transition-all">
+              <MessengerIcon />
             </a>
-            <a href="https://zalo.me" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-zinc-900 border border-white/5  flex items-center justify-center text-zinc-400 hover:text-primary transition-all">
+            <a href="https://zalo.me" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-zinc-900 border border-white/5 flex items-center justify-center text-zinc-400 hover:text-primary transition-all">
               <ZaloIcon />
             </a>
-            <a href="https://tiktok.com" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-zinc-900 border border-white/5  flex items-center justify-center text-zinc-400 hover:text-primary transition-all">
+            <a href="https://tiktok.com" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-zinc-900 border border-white/5 flex items-center justify-center text-zinc-400 hover:text-primary transition-all">
               <TiktokIcon />
             </a>
-            <a href="https://youtube.com" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-zinc-900 border border-white/5  flex items-center justify-center text-zinc-400 hover:text-primary transition-all">
+            <a href="https://youtube.com" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-zinc-900 border border-white/5 flex items-center justify-center text-zinc-400 hover:text-primary transition-all">
               <YoutubeIcon />
             </a>
           </div>
@@ -265,7 +249,7 @@ export default function Footer() {
       {/* Copyright Bottom Bar */}
       <div className="max-w-7xl mx-auto px-6 border-t border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-zinc-600">
         <div>
-          Copyright © 2026 Truong Nguyen. Tất cả quyền được bảo lưu.
+          © 2026 Truong Nguyen. Bản quyền thuộc về Truong Nguyen.
         </div>
         <div className="flex gap-4">
           <a href="#" className="hover:text-zinc-400 transition-colors">Chính Sách Bảo Mật</a>

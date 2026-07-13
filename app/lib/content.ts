@@ -1,13 +1,14 @@
 export type DashboardCategory = {
   id: string;
   name: string;
+  icon?: string;
 };
 
 export const DEFAULT_PRODUCT_CATEGORIES: DashboardCategory[] = [
-  { id: "smarthome", name: "Điện thông minh" },
-  { id: "lighting", name: "Thiết bị chiếu sáng" },
-  { id: "breaker", name: "Cáp & bảo vệ" },
-  { id: "other", name: "Khác" },
+  { id: "smarthome", name: "Điện thông minh", icon: "HousePlug" },
+  { id: "lighting", name: "Thiết bị chiếu sáng", icon: "LampCeiling" },
+  { id: "breaker", name: "Cáp & bảo vệ", icon: "ShieldCheck" },
+  { id: "other", name: "Khác", icon: "Plug" },
 ];
 
 export type DashboardProduct = {

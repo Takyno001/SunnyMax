@@ -1,5 +1,7 @@
 const decodeHtml = (value: string) =>
   value
+    .replace(/&#x([\da-f]+);/gi, (_, code: string) => String.fromCodePoint(parseInt(code, 16)))
+    .replace(/&#(\d+);/g, (_, code: string) => String.fromCodePoint(Number(code)))
     .replace(/&amp;/g, "&")
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'")
@@ -40,6 +42,12 @@ export async function GET(request: Request) {
     if (!["http:", "https:"].includes(articleUrl.protocol)) throw new Error("Invalid protocol");
   } catch {
     return Response.json({ error: "Link bài viết không hợp lệ." }, { status: 400 });
+  }
+
+  const allowedNewsHosts = ["tuoitre.vn", "vnexpress.net", "thanhnien.vn", "tienphong.vn", "laodong.vn", "dantri.com.vn", "vietnamnet.vn", "nhandan.vn", "cand.com.vn", "doisongphapluat.com.vn", "kenh14.vn", "znews.vn"];
+  const hostname = articleUrl.hostname.toLowerCase().replace(/^www\./, "");
+  if (!allowedNewsHosts.some((host) => hostname === host || hostname.endsWith(`.${host}`))) {
+    return Response.json({ error: "Chỉ hỗ trợ link từ các nguồn báo được phép trong hệ thống." }, { status: 400 });
   }
 
   try {

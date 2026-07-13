@@ -978,8 +978,8 @@ export default function Home() {
 
       {/* MODAL: PRODUCT DETAILS */}
       {selectedProduct && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm transition-all">
-          <div className="bg-card-bg border border-white/10 rounded-2xl overflow-hidden max-w-2xl w-full relative shadow-2xl animate-in zoom-in-95 duration-200">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md transition-all">
+          <div className="bg-[#171717] border border-white/10 rounded-[24px] overflow-hidden max-w-5xl max-h-[88vh] overflow-y-auto md:flex w-full relative shadow-[0_24px_90px_rgba(0,0,0,.65)] animate-in zoom-in-95 duration-200">
             <button
               onClick={() => setSelectedProduct(null)}
               className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/60 text-white hover:text-primary hover:bg-black/90 flex items-center justify-center transition-colors z-20 cursor-pointer"
@@ -988,7 +988,7 @@ export default function Home() {
               <X className="w-5 h-5" />
             </button>
 
-            <div className="aspect-video w-full relative bg-zinc-900">
+            <div className="aspect-video md:aspect-auto md:min-h-[500px] md:w-[46%] shrink-0 w-full relative bg-zinc-900">
               <img
                 src={selectedProduct.image}
                 alt={selectedProduct.title}
@@ -1000,17 +1000,17 @@ export default function Home() {
               </span>
             </div>
 
-            <div className="p-8">
-              <h3 className="text-2xl font-display font-black text-white mb-4 uppercase">
+            <div className="p-8 md:p-12 md:w-[54%] flex flex-col justify-center">
+              <div className="mb-3 text-[10px] font-bold uppercase tracking-[.24em] text-primary">Chi tiết sản phẩm</div><h3 className="text-3xl md:text-[2.65rem] leading-[1.08] font-bold text-white mb-5 tracking-tight">
                 {selectedProduct.title}
               </h3>
-              <p className="text-zinc-300 text-sm leading-relaxed mb-6">
+              <p className="text-zinc-400 text-sm md:text-[15px] leading-7 mb-8">
                 {selectedProduct.description}
               </p>
 
-              <div className="bg-zinc-900 border border-white/5 rounded-lg p-4 mb-6">
-                <span className="block text-xs text-zinc-500 uppercase font-bold tracking-wider mb-2">Thông Số Kỹ Thuật:</span>
-                <p className="text-sm font-semibold text-zinc-300 font-mono leading-relaxed">
+              <div className="bg-[#202023] border border-white/10 rounded-2xl p-5 mb-8">
+                <span className="block text-[10px] text-zinc-500 uppercase font-bold tracking-[.2em] mb-3">Thông Số Kỹ Thuật:</span>
+                <p className="text-sm font-medium text-zinc-200 leading-6">
                   {selectedProduct.spec}
                 </p>
               </div>
@@ -1020,13 +1020,13 @@ export default function Home() {
                   href={`https://zalo.me?text=Tôi%20quan%20tâm%20đến%20sản%20phẩm%20${encodeURIComponent(selectedProduct.title)}`}
                   target="_blank"
                   rel="noreferrer"
-                  className="px-6 py-3 bg-primary hover:bg-primary-light text-white text-xs font-bold tracking-widest uppercase rounded flex items-center gap-2 transition-colors cursor-pointer"
+                  className="px-6 py-3.5 bg-primary hover:bg-primary-light text-white text-xs font-bold tracking-[.12em] uppercase rounded-xl flex items-center gap-2 transition-colors cursor-pointer"
                 >
                   <MessageSquare className="w-4 h-4" /> Liên Hệ Zalo Nhận Báo Giá
                 </a>
                 <button
                   onClick={() => setSelectedProduct(null)}
-                  className="px-6 py-3 border border-white/10  text-zinc-400 hover:text-white text-xs font-bold tracking-widest uppercase rounded transition-colors cursor-pointer"
+                  className="px-6 py-3.5 border border-white/10 text-zinc-400 hover:text-white text-xs font-bold tracking-[.12em] uppercase rounded-xl transition-colors cursor-pointer"
                 >
                   Quay Lại
                 </button>

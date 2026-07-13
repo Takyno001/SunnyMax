@@ -11,7 +11,7 @@ import { CONTENT_STORAGE_KEYS, DashboardService, readStoredContent } from "../li
 export const services = [
   {
     num: "01",
-    icon: <Cpu className="w-8 h-8 text-[#ff5017]" />,
+    icon: <Plug className="w-8 h-8 text-[#ff5017]" />,
     title: "Cung Cấp Thiết Bị Điện",
     description:
       "Phân phối sỉ & lẻ thiết bị điện dân dụng, công nghiệp chính hãng. Cam kết chất lượng từ dây cáp, công tắc, ổ cắm đến các thiết bị đóng cắt an toàn.",
@@ -19,7 +19,7 @@ export const services = [
   },
   {
     num: "02",
-    icon: <Zap className="w-8 h-8 text-[#ff5017]" />,
+    icon: <Home className="w-8 h-8 text-[#ff5017]" />,
     title: "Giải Pháp Smart Home",
     description:
       "Tư vấn, thiết kế và thi công hệ thống nhà thông minh toàn diện. Tự động hóa hệ thống chiếu sáng, rèm cửa, điều hòa, kiểm soát an ninh thông minh.",
@@ -27,7 +27,7 @@ export const services = [
   },
   {
     num: "03",
-    icon: <Wrench className="w-8 h-8 text-[#ff5017]" />,
+    icon: <ShieldCheck className="w-8 h-8 text-[#ff5017]" />,
     title: "Thiết Kế Thi Công Điện Nước",
     description:
       "Thiết kế bản vẽ kỹ thuật M&E và thi công hệ thống điện nước an toàn, chuẩn kỹ thuật cho nhà phố, biệt thự, quán cafe, văn phòng làm việc.",
