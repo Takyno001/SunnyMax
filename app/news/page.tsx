@@ -19,6 +19,18 @@ function formatNewsDate(value: string) {
   return trimmed.replace("T", " ");
 }
 
+function newsDateValue(value: string) {
+  const trimmed = value.trim();
+  const vietnameseDateMatch = trimmed.match(/^(\d{2})\/(\d{2})\/(\d{4})(?:\s+(\d{2}):(\d{2}))?/);
+
+  if (vietnameseDateMatch) {
+    const [, day, month, year, hour = "00", minute = "00"] = vietnameseDateMatch;
+    return new Date(`${year}-${month}-${day}T${hour}:${minute}:00`).getTime();
+  }
+
+  return Date.parse(trimmed);
+}
+
 export const defaultNews: DashboardPost[] = [
   {
     id: "default-safety-cable",
@@ -80,7 +92,7 @@ export default function NewsPage() {
 
 
 
-  const news = customNews.length > 0 ? customNews : defaultNews;
+  const news = [...(customNews.length > 0 ? customNews : defaultNews)].sort((a, b) => newsDateValue(a.date) - newsDateValue(b.date));
   const pageCount = Math.max(1, Math.ceil(news.length / 9));
   const paginatedNews = news.slice((page - 1) * 9, page * 9);
 
